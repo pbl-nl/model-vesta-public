@@ -6,12 +6,11 @@ REM Bij nogmaals runnen worden bestanden gewoon overschreven
 
 REM aanpassingen voor machine specifieke paden
 Call path/set.bat
-SET errorhandler=^|^| ^(PAUSE ^&^& EXIT /B %errorlevel%^)
 
 set ITEM1=/LeidraadResultaten/zichtjaar/NLResults/Hoofdindicatoren/export_csv/result
 set ITEM2=/LeidraadResultaten/zichtjaar/NLResults/NationaleKosten/export_csv/result
 set ITEM3=/LeidraadResultaten/zichtjaar/NLResults/Aansluitingen/export_csv/result
-set ITEMS=%ITEM1% %ITEM2% %ITEM3% %errorhandler%
+set ITEMS=%ITEM1% %ITEM2% %ITEM3% ^|^| goto error_handler
 
 "%exe_path%" /L"%log_dir%\Ref2019All.txt"        "%prj_dir%\Runs\Runfile.dms"     /LeidraadResultaten/Startjaar/NLResults/Hoofdindicatoren/export_csv/result  %errorhandler%
 "%exe_path%" /L"%log_dir%\Ref2019All.txt"        "%prj_dir%\Runs\Runfile.dms"     /LeidraadResultaten/Startjaar/NLResults/NationaleKosten/export_csv/result   %errorhandler%
@@ -54,3 +53,9 @@ set ITEMS=%ITEM1% %ITEM2% %ITEM3% %errorhandler%
 
 echo Klaar met uitrekenen van alle varianten
 pause
+exit /B 0
+
+:error_handler
+echo Laatste rekenstap gaf foutcode: %errorlevel%. Het rekenproces zal niet worden voortgezet.
+pause
+exit /B %errorlevel%
