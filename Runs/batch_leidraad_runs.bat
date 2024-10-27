@@ -31,6 +31,7 @@ call :do_variant S3d_B_WKO15_50
 call :do_variant S3e_B_TEO_15_15
 call :do_variant S3f_D_LT15_70
 call :do_variant S3g_D_WKO15_15
+REM deze regel niet weghalen, anders wordt S3g niet uitgerekend
 call :do_variant S3h_D_WKO15_70
 
 call :do_variant S4a_GG_B_hWP
