@@ -6,8 +6,8 @@ REM Bij nogmaals runnen worden bestanden gewoon overschreven
 
 REM aanpassingen voor machine specifieke paden
 Call path/set.bat
-
-"%exe_path%" /L"%log_dir%\StatischAll.txt" "%prj_dir%\Runs\Runfile.dms" /LeidraadResultaten/StartJaar/PlanRegioResults/Statisch/export_csv/result || call :error_handler
+set FLAGS=/S1 /C2 /S3
+"%exe_path%" /L"%log_dir%\StatischAll.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" /LeidraadResultaten/StartJaar/PlanRegioResults/Statisch/export_csv/result || call :error_handler
 
 call :do_reference Startjaar
 call :do_reference Ref2030
@@ -15,7 +15,7 @@ call :do_reference Ref2030
 call :do_variant S1a_B_LuchtWP
 call :do_variant S1b_B_BodemWP
 
-"%exe_path%" /L"%log_dir%\S1AofB.txt" "%prj_dir%\Runs\Runfile.dms" /Vergelijking/Outputs/S1AofB/export_csv/result || call :error_handler
+"%exe_path%" /L"%log_dir%\S1AofB.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" /Vergelijking/Outputs/S1AofB/export_csv/result || call :error_handler
 
 call :do_variant S2a_B_Restwarmte
 call :do_variant S2b_B_Geo_contour
@@ -31,7 +31,6 @@ call :do_variant S3d_B_WKO15_50
 call :do_variant S3e_B_TEO_15_15
 call :do_variant S3f_D_LT15_70
 call :do_variant S3g_D_WKO15_15
-REM deze regel niet weghalen, anders wordt S3g niet uitgerekend
 call :do_variant S3h_D_WKO15_70
 
 call :do_variant S4a_GG_B_hWP
@@ -48,7 +47,7 @@ call :do_runfile S5_H2
 
 call :do_runfile LN
 
-"%exe_path%" /L"%log_dir%\LN.txt" "%prj_dir%\Runs\Runfile.dms" /Vergelijking/Outputs/LN/Hulpvariabelen/export_csv/result || call :error_handler
+"%exe_path%" /L"%log_dir%\LN.txt" %FLAGS%  "%prj_dir%\Runs\Runfile.dms" /Vergelijking/Outputs/LN/Hulpvariabelen/export_csv/result || call :error_handler
 
 echo Klaar met uitrekenen van alle varianten per buurt
 pause
@@ -56,9 +55,9 @@ exit /B
 
 :do_reference
 
-"%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\Runfile.dms" /LeidraadResultaten/%1/PlanRegioResults/Hoofdindicatoren/export_csv/result || call :error_handler
-"%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\Runfile.dms" /LeidraadResultaten/%1/PlanRegioResults/NationaleKosten/export_csv/result  || call :error_handler
-"%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\Runfile.dms" /LeidraadResultaten/%1/PlanRegioResults/Aansluitingen/export_csv/result    || call :error_handler
+"%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" /LeidraadResultaten/%1/PlanRegioResults/Hoofdindicatoren/export_csv/result || call :error_handler
+"%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" /LeidraadResultaten/%1/PlanRegioResults/NationaleKosten/export_csv/result  || call :error_handler
+"%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" /LeidraadResultaten/%1/PlanRegioResults/Aansluitingen/export_csv/result    || call :error_handler
 
 exit /B
 
@@ -72,13 +71,13 @@ set ITEM5=/LeidraadResultaten/Zichtjaar/PlanRegioResults/GevoeligheidsAnalyse/ex
 set ITEMS=%ITEM1% %ITEM2% %ITEM3% %ITEM4% %ITEM5% 
 
 
-REM "%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\%1.dms" %ITEM1% || call :error_handler
-REM "%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\%1.dms" %ITEM2% || call :error_handler
-REM "%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\%1.dms" %ITEM3% || call :error_handler
-REM "%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\%1.dms" %ITEM4% || call :error_handler
-REM "%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\%1.dms" %ITEM5% || call :error_handler
+REM "%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\%1.dms" %ITEM1% || call :error_handler
+REM "%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\%1.dms" %ITEM2% || call :error_handler
+REM "%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\%1.dms" %ITEM3% || call :error_handler
+REM "%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\%1.dms" %ITEM4% || call :error_handler
+REM "%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\%1.dms" %ITEM5% || call :error_handler
 
-"%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\%1.dms" %ITEMS% || call :error_handler
+"%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\%1.dms" %ITEMS% || call :error_handler
 
 exit /B
 
@@ -91,11 +90,11 @@ set ITEM3=/Vergelijking/Outputs/%1/Aansluitingen/export_csv/result
 set ITEM4=/Vergelijking/Outputs/%1/GevoeligheidsAnalyse/export_csv/result
 set ITEMS=%ITEM1% %ITEM2% %ITEM3% %ITEM4%
 
-REM "%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\Runfile.dms" %ITEM1% || call :error_handler
-REM "%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\Runfile.dms" %ITEM2% || call :error_handler
-REM "%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\Runfile.dms" %ITEM3% || call :error_handler
-REM "%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\Runfile.dms" %ITEM4% || call :error_handler
-"%exe_path%" /L"%log_dir%\%1.txt" "%prj_dir%\Runs\Runfile.dms" %ITEMS% || call :error_handler
+REM "%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" %ITEM1% || call :error_handler
+REM "%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" %ITEM2% || call :error_handler
+REM "%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" %ITEM3% || call :error_handler
+REM "%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" %ITEM4% || call :error_handler
+"%exe_path%" /L"%log_dir%\%1.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" %ITEMS% || call :error_handler
 
 exit /B
 
@@ -104,4 +103,3 @@ echo Laatste rekenstap gaf foutcode: %errorlevel%.
 echo Het rekenproces zal worden voortgezet tenzij u het nu afbreekt met Ctrl-C.
 pause
 exit /B
-
