@@ -818,6 +818,55 @@ container PlanregioResults
 			attribute<Eur_yr> K18_Extra_VariabeleKosten := IsOngeldig 
 				? (0/0)[Eur_yr]
 				: K17_Totaal_VariabeleKosten - Ref2030/PlanregioResults/NationaleKosten/Table/K17_Totaal_VariabeleKosten;
+
+			attribute<Eur_yr> K19_Gebouw_schil_w := IsOngeldig
+				? (0/0)[Eur_yr]
+				: round(
+					IsUitgesloten_Stap0_Referentie
+						? 0[Eur_yr] 
+						: MakeDefined(
+							 Maatschappelijk/gebouwen/Kmi_GebouwVerbetering_w - Origkosten/table/K19_Gebouw_schil_w          //kosten schilverbetering
+							,0[Eur_yr])
+				  )[Eur_yr];
+
+			attribute<Eur_yr> K20_Gebouw_installatie_w := IsOngeldig
+				? (0/0)[Eur_yr]
+				: round(
+					IsUitgesloten_Stap0_Referentie
+						? 0[Eur_yr]
+						: MakeDefined(
+							  R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_30_w
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_20_W
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_15_W
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_LTAS_w
+							- Origkosten/table/K20_Gebouw_installatie_w
+							+ ExtraFactoren/Kmi_ElektrischKoken
+							,0[Eur_yr])
+				  )[Eur_yr];
+
+			attribute<Eur_yr> K21_Gebouw_schil_u := IsOngeldig
+				? (0/0)[Eur_yr]
+				: round(
+					IsUitgesloten_Stap0_Referentie
+						? 0[Eur_yr] 
+						: MakeDefined(
+							 Maatschappelijk/gebouwen/Kmi_GebouwVerbetering_u - Origkosten/table/K21_Gebouw_schil_u          //kosten schilverbetering
+							,0[Eur_yr])
+				  )[Eur_yr];
+
+			attribute<Eur_yr> K22_Gebouw_installatie_u := IsOngeldig
+				? (0/0)[Eur_yr]
+				: round(
+					IsUitgesloten_Stap0_Referentie
+						? 0[Eur_yr]
+						: MakeDefined(
+							  R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_30_u
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_20_u
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_15_u
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_LTAS_u
+							- Origkosten/table/K22_Gebouw_installatie_u
+							,0[Eur_yr])
+				  )[Eur_yr];
 		}
 
 		parameter<string> RefExpr := isStap0 ? 'Ref_2023_' : isReferentie ? 'Ref_2030_' : '%configName%/';
