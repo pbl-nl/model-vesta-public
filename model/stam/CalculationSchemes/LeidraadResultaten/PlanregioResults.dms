@@ -309,6 +309,159 @@ container PlanregioResults
 					: MakeDefined(
 						 NationaleKosten/TotaalUitstoot/Delta_nat_kosten //nationale meerkosten per woningequivalent
 						,0[Eur_yr]);
+
+			attribute<GJ_yr> H17_Input_elektriciteit_WD_OW := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  R_AardG * StateNaAllocatie/totaal/verbruik/V_wd_elek
+						+ R_AardG * StateNaAllocatie/totaal/verbruik/V_ow_elek
+						+ WarmteBestaand/V_wd_elek
+					 ,0[GJ_yr]);
+
+			//=====================================================================================================================================================================
+			// VRAAG
+			attribute<GJ_yr> H18_Vraag_totaal_w := add(H19_Vraag_RV_w, H20_Vraag_TW_w, H21_Vraag_Vent_w, H22_Vraag_K_w, H23_Vraag_App_w);
+
+			attribute<GJ_yr> H19_Vraag_RV_w := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  sum(Allocatie/BestaandeWoning/BO/Functioneel/V_RV, bebouwing/BestaandeWoning/PlanRegio_rel)
+						, 0[GJ_yr]);
+
+			attribute<GJ_yr> H20_Vraag_TW_w := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  sum(Allocatie/BestaandeWoning/BO/Functioneel/V_TW, bebouwing/BestaandeWoning/PlanRegio_rel)
+						,0[GJ_yr]);
+
+			attribute<GJ_yr> H21_Vraag_Vent_w := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  sum(Allocatie/BestaandeWoning/BO/Functioneel/V_Vent, bebouwing/BestaandeWoning/PlanRegio_rel)
+						,0[GJ_yr]);
+
+			attribute<GJ_yr> H22_Vraag_K_w := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  sum(Allocatie/BestaandeWoning/BO/Functioneel/V_K * float64(Allocatie/BestaandeWoning/aandelen/WKO15_15 || Allocatie/BestaandeWoning/aandelen/WKO15_50 || Allocatie/BestaandeWoning/aandelen/WKO15_70), bebouwing/BestaandeWoning/PlanRegio_rel)
+						,0[GJ_yr]);
+
+			attribute<GJ_yr> H23_Vraag_App_w := IsOngeldig 
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  sum(Allocatie/BestaandeWoning/BO/Functioneel/V_App, bebouwing/BestaandeWoning/PlanRegio_rel)
+						,0[GJ_yr]);
+
+			attribute<GJ_yr> H24_Vraag_totaal_u := add(H25_Vraag_RV_u, H26_Vraag_TW_u, H27_Vraag_Vent_u, H28_Vraag_K_u, H29_Vraag_App_u);
+
+			attribute<GJ_yr> H25_Vraag_RV_u := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  sum(Allocatie/BestaandeUtil/BO/Functioneel/V_RV, bebouwing/BestaandeUtil/PlanRegio_rel)
+						, 0[GJ_yr]);
+
+			attribute<GJ_yr> H26_Vraag_TW_u := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  sum(Allocatie/BestaandeUtil/BO/Functioneel/V_TW, bebouwing/BestaandeUtil/PlanRegio_rel)
+						,0[GJ_yr]);
+
+			attribute<GJ_yr> H27_Vraag_Vent_u := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  sum(Allocatie/BestaandeUtil/BO/Functioneel/V_Vent, bebouwing/BestaandeUtil/PlanRegio_rel)
+						,0[GJ_yr]);
+
+			attribute<GJ_yr> H28_Vraag_K_u := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						 sum(Allocatie/BestaandeUtil/BO/Functioneel/V_K, bebouwing/BestaandeUtil/PlanRegio_rel)
+						,0[GJ_yr]);
+
+			attribute<GJ_yr> H29_Vraag_App_u := IsOngeldig 
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  sum(Allocatie/BestaandeUtil/BO/Functioneel/V_App, bebouwing/BestaandeUtil/PlanRegio_rel)
+						,0[GJ_yr]);
+
+			// INPUTS
+			attribute<GJ_yr> H30_Input_totaal_w := H31_Input_aardgas_w + H32_Input_duurzaamgas_w + H33_Input_elektriciteit_w;
+
+			attribute<GJ_yr> H31_Input_aardgas_w := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  R_AardG * sum(Allocatie/BestaandeWoning/metervraag/Aardgas, bebouwing/BestaandeWoning/PlanRegio_rel)
+					 ,0[GJ_yr]) * (1.0 - GroenGasFactor);
+
+			attribute<GJ_yr> H32_Input_duurzaamgas_w := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  R_AardG * sum(Allocatie/BestaandeWoning/metervraag/Aardgas, bebouwing/BestaandeWoning/PlanRegio_rel)
+					 ,0[GJ_yr]) * GroenGasFactor;
+
+			attribute<GJ_yr> H33_Input_elektriciteit_w := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  R_AardG * sum(Allocatie/BestaandeWoning/metervraag/Elektriciteit, bebouwing/BestaandeWoning/PlanRegio_rel)
+						+ WarmteBestaand/V_elek_w
+					 ,0[GJ_yr]);
+
+			attribute<GJ_yr> H34_Input_totaal_u := H35_Input_aardgas_u + H36_Input_duurzaamgas_u + H37_Input_elektriciteit_u;
+
+			attribute<GJ_yr> H35_Input_aardgas_u := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  R_AardG * sum(Allocatie/BestaandeUtil/metervraag/Aardgas, bebouwing/BestaandeUtil/PlanRegio_rel)
+					 ,0[GJ_yr]) * (1.0 - GroenGasFactor);
+
+			attribute<GJ_yr> H36_Input_duurzaamgas_u := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  R_AardG * sum(Allocatie/BestaandeUtil/metervraag/Aardgas, bebouwing/BestaandeUtil/PlanRegio_rel)
+					 ,0[GJ_yr]) * GroenGasFactor;
+
+			attribute<GJ_yr> H37_Input_elektriciteit_u := IsOngeldig
+				? (0/0)[GJ_yr]
+				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
+					? 0[GJ_yr]
+					: MakeDefined(
+						  R_AardG * sum(Allocatie/BestaandeUtil/metervraag/Elektriciteit, bebouwing/BestaandeUtil/PlanRegio_rel)
+						+ WarmteBestaand/V_elek_u
+					 ,0[GJ_yr]);
+
+			//=====================================================================================================================================================================
 		}
 
 		unit<uint32> table := extensief
@@ -382,6 +535,31 @@ container PlanregioResults
 
 			attribute<Eur_m3> H19_waarde_hernieuwbaar_gas          := const(0[Eur_m3] , PlanRegio);
 			attribute<string> H20_beschikbaarheid_hernieuwbaar_gas := const('onbekend', PlanRegio);
+
+
+			attribute<GJ_yr_WEQ> H18_vraag_totaal_w     := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H18_vraag_totaal_w  / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H19_Vraag_RV_w         := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H19_Vraag_RV_w      / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H20_Vraag_TW_w         := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H20_Vraag_TW_w      / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H21_Vraag_Vent_w       := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H21_Vraag_Vent_w    / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H22_Vraag_K_w          := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H22_Vraag_K_w       / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H23_Vraag_App_w        := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H23_Vraag_App_w     / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+
+			attribute<GJ_yr_WEQ> H24_vraag_totaal_u     := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H24_vraag_totaal_u  / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H25_Vraag_RV_u         := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H25_Vraag_RV_u      / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H26_Vraag_TW_u         := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H26_Vraag_TW_u      / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H27_Vraag_Vent_u       := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H27_Vraag_Vent_u    / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H28_Vraag_K_u          := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H28_Vraag_K_u       / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H29_Vraag_App_u        := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H29_Vraag_App_u     / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+
+			attribute<GJ_yr_WEQ> H30_input_totaal_w          := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H30_input_totaal_w          / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H31_input_aardgas_w         := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H31_input_aardgas_w         / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H32_input_duurzaamgas_w     := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H32_input_duurzaamgas_w     / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H33_input_elektriciteit_w   := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H33_input_elektriciteit_w   / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+
+			attribute<GJ_yr_WEQ> H34_input_totaal_u          := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H34_input_totaal_u          / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H35_input_aardgas_u         := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H35_input_aardgas_u         / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H36_input_duurzaamgas_u     := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H36_input_duurzaamgas_u     / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
+			attribute<GJ_yr_WEQ> H37_input_elektriciteit_u   := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H37_input_elektriciteit_u   / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
 		}
 
 		parameter<string> RefExpr := isStap0 ? 'Ref_2023_' : isReferentie ? 'Ref_2030_' : '%configName%/';
