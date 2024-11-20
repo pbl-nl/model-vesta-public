@@ -4,17 +4,17 @@
 <DefaultInfo>
 	<FullName>/Vergelijking/Outputs/S1aOFb/export_csv/result
 	</FullName>
-	<GeoDmsVersion>GeoDms 15.6.0 [Aug  5 2024 11:53:16]
+	<GeoDmsVersion>GeoDms 16.0.0 [Oct 27 2024 14:36:36]
 	</GeoDmsVersion>
-	<SessionStartTime>2024-10-16 15:39:12
+	<SessionStartTime>2024-11-19 15:11:12
 	</SessionStartTime>
-	<CurrentTime>2024-10-16 15:39:13
+	<CurrentTime>2024-11-19 15:11:15
 	</CurrentTime>
-	<StatusFlags>0x2e5bf = AdminMode SuspendForGUI ShowStateColors TraceLogFile TreeViewVisible DetailsVisible ToolBarVisible MultiThreading1 MultiThreading2 
+	<StatusFlags>0x21ff = AdminMode SuspendForGUI ShowStateColors TraceLogFile TreeViewVisible DetailsVisible EventLogVisible ToolBarVisible MultiThreading1 
 	</StatusFlags>
 </DefaultInfo>
 <Software>
-	<GeoDmsVersion>15.6.0
+	<GeoDmsVersion>16.0.0
 	</GeoDmsVersion>
 </Software>
 <Config>
@@ -24,11 +24,11 @@
 	</Expr>
 </Config>
 <Environment>
-	<Processor>AMD64 Family 25 Model 1 Stepping 1, AuthenticAMD
+	<Processor>Intel64 Family 6 Model 106 Stepping 6, GenuineIntel
 	</Processor>
-	<User>poorthuisw
+	<User>MolenvdF
 	</User>
-	<ComputerName>geodms-p-10
+	<ComputerName>geodms-p-3
 	</ComputerName>
 </Environment>
 </DocType>

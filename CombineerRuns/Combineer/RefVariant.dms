@@ -10,7 +10,6 @@ container Outputs
 	container S2_MT := StratOutput('ConstructStrategie/S2varL','BesteS2variant','Strategie_2_',Class/S2Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
 	container S3_LT := StratOutput('ConstructStrategie/S3varL','BesteS3variant','Strategie_3_',Class/S3Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
 	container S4_GG := StratOutput('ConstructStrategie/S4varL','BesteS4variant','Strategie_4_',Class/GGVariant,'Gaswaarde/GasWaarde_GG','Gaswaarde/Beschikbaarheid_GG_str');
-	container S5_H2 := StratOutput('ConstructStrategie/S5varL','BesteS5variant','Strategie_5_',Class/H2Variant,'Gaswaarde/GasWaarde_H2','Gaswaarde/Beschikbaarheid_H2_str');
 	
 	container LN    := StratOutput(
 		 'BesteViewerBeschikbaar'

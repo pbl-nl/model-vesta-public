@@ -41,9 +41,4 @@ Call path/set.bat
 "%exe_path%" /L"%log_dir%\S4c_GG_D_hWP_ZichtJaar_DataPakketExport_NL.txt"      "%prj_dir%\Runs\S4c_GG_D_hWP.dms"      LeidraadResultaten/ZichtJaar/DataPakketExport/bestaand/export_csv_nl/result
 "%exe_path%" /L"%log_dir%\S4d_GG_D_HR_ZichtJaar_DataPakketExport_NL.txt"       "%prj_dir%\Runs\S4d_GG_D_HR.dms"       LeidraadResultaten/ZichtJaar/DataPakketExport/bestaand/export_csv_nl/result
 
-"%exe_path%" /L"%log_dir%\S5a_H2_B_hWP_ZichtJaar_DataPakketExport_NL.txt"      "%prj_dir%\Runs\S5a_H2_B_hWP.dms"      LeidraadResultaten/ZichtJaar/DataPakketExport/bestaand/export_csv_nl/result
-"%exe_path%" /L"%log_dir%\S5b_H2_B_HR_ZichtJaar_DataPakketExport_NL.txt"       "%prj_dir%\Runs\S5b_H2_B_HR.dms"       LeidraadResultaten/ZichtJaar/DataPakketExport/bestaand/export_csv_nl/result
-"%exe_path%" /L"%log_dir%\S5c_H2_D_hWP_ZichtJaar_DataPakketExport_NL.txt"      "%prj_dir%\Runs\S5c_H2_D_hWP.dms"      LeidraadResultaten/ZichtJaar/DataPakketExport/bestaand/export_csv_nl/result
-"%exe_path%" /L"%log_dir%\S5d_H2_D_HR_ZichtJaar_DataPakketExport_NL.txt"       "%prj_dir%\Runs\S5d_H2_D_HR.dms"       LeidraadResultaten/ZichtJaar/DataPakketExport/bestaand/export_csv_nl/result
-
 pause Totaal klaar

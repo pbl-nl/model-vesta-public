@@ -43,10 +43,4 @@ set ITEMS=/LeidraadResultaten/zichtjaar/DataPakketExport/bestaand/generate_all
 "%exe_path%" /L"%log_dir%\S4c_GG_D_hWP_ZichtJaar_DataPakketExport.txt"      "%prj_dir%\Runs\S4c_GG_D_hWP.dms"      %ITEMS%
 "%exe_path%" /L"%log_dir%\S4d_GG_D_HR_ZichtJaar_DataPakketExport.txt"       "%prj_dir%\Runs\S4d_GG_D_HR.dms"       %ITEMS%
 
-"%exe_path%" /L"%log_dir%\S5a_H2_B_hWP_ZichtJaar_DataPakketExport.txt"      "%prj_dir%\Runs\S5a_H2_B_hWP.dms"      %ITEMS%
-"%exe_path%" /L"%log_dir%\S5b_H2_B_HR_ZichtJaar_DataPakketExport.txt"       "%prj_dir%\Runs\S5b_H2_B_HR.dms"       %ITEMS%
-"%exe_path%" /L"%log_dir%\S5c_H2_D_hWP_ZichtJaar_DataPakketExport.txt"      "%prj_dir%\Runs\S5c_H2_D_hWP.dms"      %ITEMS%
-"%exe_path%" /L"%log_dir%\S5d_H2_D_HR_ZichtJaar_DataPakketExport.txt"       "%prj_dir%\Runs\S5d_H2_D_HR.dms"       %ITEMS%
-
-
 pause Totaal klaar
