@@ -151,6 +151,14 @@ container PlanregioResults
 				)[ton_yr];					
 					
 			attribute<string>   I13_Uitgesloten        := string(IsUitgesloten);
+			attribute<nrAsl>    I14_aantal_woningen_na2019 := IsUitgesloten ? 0[nrAsl]   : sum(float64(
+						Invoer/RuimtelijkeData/BAG/import/vbo/gebruiksdoelen/woon
+					&& Invoer/RuimtelijkeData/StudieGebied/selected_per_gemeente[Invoer/RuimtelijkeData/BAG/import/vbo/gemeente_rel]
+					&& IsDefined(Invoer/RuimtelijkeData/BAG/import/vbo/pand_rel)
+					&& Invoer/RuimtelijkeData/BAG/import/vbo/oppervlak_filters/wonen >=  10[Units/m2]
+					&& Invoer/RuimtelijkeData/BAG/import/vbo/oppervlak_filters/wonen < 1000[Units/m2]
+					&& Invoer/RuimtelijkeData/BAG/import/vbo/pand_rel -> bouwjaar_gecorrigeerd >= 2020[yr]
+					) * 1.0[nrAsl],  point_in_polygon( Invoer/RuimtelijkeData/BAG/import/vbo/geometry , Invoer/RuimtelijkeData/StudieGebied/buurt/geometry ));
 		}
 
 		parameter<string> OutputFolder := '%localDataProjDir%/Results' + Expand( . , '') + ''+ '';
