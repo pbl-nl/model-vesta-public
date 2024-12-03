@@ -165,6 +165,15 @@ container PlanregioResults
 			attribute<nrAsl> 	I22_WEQ_Utiliteit_Defaultlabel_E 	:= IsUitgesloten ? 0[nrAsl] : roundUp(sum(float64(BeginSituatie/StartingStateComponenten/BestaandeUtil/Results/SchilLabel_rel == Classifications/schillabel/V/E && not(IsDefined(Invoer/RuimtelijkeData/Bebouwing/impl/BestaandeUtil/SchilLabel_rel))) * Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/oppervlakte / 130[m2], BeginSituatie/StartingStateComponenten/BestaandeUtil/Results/Planregio_rel))[nrAsl]; //130m2 utiliteit = 1 WEQ
 			attribute<nrAsl> 	I23_WEQ_Utiliteit_Defaultlabel_F 	:= IsUitgesloten ? 0[nrAsl] : roundUp(sum(float64(BeginSituatie/StartingStateComponenten/BestaandeUtil/Results/SchilLabel_rel == Classifications/schillabel/V/F && not(IsDefined(Invoer/RuimtelijkeData/Bebouwing/impl/BestaandeUtil/SchilLabel_rel))) * Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/oppervlakte / 130[m2], BeginSituatie/StartingStateComponenten/BestaandeUtil/Results/Planregio_rel))[nrAsl]; //130m2 utiliteit = 1 WEQ
 			attribute<nrAsl> 	I24_WEQ_Utiliteit_Defaultlabel_G 	:= IsUitgesloten ? 0[nrAsl] : roundUp(sum(float64(BeginSituatie/StartingStateComponenten/BestaandeUtil/Results/SchilLabel_rel == Classifications/schillabel/V/G && not(IsDefined(Invoer/RuimtelijkeData/Bebouwing/impl/BestaandeUtil/SchilLabel_rel))) * Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/oppervlakte / 130[m2], BeginSituatie/StartingStateComponenten/BestaandeUtil/Results/Planregio_rel))[nrAsl]; //130m2 utiliteit = 1 WEQ
+		
+			attribute<nrAsl>    I25_aantal_woningen_na2019 := IsUitgesloten ? 0[nrAsl]   : sum(float64(
+						Invoer/RuimtelijkeData/BAG/import/vbo/gebruiksdoelen/woon
+					&& Invoer/RuimtelijkeData/StudieGebied/selected_per_gemeente[Invoer/RuimtelijkeData/BAG/import/vbo/gemeente_rel]
+					&& IsDefined(Invoer/RuimtelijkeData/BAG/import/vbo/pand_rel)
+					&& Invoer/RuimtelijkeData/BAG/import/vbo/oppervlak_filters/wonen >=  10[Units/m2]
+					&& Invoer/RuimtelijkeData/BAG/import/vbo/oppervlak_filters/wonen < 1000[Units/m2]
+					&& Invoer/RuimtelijkeData/BAG/import/vbo/pand_rel -> bouwjaar_gecorrigeerd >= 2020[yr]
+					) * 1.0[nrAsl],  point_in_polygon( Invoer/RuimtelijkeData/BAG/import/vbo/geometry , Invoer/RuimtelijkeData/StudieGebied/buurt/geometry ));
 		}
 
 		parameter<string> OutputFolder := '%localDataProjDir%/Results' + Expand( . , '') + ''+ '';
