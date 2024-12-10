@@ -308,6 +308,8 @@ container Outputs
 		container A04 := for_each_nedv(Class/Variant/name, replace('data/@C/results/A04_Aansl_LT','@C',Class/Variant/name), PlanRegio, nrAsl);
 		container A05 := for_each_nedv(Class/Variant/name, replace('data/@C/results/A05_Aansl_hWP_HG','@C',Class/Variant/name), PlanRegio, nrAsl);
 		container A06 := for_each_nedv(Class/Variant/name, replace('data/@C/results/A06_Aansl_HR_HG','@C',Class/Variant/name), PlanRegio, nrAsl);
+		container A07 := for_each_nedv(Class/Variant/name, replace('data/@C/results/A07_Aandeel_eWP_WEQ','@C',Class/Variant/name), PlanRegio, ratio);
+		container A08 := for_each_nedv(Class/Variant/name, replace('data/@C/results/A08_Aandeel_eWP_GJ','@C',Class/Variant/name), PlanRegio, ratio	);
 		
 		container G01 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G01_Nat_meerkost_CO2_Kost_Reductie_Hoog','@C',Class/Variant/name), PlanRegio, Eur_ton);
 		container G02 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G02_Nat_meerkost_CO2_Kost_Reductie_Laag','@C',Class/Variant/name), PlanRegio, Eur_ton);
