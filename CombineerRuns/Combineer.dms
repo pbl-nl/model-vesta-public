@@ -434,6 +434,8 @@ container Vergelijking: using = "Units"
 		attribute<nrAsl>    A04_Aansl_LT                         (Planregio):= rjoin(BU_CODE, Aansluitingen/CODE, Aansluitingen/_A04_Aansl_LT_Aansluiting_)[nrAsl];
 		attribute<nrAsl>    A05_Aansl_hWP_HG                     (Planregio):= rjoin(BU_CODE, Aansluitingen/CODE, Aansluitingen/_A05_Aansl_hWP_HG_Aansluiting_)[nrAsl];
 		attribute<nrAsl>    A06_Aansl_HR_HG                      (Planregio):= rjoin(BU_CODE, Aansluitingen/CODE, Aansluitingen/_A06_Aansl_HR_HG_Aansluiting_)[nrAsl];
+		attribute<ratio>    A07_Aandeel_eWP_WEQ                  (Planregio):= rjoin(BU_CODE, Aansluitingen/CODE, Aansluitingen/_A07_Aandeel_eWP_WEQ_)[ratio];
+		attribute<ratio>    A08_Aandeel_eWP_GJ                   (Planregio):= rjoin(BU_CODE, Aansluitingen/CODE, Aansluitingen/_A08_Aandeel_eWP_GJ_)[ratio];
 		
 		attribute<nrWoning>   nrWEQ                                (Planregio):= rjoin(BU_CODE, Hulpvariabelen/CODE, Hulpvariabelen/_nrWEQ_Woning_)[nrWoning];
 		attribute<ratio>      R_StadV                              (Planregio):= rjoin(BU_CODE, Hulpvariabelen/CODE, Hulpvariabelen/_R_StadV_)[ratio];

@@ -193,6 +193,8 @@ template AllocatieResultatenComponent
 		attribute<nrAsl> gas      (PlanRegio) := sum(BO/Aansluitingen/Gnet,     BO/Planregio_rel);
 		attribute<nrAsl> H2net    (PlanRegio) := sum(BO/Aansluitingen/H2net,    BO/Planregio_rel);
 		attribute<nrAsl> Enet_ewp (PlanRegio) := sum(BO/Aansluitingen/Enet_ewp * float64(not(Classifications/WarmteOptie/isGebiedsOptie[WarmteAllocatie])), BO/Planregio_rel);
+		attribute<nrWoning> Enet_ewp_weq (PlanRegio) := sum(BO/Aansluitingen/Enet_ewp * 1[1 / nrAsl] * float64(not(Classifications/WarmteOptie/isGebiedsOptie[WarmteAllocatie])) * BO/oppervlakte / 130 [m2 / nrWoning], BO/Planregio_rel);
+		attribute<GJ_yr> 	Enet_ewp_GJ (PlanRegio) := sum(BO/Aansluitingen/Enet_ewp * 1[1 / nrAsl] * float64(not(Classifications/WarmteOptie/isGebiedsOptie[WarmteAllocatie])) * (BO/Functioneel/V_RV + BO/Functioneel/V_TW), BO/Planregio_rel);
 		attribute<nrAsl> Enet_hwp (PlanRegio) := sum(BO/Aansluitingen/Enet_hwp, BO/Planregio_rel);
 		attribute<nrAsl> LT_wp    (PlanRegio) := sum(BO/Aansluitingen/Enet_ewp * float64(Classifications/WarmteOptie/isGebiedsOptie[WarmteAllocatie])     , BO/Planregio_rel);
 	}

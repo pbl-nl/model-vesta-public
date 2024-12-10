@@ -1013,6 +1013,26 @@ container PlanregioResults
 								 + R_AardG * StateNaAllocatie/nrAansluitinging/WaterstofHR
 								,0[nrAsl]) * GroenGasFactor
 				)[nrAsl];
+				
+			attribute<ratio> A07_Aandeel_eWP_WEQ :=
+				round(
+					Statisch/IsUitgesloten
+						? 0[ratio]
+						: MakeDefined(
+							   (R_AardG * Allocatie/BestaandeWoning/Aansluitingen/Enet_ewp * 1[nrWoning / nrAsl]
+							 + R_AardG * Allocatie/BestaandeUtil/Aansluitingen/Enet_ewp_weq) / nrWEQ * 100d
+							,0[ratio])
+				)[ratio] / 100d;
+				
+			attribute<ratio> A08_Aandeel_eWP_GJ :=
+				round(
+					Statisch/IsUitgesloten
+						? 0[ratio]
+						: MakeDefined(
+							   (R_AardG * Allocatie/BestaandeWoning/Aansluitingen/Enet_ewp_GJ
+							 + R_AardG * Allocatie/BestaandeUtil/Aansluitingen/Enet_ewp_GJ) / ((Hoofdindicatoren/Table/H02_Vraag_RV + Hoofdindicatoren/Table/H03_Vraag_TW) * nrWEQ) * 100d
+							,0[ratio])
+				)  [ratio] / 100d;
 		}
 		parameter<string> RefExpr := isStap0 ? 'Ref_2023_' : isReferentie ? 'Ref_2030_' : '%configName%/';
 

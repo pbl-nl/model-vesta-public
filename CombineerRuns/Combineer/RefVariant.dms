@@ -127,6 +127,8 @@ container Outputs
 			attribute<nrAsl>    A04_Aansl_LT                        (PlanRegio) := ='merge('+BesteVar+', nrAsl,  '+AsItemList('Src/A04/'+Varname/name+'')+')';
 			attribute<nrAsl>    A05_Aansl_hWP_HG                    (PlanRegio) := ='merge('+BesteVar+', nrAsl,  '+AsItemList('Src/A05/'+Varname/name+'')+')';
 			attribute<nrAsl>    A06_Aansl_HR_HG                     (PlanRegio) := ='merge('+BesteVar+', nrAsl,  '+AsItemList('Src/A06/'+Varname/name+'')+')';
+			attribute<ratio>    A07_Aandeel_eWP_WEQ                 (PlanRegio) := ='merge('+BesteVar+', ratio,  '+AsItemList('Src/A07/'+Varname/name+'')+')';
+			attribute<ratio>    A08_Aandeel_eWP_GJ                  (PlanRegio) := ='merge('+BesteVar+', ratio,  '+AsItemList('Src/A08/'+Varname/name+'')+')';
 			}
 			parameter<string> OutputFolder := '%localDataProjDir%/Results/' + Expand( . , OutputExpr) + ''+ '';
 			unit<uint32> variable := SubItem_PropValues(table,'name');
