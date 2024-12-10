@@ -18,8 +18,8 @@ Ki_LTAS_wl_min;1288;Eur_asl;Arcadis 2023 (Actualisatie bouw- en investeringskost
 Ki_LTAS_wh_min;1117;Eur_asl;Arcadis 2023 (Actualisatie bouw- en investeringskosten verduurzamingsmaatregelen bestaande woningbouw 2023);
 Ki_LTAS_wl_max;3199;Eur_asl;Arcadis 2023 (Actualisatie bouw- en investeringskosten verduurzamingsmaatregelen bestaande woningbouw 2023);
 Ki_LTAS_wh_max;1486;Eur_asl;Arcadis 2023 (Actualisatie bouw- en investeringskosten verduurzamingsmaatregelen bestaande woningbouw 2023);
-Ki_LTAS_u_min;8;Eur_m2;Arcadis 2023 (Actualisatie bouw- en investeringskosten verduurzamingsmaatregelen bestaande woningbouw 2023);
-Ki_LTAS_u_max;8;Eur_m2;Arcadis 2023 (Actualisatie bouw- en investeringskosten verduurzamingsmaatregelen bestaande woningbouw 2023);
+Ki_LTAS_u_min;5.25;Eur_m2;Arcadis 2023 (Actualisatie bouw- en investeringskosten verduurzamingsmaatregelen bestaande woningbouw 2023);
+Ki_LTAS_u_max;5.25;Eur_m2;Arcadis 2023 (Actualisatie bouw- en investeringskosten verduurzamingsmaatregelen bestaande woningbouw 2023);
 Ki_Meterkast_wl_S1;1200;Eur_asl;Validatiesessie 2024;
 Ki_Meterkast_wh_S1;850;Eur_asl;Validatiesessie 2024;
 Ki_Meterkast_wl_Sx;400;Eur_asl;Validatiesessie 2024;
