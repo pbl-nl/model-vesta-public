@@ -142,17 +142,17 @@ container PlanregioResults
 			attribute<string>   I08_provincienaam      := IsUitgesloten ? 'UITGESLOTEN' : replace(Invoer/RuimtelijkeData/StudieGebied/buurt/PROV_NAAM, ',' , '');
 			attribute<nrAsl>    I09_aantal_woningen    := IsUitgesloten ? 0[nrAsl]      : roundUp(sum(bebouwing/BestaandeWoning/nrAansluitingen, bebouwing/BestaandeWoning/PlanRegio_rel))[nrAsl];
 			attribute<nrAsl>    I10_aantal_utiliteit   := IsUitgesloten ? 0[nrAsl]      : roundUp(sum(bebouwing/BestaandeUtil/nrAansluitingen  , bebouwing/BestaandeUtil/PlanRegio_rel))[nrAsl];
-			attribute<nrAsl>    I11_WEQ_utiliteit      := IsUitgesloten ? 0[nrAsl]      : roundUp(sum(bebouwing/BestaandeUtil/Oppervlakte / 130[m2]  , bebouwing/BestaandeUtil/PlanRegio_rel))[nrAsl];
-			attribute<nrWoning> I12_woningequivalenten := IsUitgesloten ? 0[nrwoning]   : roundUp(nrWEQ)[nrWoning]; //130m2 utiliteit = 1 WEQ
+			attribute<nrWoning> I11_woningequivalenten := IsUitgesloten ? 0[nrwoning]   : roundUp(nrWEQ)[nrWoning]; //130m2 utiliteit = 1 WEQ
 
-			attribute<ton_yr>   I13_CO2_startjaar      :=
+			attribute<ton_yr>   I12_CO2_startjaar      :=
 				round(
 					(Statisch/IsUitgesloten || nrWEQ == 0[nrWoning]) ? 0[ton_yr] 
 					: MakeDefined( StartJaar/OrigKosten/Orig_CO2_ton, 0[ton_yr])
 				)[ton_yr];					
 					
-			attribute<string>   I14_Uitgesloten        := string(IsUitgesloten);
-			
+			attribute<string>   I13_Uitgesloten        := string(IsUitgesloten);
+			attribute<nrAsl>    I14_WEQ_utiliteit      := IsUitgesloten ? 0[nrAsl]      : roundUp(sum(bebouwing/BestaandeUtil/Oppervlakte / 130[m2]  , bebouwing/BestaandeUtil/PlanRegio_rel))[nrAsl];
+
 			attribute<nrWoning> I15_Woningen_met_afgemeld_label 		:= IsUitgesloten ? 0[nrwoning] : roundUp(sum(float64(IsDefined(Invoer/RuimtelijkeData/Bebouwing/impl/BestaandeWoning/SchilLabel_rel)), BeginSituatie/StartingStateComponenten/BestaandeWoning/Results/Planregio_rel))[nrWoning];
 			attribute<nrAsl> 	I16_WEQ_Utiliteit_met_afgemeld_label 	:= IsUitgesloten ? 0[nrAsl] : roundUp(sum(float64(IsDefined(Invoer/RuimtelijkeData/Bebouwing/impl/BestaandeUtil/SchilLabel_rel)) * Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/oppervlakte / 130[m2], BeginSituatie/StartingStateComponenten/BestaandeUtil/Results/Planregio_rel))[nrAsl];
 
