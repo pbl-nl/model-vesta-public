@@ -833,7 +833,7 @@ container Vergelijking: using = "Units"
 		attribute<Eur_m3> GasWaarde_GG           (PlanRegio) :=
 			makedefined(GG/Gasvragers/GasWaarde[invert(GG/Gasvragers/nr_OrgEntity)] + GGprijs_m3, 0.0[Eur_m3]);
 		attribute<bool>   Beschikbaarheid_GG     (PlanRegio) := GG/Gasvragers/Beschikbaarheid[invert(GG/Gasvragers/nr_OrgEntity)];
-		attribute<string> Beschikbaarheid_GG_str (PlanRegio) := Beschikbaarheid_GG ? 'hoger' : 'lager';
+		attribute<string> Beschikbaarheid_GG_str (PlanRegio) := Beschikbaarheid_GG ? 'True' : 'False';
 		
 		attribute<m3_yr> GGvraagM3 (PlanRegio) := GG/Gasvragers/VerbruikM3[invert(GG/Gasvragers/nr_OrgEntity)] * float64(Beschikbaarheid_GG);
 	}

@@ -28,7 +28,7 @@ container Outputs
 		
 		parameter<string> GaswaardeEurM3 := 'const(0.0[Eur_m3],PlanRegio)';  //'Gaswaarde/GasWaarde_GG' - //'Gaswaarde/GasWaarde_H2'
 		parameter<string> BeschikbaarStr := 'const(NvtExpr,PlanRegio)';  //'Gaswaarde/Beschikbaarheid_GG_str' - 'Gaswaarde/Beschikbaarheid_H2_str'
-		parameter<string> NvtExpr := 'onbekend';
+		parameter<string> NvtExpr := 'False';
 		
 		container Hoofdindicatoren
 		{
