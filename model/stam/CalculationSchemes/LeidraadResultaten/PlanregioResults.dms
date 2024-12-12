@@ -236,8 +236,8 @@ container PlanregioResults
 				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
 					? 0[GJ_yr]
 					: MakeDefined(
-						  sum(Allocatie/BestaandeWoning/BO/Functioneel/V_K * float64(Allocatie/BestaandeWoning/aandelen/WKO15_15 || Allocatie/BestaandeWoning/aandelen/WKO15_50 || Allocatie/BestaandeWoning/aandelen/WKO15_70), bebouwing/BestaandeWoning/PlanRegio_rel)
-						+ sum(Allocatie/BestaandeUtil/BO/Functioneel/V_K                                                    , bebouwing/BestaandeUtil/PlanRegio_rel)
+						  sum(Allocatie/BestaandeWoning/BO/Functioneel/V_K, bebouwing/BestaandeWoning/PlanRegio_rel)
+						+ sum(Allocatie/BestaandeUtil/BO/Functioneel/V_K  , bebouwing/BestaandeUtil/PlanRegio_rel)
 						,0[GJ_yr]);
 
 			attribute<GJ_yr> H06_Vraag_App := IsOngeldig 
@@ -376,7 +376,7 @@ container PlanregioResults
 				: (Statisch/IsUitgesloten || nrWEQ == 0[nrWoning])
 					? 0[GJ_yr]
 					: MakeDefined(
-						  sum(Allocatie/BestaandeWoning/BO/Functioneel/V_K * float64(Allocatie/BestaandeWoning/aandelen/WKO15_15 || Allocatie/BestaandeWoning/aandelen/WKO15_50 || Allocatie/BestaandeWoning/aandelen/WKO15_70), bebouwing/BestaandeWoning/PlanRegio_rel)
+						  sum(Allocatie/BestaandeWoning/BO/Functioneel/V_K, bebouwing/BestaandeWoning/PlanRegio_rel)
 						,0[GJ_yr]);
 
 			attribute<GJ_yr> H27_Vraag_App_w := IsOngeldig 
