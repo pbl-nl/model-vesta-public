@@ -59,6 +59,53 @@ container Resultaten := for_each_ne(Classifications/Rekenstap/name
 			,	storagename = "= '%localDataProjDir%/vesta_indicator_results_test.html'";
 		}
 		*/
+		container Woningen
+		{
+			container class
+			{
+				unit<uint32> WB 	:= combine(classifications/WoningtypeBestaand, Classifications/BouwjaarWoningBestaand)
+				{
+					attribute<Classifications/WoningtypeBestaand>		Woningtype_rel		:= first_rel;
+					attribute<Classifications/BouwjaarWoningBestaand>	BouwjaarKlasse_rel	:= second_rel;
+				}
+				unit<uint32> WBS	:= combine(WB, Classifications/schillabel)
+				{
+					attribute<WB> 										WB_rel 				:= first_rel;
+					attribute<Classifications/WoningtypeBestaand>		Woningtype_rel		:= WB/Woningtype_rel[WB_rel];
+					attribute<Classifications/BouwjaarWoningBestaand>	BouwjaarKlasse_rel	:= WB/BouwjaarKlasse_rel[WB_rel];
+					attribute<Classifications/schillabel>				Schillabel_rel		:= second_rel;
+					attribute<string> 									Woningtype 			:= classifications/WoningtypeBestaand/name[woningtype_rel];
+					attribute<string> 									BouwjaarKlasse 		:= classifications/BouwjaarWoningBestaand/excel_code[BouwjaarKlasse_rel];
+					attribute<string> 									Energielabel 		:= classifications/schillabel/name[Schillabel_rel];
+					attribute<uint32>									Aantal_woningen		:= count(vbo/Woningtype, vbo/WBS_rel);
+					attribute<GJ_yr>									V_RV_mean			:= mean(vbo/V_RV, vbo/WBS_rel);
+					attribute<GJ_yr>									V_TW_mean			:= mean(vbo/V_TW, vbo/WBS_rel);
+					attribute<GJ_yr>									V_RV_TW_mean		:= mean(vbo/V_RV_TW, vbo/WBS_rel);
+					attribute<Eur>										Ki_GV_B_mean		:= mean(vbo/Ki_GV_B, vbo/WBS_rel);
+					attribute<Eur>										Ki_GV_D_mean		:= mean(vbo/Ki_GV_D, vbo/WBS_rel);
+				}
+			}
+		
+			unit<uint32> vbo := Invoer/RuimtelijkeData/BAG/vbo_woonfunctie_studiegebied
+			{
+				attribute<classifications/WoningtypeBestaand>		Woningtype		:= Invoer/RuimtelijkeData/BAG/vbo_woonfunctie_studiegebied/WoningtypeBestaand_rel;
+				attribute<classifications/BouwjaarWoningBestaand>	Bouwjaarklasse	:= Invoer/RuimtelijkeData/BAG/vbo_woonfunctie_studiegebied/BouwjaarWoningBestaand_rel;
+				attribute<classifications/schillabel>				Energielabel	:= BeginSituatie/StartingStateComponenten/BestaandeWoning/Results/SchilLabel_rel;
+				
+				attribute<string>		Woningtype_str		:= classifications/WoningtypeBestaand/name[Woningtype];
+				attribute<string>		BouwjaarKlasse_str	:= Classifications/BouwjaarWoningBestaand/excel_code[Bouwjaarklasse];
+				attribute<string>		Energielabel_str	:= Classifications/schillabel/name[Energielabel];
+				attribute<GJ_yr>		V_RV				:= TussenResultaten/StartJaar/BebouwingsComponenten/BestaandeWoning/BO/Functioneel/StartlabelRV;
+				attribute<GJ_yr>		V_TW				:= TussenResultaten/StartJaar/BebouwingsComponenten/BestaandeWoning/BO/Functioneel/TW;
+				attribute<GJ_yr>		V_RV_TW				:= V_RV + V_TW;
+				attribute<Eur>			Ki_GV_B 			:= TussenResultaten/R2_2030/BebouwingsComponenten/BestaandeWoning/Doellabels/B/Ki_GV;
+				attribute<Eur>			Ki_GV_D 			:= TussenResultaten/R2_2030/BebouwingsComponenten/BestaandeWoning/Doellabels/D/Ki_GV;
+				attribute<class/WB> 	WB_rel				:= combine_data(class/WB, Woningtype, Bouwjaarklasse);
+				attribute<class/WBS>	WBS_rel				:= combine_data(class/WBS, WB_rel, Energielabel);
+			}
+		}
+		
+		
 		container BAG
 		{
 			unit<uint32> vbo := Invoer/RuimtelijkeData/BAG/import/vbo;
