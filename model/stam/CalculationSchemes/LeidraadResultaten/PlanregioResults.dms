@@ -188,6 +188,257 @@ container PlanregioResults
 			attribute<nrWoning> I11_woningequivalenten := IsUitgesloten ? 0[nrWoning] : nrWEQ; // voor de vergelijking, daarvoor GEEN integers wegschrijven.
 		}
 	}
+
+	container Gebouwvoorraad_export
+	{
+		attribute<bool> IsUitgesloten (Planregio) := Invoer/RuimtelijkeData/leidraad_oktober_2019/IsUitgesloten;
+
+		container Class
+		{
+			unit<uint32> WB := combine(classifications/WoningtypeBestaand, classifications/BouwjaarWoningBestaand)
+			{
+				attribute<string> name := classifications/WoningtypeBestaand/name[first_rel] + '_' + classifications/BouwjaarWoningBestaand/name[second_rel];
+			}
+			unit<uint32> WS := combine(classifications/WoningtypeBestaand, classifications/schillabel)
+			{
+				attribute<string> name := classifications/WoningtypeBestaand/name[first_rel] + '_' + classifications/schillabel/name[second_rel];
+			}
+			unit<uint32> UB := combine(classifications/UtilTypeBestaand, classifications/BouwjaarUtilBestaand)
+			{
+				attribute<string> name := classifications/UtilTypeBestaand/name[first_rel] + '_' + classifications/BouwjaarUtilBestaand/name[second_rel];
+			}
+		}
+
+		container tellingen
+		{
+			container woningtype_bouwjaarklasse := for_each_ind(
+			'nedv'
+			, Class/WB/name
+			,'sum(float64(Invoer/RuimtelijkeData/BAG/vbo_woonfunctie_studiegebied/WoningtypeBestaand_rel == rjoin("'+Class/WB/name+'",Class/WB/name,class/WB/first_rel))
+				* float64(Invoer/RuimtelijkeData/BAG/vbo_woonfunctie_studiegebied/BouwjaarWoningBestaand_rel == rjoin("'+Class/WB/name+'",Class/WB/name,class/WB/second_rel)), /Invoer/RuimtelijkeData/BAG/vbo_woonfunctie_studiegebied/buurt_rel)'
+			, Planregio
+			, float64);
+			
+			container woningtype_energielabel := for_each_ind(
+			'nedv'
+			, Class/WS/name
+			,'sum(float64(Invoer/RuimtelijkeData/BAG/vbo_woonfunctie_studiegebied/WoningtypeBestaand_rel == rjoin("'+Class/WS/name+'",Class/WS/name,class/WS/first_rel))
+				* float64(BeginSituatie/StartingStateComponenten/BestaandeWoning/Results/SchilLabel_rel == rjoin("'+Class/WS/name+'",Class/WS/name,class/WS/second_rel)), /Invoer/RuimtelijkeData/BAG/vbo_woonfunctie_studiegebied/buurt_rel)'
+			, Planregio
+			, float64);
+			
+			container utiltype_bouwjaarklasse := for_each_ind(
+			'nedv'
+			, Class/UB/name
+			,'sum(float64(Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/gebruiksdoel == rjoin("'+Class/UB/name+'",Class/UB/name,class/UB/first_rel))
+				* float64(Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/BouwjaarUtilBestaand_rel == rjoin("'+Class/UB/name+'",Class/UB/name,class/UB/second_rel))
+				* Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/oppervlakte, /Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/buurt_rel)'
+			, Planregio
+			, m2);
+		}
+		
+		unit<uint32>  Table := PlanRegio
+		{
+			attribute<string>   BU_CODE                	:= I01_buurtcode;
+			attribute<string>   I01_buurtcode          	:= Invoer/RuimtelijkeData/StudieGebied/buurt/BU_CODE;
+			attribute<string>   I02_buurtnaam          	:= IsUitgesloten ? 'UITGESLOTEN' : replace(Invoer/RuimtelijkeData/StudieGebied/buurt/BU_NAAM, ',' , '');
+			attribute<string>   I05_gemeentecode       	:= Invoer/RuimtelijkeData/StudieGebied/buurt/GM_CODE;
+			attribute<string>   I06_gemeentenaam       	:= IsUitgesloten ? 'UITGESLOTEN' : replace(Invoer/RuimtelijkeData/StudieGebied/buurt/GM_NAAM, ',' , '');
+			attribute<string>   I08_provincienaam      	:= IsUitgesloten ? 'UITGESLOTEN' : replace(Invoer/RuimtelijkeData/StudieGebied/buurt/PROV_NAAM, ',' , '');
+			
+			attribute<nrAsl> 	vrijstaand_v1930		:= IsUitgesloten ? 0[nrAsl] : tellingen/woningtype_bouwjaarklasse/vrijstaand_v1930[nrAsl];
+			attribute<nrAsl> 	vrijstaand_v1946		:= IsUitgesloten ? 0[nrAsl] : tellingen/woningtype_bouwjaarklasse/vrijstaand_v1946[nrAsl];
+			attribute<nrAsl> 	vrijstaand_v1965		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/vrijstaand_v1965[nrAsl];
+			attribute<nrAsl> 	vrijstaand_v1975		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/vrijstaand_v1975[nrAsl];
+			attribute<nrAsl> 	vrijstaand_v1992		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/vrijstaand_v1992[nrAsl];
+			attribute<nrAsl> 	vrijstaand_v1996		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/vrijstaand_v1996[nrAsl];
+			attribute<nrAsl> 	vrijstaand_v2000		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/vrijstaand_v2000[nrAsl];
+			attribute<nrAsl> 	vrijstaand_v2006		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/vrijstaand_v2006[nrAsl];
+			attribute<nrAsl> 	vrijstaand_v2011		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/vrijstaand_v2011[nrAsl];
+			attribute<nrAsl> 	vrijstaand_v2014		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/vrijstaand_v2014[nrAsl];
+			attribute<nrAsl> 	vrijstaand_v2020		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/vrijstaand_v2020[nrAsl];
+			
+			attribute<nrAsl> 	twee_onder_1_kap_v1930		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/twee_onder_1_kap_v1930[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_v1946		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/twee_onder_1_kap_v1946[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_v1965		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/twee_onder_1_kap_v1965[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_v1975		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/twee_onder_1_kap_v1975[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_v1992		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/twee_onder_1_kap_v1992[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_v1996		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/twee_onder_1_kap_v1996[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_v2000		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/twee_onder_1_kap_v2000[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_v2006		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/twee_onder_1_kap_v2006[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_v2011		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/twee_onder_1_kap_v2011[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_v2014		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/twee_onder_1_kap_v2014[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_v2020		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/twee_onder_1_kap_v2020[nrAsl];
+			
+			attribute<nrAsl> 	hoekwoning_v1930		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/hoekwoning_v1930[nrAsl];
+			attribute<nrAsl> 	hoekwoning_v1946		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/hoekwoning_v1946[nrAsl];
+			attribute<nrAsl> 	hoekwoning_v1965		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/hoekwoning_v1965[nrAsl];
+			attribute<nrAsl> 	hoekwoning_v1975		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/hoekwoning_v1975[nrAsl];
+			attribute<nrAsl> 	hoekwoning_v1992		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/hoekwoning_v1992[nrAsl];
+			attribute<nrAsl> 	hoekwoning_v1996		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/hoekwoning_v1996[nrAsl];
+			attribute<nrAsl> 	hoekwoning_v2000		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/hoekwoning_v2000[nrAsl];
+			attribute<nrAsl> 	hoekwoning_v2006		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/hoekwoning_v2006[nrAsl];
+			attribute<nrAsl> 	hoekwoning_v2011		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/hoekwoning_v2011[nrAsl];
+			attribute<nrAsl> 	hoekwoning_v2014		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/hoekwoning_v2014[nrAsl];
+			attribute<nrAsl> 	hoekwoning_v2020		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/hoekwoning_v2020[nrAsl];
+			
+			attribute<nrAsl> 	tussenwoning_v1930		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/tussenwoning_v1930[nrAsl];
+			attribute<nrAsl> 	tussenwoning_v1946		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/tussenwoning_v1946[nrAsl];
+			attribute<nrAsl> 	tussenwoning_v1965		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/tussenwoning_v1965[nrAsl];
+			attribute<nrAsl> 	tussenwoning_v1975		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/tussenwoning_v1975[nrAsl];
+			attribute<nrAsl> 	tussenwoning_v1992		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/tussenwoning_v1992[nrAsl];
+			attribute<nrAsl> 	tussenwoning_v1996		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/tussenwoning_v1996[nrAsl];
+			attribute<nrAsl> 	tussenwoning_v2000		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/tussenwoning_v2000[nrAsl];
+			attribute<nrAsl> 	tussenwoning_v2006		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/tussenwoning_v2006[nrAsl];
+			attribute<nrAsl> 	tussenwoning_v2011		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/tussenwoning_v2011[nrAsl];
+			attribute<nrAsl> 	tussenwoning_v2014		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/tussenwoning_v2014[nrAsl];
+			attribute<nrAsl> 	tussenwoning_v2020		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/tussenwoning_v2020[nrAsl];
+			
+			attribute<nrAsl> 	meergezinspand_laag_midden_v1930		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_laag_midden_v1930[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_v1946		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_laag_midden_v1946[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_v1965		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_laag_midden_v1965[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_v1975		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_laag_midden_v1975[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_v1992		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_laag_midden_v1992[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_v1996		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_laag_midden_v1996[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_v2000		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_laag_midden_v2000[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_v2006		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_laag_midden_v2006[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_v2011		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_laag_midden_v2011[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_v2014		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_laag_midden_v2014[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_v2020		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_laag_midden_v2020[nrAsl];
+			
+			attribute<nrAsl> 	meergezinspand_hoog_v1930		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_hoog_v1930[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_v1946		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_hoog_v1946[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_v1965		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_hoog_v1965[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_v1975		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_hoog_v1975[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_v1992		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_hoog_v1992[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_v1996		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_hoog_v1996[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_v2000		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_hoog_v2000[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_v2006		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_hoog_v2006[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_v2011		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_hoog_v2011[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_v2014		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_hoog_v2014[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_v2020		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_bouwjaarklasse/meergezinspand_hoog_v2020[nrAsl];
+			
+			attribute<nrAsl> 	vrijstaand_A		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/vrijstaand_A[nrAsl];
+			attribute<nrAsl> 	vrijstaand_B		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/vrijstaand_B[nrAsl];
+			attribute<nrAsl> 	vrijstaand_C		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/vrijstaand_C[nrAsl];
+			attribute<nrAsl> 	vrijstaand_D		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/vrijstaand_D[nrAsl];
+			attribute<nrAsl> 	vrijstaand_E		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/vrijstaand_E[nrAsl];
+			attribute<nrAsl> 	vrijstaand_F		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/vrijstaand_F[nrAsl];
+			attribute<nrAsl> 	vrijstaand_G		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/vrijstaand_G[nrAsl];
+			attribute<nrAsl> 	vrijstaand_N		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/vrijstaand_N[nrAsl];
+
+			attribute<nrAsl> 	twee_onder_1_kap_A		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/twee_onder_1_kap_A[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_B		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/twee_onder_1_kap_B[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_C		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/twee_onder_1_kap_C[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_D		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/twee_onder_1_kap_D[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_E		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/twee_onder_1_kap_E[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_F		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/twee_onder_1_kap_F[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_G		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/twee_onder_1_kap_G[nrAsl];
+			attribute<nrAsl> 	twee_onder_1_kap_N		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/twee_onder_1_kap_N[nrAsl];
+
+			attribute<nrAsl> 	hoekwoning_A		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/hoekwoning_A[nrAsl];
+			attribute<nrAsl> 	hoekwoning_B		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/hoekwoning_B[nrAsl];
+			attribute<nrAsl> 	hoekwoning_C		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/hoekwoning_C[nrAsl];
+			attribute<nrAsl> 	hoekwoning_D		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/hoekwoning_D[nrAsl];
+			attribute<nrAsl> 	hoekwoning_E		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/hoekwoning_E[nrAsl];
+			attribute<nrAsl> 	hoekwoning_F		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/hoekwoning_F[nrAsl];
+			attribute<nrAsl> 	hoekwoning_G		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/hoekwoning_G[nrAsl];
+			attribute<nrAsl> 	hoekwoning_N		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/hoekwoning_N[nrAsl];
+
+			attribute<nrAsl> 	tussenwoning_A		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/tussenwoning_A[nrAsl];
+			attribute<nrAsl> 	tussenwoning_B		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/tussenwoning_B[nrAsl];
+			attribute<nrAsl> 	tussenwoning_C		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/tussenwoning_C[nrAsl];
+			attribute<nrAsl> 	tussenwoning_D		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/tussenwoning_D[nrAsl];
+			attribute<nrAsl> 	tussenwoning_E		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/tussenwoning_E[nrAsl];
+			attribute<nrAsl> 	tussenwoning_F		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/tussenwoning_F[nrAsl];
+			attribute<nrAsl> 	tussenwoning_G		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/tussenwoning_G[nrAsl];
+			attribute<nrAsl> 	tussenwoning_N		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/tussenwoning_N[nrAsl];
+
+			attribute<nrAsl> 	meergezinspand_laag_midden_A		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_laag_midden_A[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_B		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_laag_midden_B[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_C		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_laag_midden_C[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_D		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_laag_midden_D[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_E		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_laag_midden_E[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_F		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_laag_midden_F[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_G		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_laag_midden_G[nrAsl];
+			attribute<nrAsl> 	meergezinspand_laag_midden_N		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_laag_midden_N[nrAsl];
+
+			attribute<nrAsl> 	meergezinspand_hoog_A		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_hoog_A[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_B		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_hoog_B[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_C		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_hoog_C[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_D		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_hoog_D[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_E		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_hoog_E[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_F		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_hoog_F[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_G		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_hoog_G[nrAsl];
+			attribute<nrAsl> 	meergezinspand_hoog_N		:= IsUitgesloten ? 0[nrAsl] :  tellingen/woningtype_energielabel/meergezinspand_hoog_N[nrAsl];
+
+			attribute<m2> 	Kantoor_v1920		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_bouwjaarklasse/Kantoor_v1920;
+			attribute<m2> 	Kantoor_v1975		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Kantoor_v1975;
+			attribute<m2> 	Kantoor_v1990		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Kantoor_v1990;
+			attribute<m2> 	Kantoor_v1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Kantoor_v1995;
+			attribute<m2> 	Kantoor_n1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Kantoor_n1995;
+			
+			attribute<m2> 	winkel_v1920		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/winkel_v1920;
+			attribute<m2> 	winkel_v1975		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/winkel_v1975;
+			attribute<m2> 	winkel_v1990		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/winkel_v1990;
+			attribute<m2> 	winkel_v1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/winkel_v1995;
+			attribute<m2> 	winkel_n1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/winkel_n1995;
+			
+			attribute<m2> 	Gezondheidszorg_v1920		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Gezondheidszorg_v1920;
+			attribute<m2> 	Gezondheidszorg_v1975		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Gezondheidszorg_v1975;
+			attribute<m2> 	Gezondheidszorg_v1990		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Gezondheidszorg_v1990;
+			attribute<m2> 	Gezondheidszorg_v1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Gezondheidszorg_v1995;
+			attribute<m2> 	Gezondheidszorg_n1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Gezondheidszorg_n1995;
+			
+			attribute<m2> 	Logies_v1920		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Logies_v1920;
+			attribute<m2> 	Logies_v1975		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Logies_v1975;
+			attribute<m2> 	Logies_v1990		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Logies_v1990;
+			attribute<m2> 	Logies_v1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Logies_v1995;
+			attribute<m2> 	Logies_n1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Logies_n1995;
+			
+			attribute<m2> 	Onderwijs_v1920		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Onderwijs_v1920;
+			attribute<m2> 	Onderwijs_v1975		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Onderwijs_v1975;
+			attribute<m2> 	Onderwijs_v1990		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Onderwijs_v1990;
+			attribute<m2> 	Onderwijs_v1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Onderwijs_v1995;
+			attribute<m2> 	Onderwijs_n1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Onderwijs_n1995;
+			
+			attribute<m2> 	Industrie_v1920		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Industrie_v1920;
+			attribute<m2> 	Industrie_v1975		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Industrie_v1975;
+			attribute<m2> 	Industrie_v1990		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Industrie_v1990;
+			attribute<m2> 	Industrie_v1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Industrie_v1995;
+			attribute<m2> 	Industrie_n1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Industrie_n1995;
+						
+			attribute<m2> 	Bijeenkomst_v1920		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Bijeenkomst_v1920;
+			attribute<m2> 	Bijeenkomst_v1975		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Bijeenkomst_v1975;
+			attribute<m2> 	Bijeenkomst_v1990		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Bijeenkomst_v1990;
+			attribute<m2> 	Bijeenkomst_v1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Bijeenkomst_v1995;
+			attribute<m2> 	Bijeenkomst_n1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Bijeenkomst_n1995;
+			
+			attribute<m2> 	Sport_v1920		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Sport_v1920;
+			attribute<m2> 	Sport_v1975		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Sport_v1975;
+			attribute<m2> 	Sport_v1990		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Sport_v1990;
+			attribute<m2> 	Sport_v1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Sport_v1995;
+			attribute<m2> 	Sport_n1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Sport_n1995;			
+			
+			attribute<m2> 	overige_gebruiks_v1920		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/overige_gebruiks_v1920;
+			attribute<m2> 	overige_gebruiks_v1975		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/overige_gebruiks_v1975;
+			attribute<m2> 	overige_gebruiks_v1990		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/overige_gebruiks_v1990;
+			attribute<m2> 	overige_gebruiks_v1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/overige_gebruiks_v1995;
+			attribute<m2> 	overige_gebruiks_n1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/overige_gebruiks_n1995;			
+			
+			attribute<m2> 	Cel_v1920		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Cel_v1920;
+			attribute<m2> 	Cel_v1975		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Cel_v1975;
+			attribute<m2> 	Cel_v1990		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Cel_v1990;
+			attribute<m2> 	Cel_v1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Cel_v1995;
+			attribute<m2> 	Cel_n1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Cel_n1995;
+		}
+
+		unit<uint32> variable := SubItem_PropValues(Table,'name');
+		
+		container export_csv_nl := Rapportage/WriteTable32ToCSV(Table, AsList(variable/name, ';'), FolderInfo/OutputFolder + '/gebouwvoorraad_export.csv');
+
+	}
+
 	attribute<bool> IsUitgesloten_Stap0_Referentie (PlanRegio) := Statisch/IsUitgesloten || IsStap0 || IsReferentie;
 
 	#include <Freqentieverdeling_labels.dms>

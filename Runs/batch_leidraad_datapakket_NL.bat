@@ -8,6 +8,7 @@ REM aanpassingen voor machine specifieke paden
 Call path/set.bat
 set FLAGS=/S1 /C2 /S3
 "%exe_path%" /L"%log_dir%\StatischAll.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" /LeidraadResultaten/StartJaar/PlanRegioResults/Statisch/export_csv/result || call :error_handler
+"%exe_path%" /L"%log_dir%\Gebouwvoorraad_export.txt" %FLAGS% "%prj_dir%\Runs\Runfile.dms" /LeidraadResultaten/StartJaar/PlanregioResults/Gebouwvoorraad_export/export_csv_nl/result || call :error_handler
 
 call :do_reference Startjaar
 call :do_reference Ref2030
