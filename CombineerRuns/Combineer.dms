@@ -461,8 +461,8 @@ container Vergelijking: using = "Units"
 		attribute<float64>    AantalG                              (Planregio):= rjoin(BU_CODE, Hulpvariabelen/CODE, Hulpvariabelen/_AantalG_)[float64];
 		attribute<float64>    AantalN                              (Planregio):= rjoin(BU_CODE, Hulpvariabelen/CODE, Hulpvariabelen/_AantalN_)[float64];
 		
-		attribute<string>    G01_Toekenning_klimaatneutraal_gas_1_5  	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G01_Toekenning_klimaatneutraal_gas_1_5);
-		attribute<string>    G02_Toekenning_klimaatneutraal_gas_1_0  	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G02_Toekenning_klimaatneutraal_gas_1_0);
+		attribute<string>    G01_Toekenning_klimaatneutraal_gas_1_5  	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G01_Toekenning_klimaatneutraal_gas_1_5_);
+		attribute<string>    G02_Toekenning_klimaatneutraal_gas_1_0  	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G02_Toekenning_klimaatneutraal_gas_1_0_);
 		attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag		(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G03_Nat_meerkost_energiekosten_laag_Euro_per_mega_g_)[Eur_ton];
 		attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog     	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G04_Nat_meerkost_energiekosten_hoog_Euro_per_mega_g_)[Eur_ton];
 		attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt    	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G05_Nat_meerkost_energiebesparing_opt_Euro_per_mega_g_)[Eur_ton];

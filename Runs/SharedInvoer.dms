@@ -46,5 +46,5 @@ container SharedInvoer
 	
 	parameter<bool> IncludeGA := false;
 	
-	parameter<units/m3_yr> MaxVolume_GG := 1500000000[units/m3_yr]; //Invoer maximale beschikbaarheid GG in m3 aardgasequivalent
+	parameter<units/m3_yr> MaxVolume_KG := 1500000000[units/m3_yr]; //Invoer maximale beschikbaarheid GG in m3 aardgasequivalent
 }

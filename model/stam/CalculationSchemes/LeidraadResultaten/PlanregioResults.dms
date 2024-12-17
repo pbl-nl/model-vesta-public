@@ -113,8 +113,8 @@ container PlanregioResults
 		{
 			attribute<string> BU_CODE := Statisch/table/I01_buurtcode;
 			
-			attribute<Eur_ton> G01_Toekenning_klimaatneutraal_gas_1_5 := =Invoer/G01_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
-			attribute<Eur_ton> G02_Toekenning_klimaatneutraal_gas_1_0 := =Invoer/G02_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
+			attribute<string> G01_Toekenning_klimaatneutraal_gas_1_5 := =Invoer/G01_aan ? 'const("dummyvar",PlanRegio)' : 'const("dummyvar",PlanRegio)';
+			attribute<string> G02_Toekenning_klimaatneutraal_gas_1_0 := =Invoer/G02_aan ? 'const("dummyvar",PlanRegio)' : 'const("dummyvar",PlanRegio)';
 			attribute<Eur_ton> G03_Nat_meerkost_energiekosten_laag    := =Invoer/G03_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
 			attribute<Eur_ton> G04_Nat_meerkost_energiekosten_hoog    := =Invoer/G04_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
 			attribute<Eur_ton> G05_Nat_meerkost_energiebesparing_opt  := =Invoer/G05_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';

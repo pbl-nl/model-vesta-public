@@ -141,8 +141,8 @@ container Outputs
 			{
 			attribute<string>  	  BU_CODE             	  	  	          	(PlanRegio) := /Invoer/RuimtelijkeData/StudieGebied/buurt/BU_CODE;
 			attribute<string>  	  V01_Strategievariant 	  	  	          	(PlanRegio) := ='Class/Variant/name['+VarCodeOrg+']';
-			attribute<Eur_ton>    G01_Toekenning_klimaatneutraal_gas_1_5  	(Planregio):= ='merge('+BesteVar+', string,   '+AsItemList('Src/G01/'+Varname/name+'')+')'; // OPM: TODO ophalen juiste variabele
-			attribute<Eur_ton>    G02_Toekenning_klimaatneutraal_gas_1_0  	(Planregio):= ='merge('+BesteVar+', string,   '+AsItemList('Src/G02/'+Varname/name+'')+')'; // OPM: TODO ophalen juiste variabele
+			attribute<string>     G01_Toekenning_klimaatneutraal_gas_1_5  	(Planregio):= const('dummyvar', Planregio); // OPM: TODO ophalen juiste variabele
+			attribute<string>     G02_Toekenning_klimaatneutraal_gas_1_0  	(Planregio):= const('dummyvar', Planregio); // OPM: TODO ophalen juiste variabele
 			attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag     	(Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G03/'+Varname/name+'')+')';
 			attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog     	(Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G04/'+Varname/name+'')+')';
 			attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt     (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G05/'+Varname/name+'')+')';
@@ -300,8 +300,8 @@ container Outputs
 		container A07 := for_each_nedv(Class/Variant/name, replace('data/@C/results/A07_Aandeel_eWP_WEQ','@C',Class/Variant/name), PlanRegio, ratio);
 		container A08 := for_each_nedv(Class/Variant/name, replace('data/@C/results/A08_Aandeel_eWP_GJ','@C',Class/Variant/name), PlanRegio, ratio	);
 		
-		container G01 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G01_Toekenning_klimaatneutraal_gas_1_5','@C',Class/Variant/name), PlanRegio, Eur_ton);
-		container G02 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G02_Toekenning_klimaatneutraal_gas_1_0','@C',Class/Variant/name), PlanRegio, Eur_ton);
+		container G01 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G01_Toekenning_klimaatneutraal_gas_1_5','@C',Class/Variant/name), PlanRegio, string);
+		container G02 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G02_Toekenning_klimaatneutraal_gas_1_0','@C',Class/Variant/name), PlanRegio, string);
 		container G03 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G03_Nat_meerkost_energiekosten_laag','@C',Class/Variant/name), PlanRegio, Eur_ton);
 		container G04 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G04_Nat_meerkost_energiekosten_hoog','@C',Class/Variant/name), PlanRegio, Eur_ton);
 		container G05 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G05_Nat_meerkost_energiebesparing_opt','@C',Class/Variant/name), PlanRegio, Eur_ton);
