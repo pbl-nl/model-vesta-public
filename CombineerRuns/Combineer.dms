@@ -11,15 +11,18 @@ container Vergelijking: using = "Units"
 	
 	container Gevoeligheidsanalyses
 	{
-		parameter<string> G01_name := '_veel_kostenreductie'; 
-		parameter<string> G02_name := '_weinig_kostenreductie';
+		parameter<string> G01_name := '_Toekenning_gas_1_5'; 
+		parameter<string> G02_name := '_Toekenning_gas_1_0';
 		parameter<string> G03_name := '_lagere_energieprijzen';
 		parameter<string> G04_name := '_hogere_energieprijzen';
+		parameter<string> G05_name := '_energiebesparing_opt';
+
 		container G01_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G01_name' + ')','@C',Class/Variant/name));
 		container G02_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G02_name' + ')','@C',Class/Variant/name));
 		container G03_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G03_name' + ')','@C',Class/Variant/name));
 		container G04_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G04_name' + ')','@C',Class/Variant/name));
-		
+		container G05_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G05_name' + ')','@C',Class/Variant/name));
+
 		template ImportOneGA
 		{
 			//case parameters
@@ -34,8 +37,9 @@ container Vergelijking: using = "Units"
 			{
 				attribute<string> CODE := substr(_BU_CODE_, 1, 10);
 			}
-			attribute<string>     BU_CODE              (Planregio):= Invoer/RuimtelijkeData/StudieGebied/buurt/BU_CODE;
-			attribute<Eur_ton>    H17_Nat_meerkost_CO2 (Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, Hoofdindicatoren/_H17_Nat_meerkost_CO2_Euro_per_mega_g_)[Eur_ton];
+			attribute<string>    BU_CODE              				(Planregio):= Invoer/RuimtelijkeData/StudieGebied/buurt/BU_CODE;
+			attribute<Eur_ton>   H17_Nat_meerkost_CO2 				(Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, Hoofdindicatoren/_H17_Nat_meerkost_CO2_Euro_per_mega_g_)[Eur_ton];
+			attribute<string>    H20_Toekenning_klimaatneutraal_gas (Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, Hoofdindicatoren/_H20_Toekenning_klimaatneutraal_gas_);
 		}
 	}
 	
@@ -332,17 +336,20 @@ container Vergelijking: using = "Units"
 			attribute<Eur_yr>  H16_Nat_meerkost     (Planregio):= Checks/ChecksFailed ? (0/0)[Eur_yr]  : Preresults/H16_Nat_meerkost;
 			attribute<Eur_ton> H17_Nat_meerkost_CO2 (Planregio):= Checks/ChecksFailed ? (0/0)[Eur_ton] : Preresults/H17_Nat_meerkost_CO2;
 			
-			parameter<string> G01_expr := 'Gevoeligheidsanalyses/G01_Import/'+Class/Variant/name[VC]+'/H17_Nat_meerkost_CO2';
-			parameter<string> G02_expr := 'Gevoeligheidsanalyses/G02_Import/'+Class/Variant/name[VC]+'/H17_Nat_meerkost_CO2';
+			parameter<string> G01_expr := 'Gevoeligheidsanalyses/G01_Import/'+Class/Variant/name[VC]+'/H20_Toekenning_klimaatneutraal_gas';
+			parameter<string> G02_expr := 'Gevoeligheidsanalyses/G02_Import/'+Class/Variant/name[VC]+'/H20_Toekenning_klimaatneutraal_gas';
 			parameter<string> G03_expr := 'Gevoeligheidsanalyses/G03_Import/'+Class/Variant/name[VC]+'/H17_Nat_meerkost_CO2';
 			parameter<string> G04_expr := 'Gevoeligheidsanalyses/G04_Import/'+Class/Variant/name[VC]+'/H17_Nat_meerkost_CO2';
+			parameter<string> G05_expr := 'Gevoeligheidsanalyses/G05_Import/'+Class/Variant/name[VC]+'/H17_Nat_meerkost_CO2';
 			
-			attribute<Eur_ton>    G01_Nat_meerkost_CO2_Kost_Reductie_Hoog  (Planregio):= =IncludeGA ? G01_expr : 'Preresults/G01_Nat_meerkost_CO2_Kost_Reductie_Hoog';
-			attribute<Eur_ton>    G02_Nat_meerkost_CO2_Kost_Reductie_Laag  (Planregio):= =IncludeGA ? G02_expr : 'Preresults/G02_Nat_meerkost_CO2_Kost_Reductie_Laag';
-			attribute<Eur_ton>    G03_Nat_meerkost_CO2_En_Prijzen_Laag     (Planregio):= =IncludeGA ? G03_expr : 'Preresults/G03_Nat_meerkost_CO2_En_Prijzen_Laag';
-			attribute<Eur_ton>    G04_Nat_meerkost_CO2_En_Prijzen_Hoog	   (Planregio):= =IncludeGA ? G04_expr : 'Preresults/G04_Nat_meerkost_CO2_En_Prijzen_Hoog';
+			attribute<string>     G01_Toekenning_klimaatneutraal_gas_1_5	(Planregio):= =IncludeGA ? G01_expr : 'Preresults/G01_Toekenning_klimaatneutraal_gas_1_5';
+			attribute<string>     G02_Toekenning_klimaatneutraal_gas_1_0  	(Planregio):= =IncludeGA ? G02_expr : 'Preresults/G02_Toekenning_klimaatneutraal_gas_1_0';
+			attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag    	(Planregio):= =IncludeGA ? G03_expr : 'Preresults/G03_Nat_meerkost_energiekosten_laag';
+			attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog	   	(Planregio):= =IncludeGA ? G04_expr : 'Preresults/G04_Nat_meerkost_energiekosten_hoog';
+			attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt	   	(Planregio):= =IncludeGA ? G05_expr : 'Preresults/G05_Nat_meerkost_energiebesparing_opt';
 			
-		}
+		}		
+
 	}
 	
 	template TransLate:= Invoer/RuimtelijkeData/Studiegebied/buurt
@@ -378,8 +385,8 @@ container Vergelijking: using = "Units"
 		attribute<Eur_yr>     H16_Nat_meerkost                     	(Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, hoofdindicatoren/_H16_Nat_meerkost_Euro_per_yr_)[Eur_yr];
 		attribute<Eur_ton>    H17_Nat_meerkost_CO2                 	(Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, hoofdindicatoren/_H17_Nat_meerkost_CO2_Euro_per_mega_g_)[Eur_ton];
 		attribute<Eur_yr_WEQ> H18_Nat_meerkost_WEQ                 	(Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, hoofdindicatoren/_H18_Nat_meerkost_WEQ_Euro_per_Woning_yr_)[Eur_yr_WEQ];
-		attribute<Eur_m3>     H19_waarde_hernieuwbaar_gas          	(Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, hoofdindicatoren/_H19_waarde_hernieuwbaar_gas_Euro_per_m_3_)[Eur_m3];
-		attribute<string>     H20_beschikbaarheid_hernieuwbaar_gas 	(Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, hoofdindicatoren/_H20_beschikbaarheid_hernieuwbaar_gas_)[string];
+		attribute<Eur_m3>     H19_Waarde_klimaatneutraal_gas       	(Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, hoofdindicatoren/_H19_waarde_klimaatneutraal_gas_Euro_per_m_3_)[Eur_m3];
+		attribute<string>     H20_Toekenning_klimaatneutraal_gas 	(Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, hoofdindicatoren/_H20_Toekenning_klimaatneutraal_gas_)[string];
 
 		attribute<GJ_yr_WEQ>     H21_Input_elektriciteit_WD_OW 			(Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, hoofdindicatoren/_H21_Input_elektriciteit_WD_OW_giga_J_per_Woning_yr_)[GJ_yr_WEQ];
 		attribute<GJ_yr_WEQ>     H22_Vraag_totaal_w 					(Planregio):= rjoin(BU_CODE, hoofdindicatoren/CODE, hoofdindicatoren/_H22_Vraag_totaal_w_giga_J_per_Woning_yr_)[GJ_yr_WEQ];
@@ -453,10 +460,11 @@ container Vergelijking: using = "Units"
 		attribute<float64>    AantalG                              (Planregio):= rjoin(BU_CODE, Hulpvariabelen/CODE, Hulpvariabelen/_AantalG_)[float64];
 		attribute<float64>    AantalN                              (Planregio):= rjoin(BU_CODE, Hulpvariabelen/CODE, Hulpvariabelen/_AantalN_)[float64];
 		
-		attribute<Eur_ton>    G01_Nat_meerkost_CO2_Kost_Reductie_Hoog  (Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G01_Nat_meerkost_CO2_Kost_Reductie_Hoog_Euro_per_mega_g_)[Eur_ton];
-		attribute<Eur_ton>    G02_Nat_meerkost_CO2_Kost_Reductie_Laag  (Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G02_Nat_meerkost_CO2_Kost_Reductie_Laag_Euro_per_mega_g_)[Eur_ton];
-		attribute<Eur_ton>    G03_Nat_meerkost_CO2_En_Prijzen_Laag     (Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G03_Nat_meerkost_CO2_En_Prijzen_Laag_Euro_per_mega_g_)[Eur_ton];
-		attribute<Eur_ton>    G04_Nat_meerkost_CO2_En_Prijzen_Hoog     (Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G04_Nat_meerkost_CO2_En_Prijzen_Hoog_Euro_per_mega_g_)[Eur_ton];
+		attribute<string>    G01_Toekenning_klimaatneutraal_gas_1_5  	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G01_Toekenning_klimaatneutraal_gas_1_5);
+		attribute<string>    G02_Toekenning_klimaatneutraal_gas_1_0  	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G02_Toekenning_klimaatneutraal_gas_1_0);
+		attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag		(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G03_Nat_meerkost_energiekosten_laag_Euro_per_mega_g_)[Eur_ton];
+		attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog     	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G04_Nat_meerkost_energiekosten_hoog_Euro_per_mega_g_)[Eur_ton];
+		attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt    	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G05_Nat_meerkost_energiebesparing_opt_Euro_per_mega_g_)[Eur_ton];
 	}
 	
 	container Combines 
@@ -833,7 +841,7 @@ container Vergelijking: using = "Units"
 		attribute<Eur_m3> GasWaarde_GG           (PlanRegio) :=
 			makedefined(GG/Gasvragers/GasWaarde[invert(GG/Gasvragers/nr_OrgEntity)] + GGprijs_m3, 0.0[Eur_m3]);
 		attribute<bool>   Beschikbaarheid_GG     (PlanRegio) := GG/Gasvragers/Beschikbaarheid[invert(GG/Gasvragers/nr_OrgEntity)];
-		attribute<string> Beschikbaarheid_GG_str (PlanRegio) := Beschikbaarheid_GG ? 'True' : 'False';
+		attribute<string> Beschikbaarheid_GG_str (PlanRegio) := Beschikbaarheid_GG ? 'Ja' : 'Nee';
 		
 		attribute<m3_yr> GGvraagM3 (PlanRegio) := GG/Gasvragers/VerbruikM3[invert(GG/Gasvragers/nr_OrgEntity)] * float64(Beschikbaarheid_GG);
 	}
@@ -887,7 +895,7 @@ container Vergelijking: using = "Units"
 			attribute<Eur_m3> GasWaarde_GG           (PlanRegio) :=
 				makedefined(GG/Gasvragers/GasWaarde[invert(GG/Gasvragers/nr_OrgEntity)] + GGprijs_m3, 0.0[Eur_m3]);
 			attribute<bool>   Beschikbaarheid_GG     (PlanRegio) := GG/Gasvragers/Beschikbaarheid[invert(GG/Gasvragers/nr_OrgEntity)];
-			attribute<string> Beschikbaarheid_GG_str (PlanRegio) := Beschikbaarheid_GG ? 'hoger' : 'lager';
+			attribute<string> Beschikbaarheid_GG_str (PlanRegio) := Beschikbaarheid_GG ? 'Ja' : 'Nee';
 			
 			attribute<m3_yr> GGvraagM3 (PlanRegio) := GG/Gasvragers/VerbruikM3[invert(GG/Gasvragers/nr_OrgEntity)] * float64(Beschikbaarheid_GG);
 		}

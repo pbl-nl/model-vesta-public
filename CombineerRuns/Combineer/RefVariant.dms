@@ -28,7 +28,7 @@ container Outputs
 		
 		parameter<string> GaswaardeEurM3 := 'const(0.0[Eur_m3],PlanRegio)';  //'Gaswaarde/GasWaarde_GG' - //'Gaswaarde/GasWaarde_H2'
 		parameter<string> BeschikbaarStr := 'const(NvtExpr,PlanRegio)';  //'Gaswaarde/Beschikbaarheid_GG_str' - 'Gaswaarde/Beschikbaarheid_H2_str'
-		parameter<string> NvtExpr := 'False';
+		parameter<string> NvtExpr := 'Nee';
 		
 		container Hoofdindicatoren
 		{
@@ -54,8 +54,8 @@ container Outputs
 			attribute<Eur_yr>     H16_Nat_meerkost                    	(PlanRegio) := ='merge('+BesteVar+', Eur_yr,     '+AsItemList('Src/H16/'+Varname/name+'')+')';
 			attribute<Eur_ton>    H17_Nat_meerkost_CO2                	(PlanRegio) := ='merge('+BesteVar+', Eur_ton,    '+AsItemList('Src/H17/'+Varname/name+'')+')';
 			attribute<Eur_yr_WEQ> H18_Nat_meerkost_WEQ                	(PlanRegio) := ='merge('+BesteVar+', Eur_yr_WEQ, '+AsItemList('Src/H18/'+Varname/name+'')+')';
-			attribute<Eur_m3>     H19_waarde_hernieuwbaar_gas         	(PlanRegio) := =GaswaardeEurM3;
-			attribute<string>     H20_beschikbaarheid_hernieuwbaar_gas	(PlanRegio) := =BeschikbaarStr;
+			attribute<Eur_m3>     H19_Waarde_klimaatneutraal_gas       	(PlanRegio) := =GaswaardeEurM3;
+			attribute<string>     H20_Toekenning_klimaatneutraal_gas	(PlanRegio) := =BeschikbaarStr;
 			attribute<GJ_yr_WEQ> H21_Input_elektriciteit_WD_OW       	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H21/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H22_Vraag_totaal_w                		(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H22/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H23_Vraag_RV_wH24_Vraag_TW_w          	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H23/'+Varname/name+'')+')';
@@ -138,12 +138,13 @@ container Outputs
 		{
 			unit<uint32> table := Invoer/DefaultInstellingen/Basis/PlanRegio
 			{
-			attribute<string>  	  BU_CODE             	  	  	           (PlanRegio) := /Invoer/RuimtelijkeData/StudieGebied/buurt/BU_CODE;
-			attribute<string>  	  V01_Strategievariant 	  	  	           (PlanRegio) := ='Class/Variant/name['+VarCodeOrg+']';
-			attribute<Eur_ton>    G01_Nat_meerkost_CO2_Kost_Reductie_Hoog  (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G01/'+Varname/name+'')+')';
-			attribute<Eur_ton>    G02_Nat_meerkost_CO2_Kost_Reductie_Laag  (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G02/'+Varname/name+'')+')';
-			attribute<Eur_ton>    G03_Nat_meerkost_CO2_En_Prijzen_Laag     (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G03/'+Varname/name+'')+')';
-			attribute<Eur_ton>    G04_Nat_meerkost_CO2_En_Prijzen_Hoog     (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G04/'+Varname/name+'')+')';
+			attribute<string>  	  BU_CODE             	  	  	          	(PlanRegio) := /Invoer/RuimtelijkeData/StudieGebied/buurt/BU_CODE;
+			attribute<string>  	  V01_Strategievariant 	  	  	          	(PlanRegio) := ='Class/Variant/name['+VarCodeOrg+']';
+			attribute<Eur_ton>    G01_Toekenning_klimaatneutraal_gas_1_5  	(Planregio):= ='merge('+BesteVar+', string,   '+AsItemList('Src/G01/'+Varname/name+'')+')'; // OPM: TODO ophalen juiste variabele
+			attribute<Eur_ton>    G02_Toekenning_klimaatneutraal_gas_1_0  	(Planregio):= ='merge('+BesteVar+', string,   '+AsItemList('Src/G02/'+Varname/name+'')+')'; // OPM: TODO ophalen juiste variabele
+			attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag     	(Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G03/'+Varname/name+'')+')';
+			attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog     	(Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G04/'+Varname/name+'')+')';
+			attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt     (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G05/'+Varname/name+'')+')';
 			}
 			parameter<string> OutputFolder := '%localDataProjDir%/Results/' + Expand( . , OutputExpr) + ''+ '';
 			unit<uint32> variable := SubItem_PropValues(table,'name');
@@ -152,43 +153,29 @@ container Outputs
 			{
 				attribute<Eur_ton> StandaardBerekening (PlanRegio) := Hoofdindicatoren/Table/H17_Nat_meerkost_CO2;
 				
-				attribute<bool> G012_simpel (PlanRegio) := IsNull(StandaardBerekening) ||
-						Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten
-					||  LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [ nrWoning ] ||
-					(	Table/G01_Nat_meerkost_CO2_Kost_Reductie_Hoog <= StandaardBerekening
-					 && Table/G02_Nat_meerkost_CO2_Kost_Reductie_Laag >= StandaardBerekening );
 				attribute<bool> G034_simpel (PlanRegio) := IsNull(StandaardBerekening) ||
 						Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten
 					||  LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [ nrWoning ] ||
-					(	Table/G03_Nat_meerkost_CO2_En_Prijzen_Laag <= StandaardBerekening
-					 && Table/G04_Nat_meerkost_CO2_En_Prijzen_Hoog >= StandaardBerekening );
+					(	Table/G03_Nat_meerkost_energiekosten_laag <= StandaardBerekening
+					 && Table/G04_Nat_meerkost_energiekosten_hoog >= StandaardBerekening );
 				attribute<bool> G034_StandaardIsMidden (PlanRegio) := IsNull(StandaardBerekening) ||
 						Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten
 					||  LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [ nrWoning ] ||
-					(	Table/G03_Nat_meerkost_CO2_En_Prijzen_Laag <= StandaardBerekening
-					 &&	Table/G04_Nat_meerkost_CO2_En_Prijzen_Hoog >= StandaardBerekening ) ||
-					(	Table/G03_Nat_meerkost_CO2_En_Prijzen_Laag >= StandaardBerekening
-					 && Table/G04_Nat_meerkost_CO2_En_Prijzen_Hoog <= StandaardBerekening );
+					(	Table/G03_Nat_meerkost_energiekosten_laag <= StandaardBerekening
+					 &&	Table/G04_Nat_meerkost_energiekosten_hoog >= StandaardBerekening ) ||
+					(	Table/G03_Nat_meerkost_energiekosten_laag >= StandaardBerekening
+					 && Table/G04_Nat_meerkost_energiekosten_hoog <= StandaardBerekening );
 				
-				attribute<bool>	G01_groterdan_G02 (Planregio):= Table/G01_Nat_meerkost_CO2_Kost_Reductie_Hoog > Table/G02_Nat_meerkost_CO2_Kost_Reductie_Laag;
+				attribute<bool>	G03_groterdan_G04 (Planregio):= Table/G03_Nat_meerkost_energiekosten_laag > Table/G04_Nat_meerkost_energiekosten_hoog;
 				
-				attribute<bool>	G03_groterdan_G04 (Planregio):= Table/G03_Nat_meerkost_CO2_En_Prijzen_Laag > Table/G04_Nat_meerkost_CO2_En_Prijzen_Hoog;
-				
-				unit<uint32> Afwijkend12 := subset(G012_simpel == false)
-				{
-					attribute<string>  BU_CODE        := Table/BU_CODE[nr_orgentity];
-					attribute<string>  Variant        := Table/V01_Strategievariant[nr_orgentity];
-					attribute<eur_ton> Standaard      := Standaardberekening[nr_orgentity];
-					attribute<eur_ton> Leercurve_hoog := Table/G01_Nat_meerkost_CO2_Kost_Reductie_Hoog[nr_orgentity];
-					attribute<eur_ton> Leercurve_laag := Table/G02_Nat_meerkost_CO2_Kost_Reductie_Laag[nr_orgentity];	
-				}
 				unit<uint32> Afwijkend34 := subset(G034_simpel == false)
 				{
-					attribute<string>  BU_CODE        := Table/BU_CODE[nr_orgentity];
-					attribute<string>  Variant        := Table/V01_Strategievariant[nr_orgentity];
-					attribute<eur_ton> Standaard      := Standaardberekening[nr_orgentity];
-					attribute<eur_ton> E_kosten_laag  := Table/G03_Nat_meerkost_CO2_En_Prijzen_Laag[nr_orgentity];
-					attribute<eur_ton> E_kosten_hoog  := Table/G04_Nat_meerkost_CO2_En_Prijzen_Hoog[nr_orgentity];	
+					attribute<string>  BU_CODE        		:= Table/BU_CODE[nr_orgentity];
+					attribute<string>  Variant        		:= Table/V01_Strategievariant[nr_orgentity];
+					attribute<eur_ton> Standaard      		:= Standaardberekening[nr_orgentity];
+					attribute<eur_ton> E_kosten_laag  		:= Table/G03_Nat_meerkost_energiekosten_laag[nr_orgentity];
+					attribute<eur_ton> E_kosten_hoog  		:= Table/G04_Nat_meerkost_energiekosten_hoog[nr_orgentity];
+					attribute<eur_ton> Energiebesparing_opt	:= Table/G05_Nat_meerkost_energiebesparing_opt[nr_orgentity];
 				}
 			}
 		}	
@@ -196,14 +183,14 @@ container Outputs
 		{	
 			unit<uint32> table := Invoer/DefaultInstellingen/Basis/PlanRegio
 			{
-			attribute<string>  	  BU_CODE             	   (PlanRegio) := /Invoer/RuimtelijkeData/StudieGebied/buurt/BU_CODE;
-			attribute<string>  	  V01_Strategievariant 	   (PlanRegio) := ='Class/Variant/name['+VarCodeOrg+']';
-			attribute<nrWoning> nrWEQ					   (Planregio) := ='merge('+BesteVar+', nrWoning, '+AsItemList('Src/nrWEQ/'       +Varname/name+'')+')';
-			attribute<ratio>    R_StadV				   (Planregio) := ='merge('+BesteVar+', ratio,      '+AsItemList('Src/R_StadV/'     +Varname/name+'')+')';
-			attribute<GJ_yr>    Vraag_H2 				   (Planregio) := ='merge('+BesteVar+', GJ_yr,      '+AsItemList('Src/VraagH2/'     +Varname/name+'')+')';
-			attribute<GJ_yr>    Vraag_GG  			   (Planregio) := ='merge('+BesteVar+', GJ_yr,      '+AsItemList('Src/VraagGG/'     +Varname/name+'')+')';
-			attribute<m3_yr>	  Vraag_GG_m3              (Planregio) := Vraag_GG / Invoer/Kengetallen/Constanten/GasEnergie;
-			attribute<string>     Uitgesloten  			   (Planregio) := string(LeidraadResultaten/zichtjaar/PlanregioResults/Statisch/isUitgesloten);
+			attribute<string>  	BU_CODE             	(PlanRegio) := /Invoer/RuimtelijkeData/StudieGebied/buurt/BU_CODE;
+			attribute<string>  	V01_Strategievariant	(PlanRegio) := ='Class/Variant/name['+VarCodeOrg+']';
+			attribute<nrWoning> nrWEQ					(Planregio) := ='merge('+BesteVar+', nrWoning, '+AsItemList('Src/nrWEQ/'       +Varname/name+'')+')';
+			attribute<ratio>    R_StadV				   	(Planregio) := ='merge('+BesteVar+', ratio,      '+AsItemList('Src/R_StadV/'     +Varname/name+'')+')';
+			attribute<GJ_yr>    Vraag_H2 				(Planregio) := ='merge('+BesteVar+', GJ_yr,      '+AsItemList('Src/VraagH2/'     +Varname/name+'')+')';
+			attribute<GJ_yr>    Vraag_GG  			   	(Planregio) := ='merge('+BesteVar+', GJ_yr,      '+AsItemList('Src/VraagGG/'     +Varname/name+'')+')';
+			attribute<m3_yr>	Vraag_GG_m3             (Planregio) := Vraag_GG / Invoer/Kengetallen/Constanten/GasEnergie;
+			attribute<string>   Uitgesloten  			(Planregio) := string(LeidraadResultaten/zichtjaar/PlanregioResults/Statisch/isUitgesloten);
 			
 			attribute<string>     MT_nr  (Planregio) :=
 				V01_Strategievariant == 's2a' ? Src/MT_nr/s2a :
@@ -251,8 +238,8 @@ container Outputs
 		container H16 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H16_Nat_meerkost','@C',Class/Variant/name), PlanRegio, Eur_yr);
 		container H17 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H17_Nat_meerkost_CO2','@C',Class/Variant/name), PlanRegio, Eur_ton);
 		container H18 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H18_Nat_meerkost_WEQ','@C',Class/Variant/name), PlanRegio, Eur_yr_WEQ);
-		container H19 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H19_waarde_hernieuwbaar_gas','@C',Class/Variant/name), PlanRegio, Eur_m3);
-		container H20 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H20_beschikbaarheid_hernieuwbaar_gas','@C',Class/Variant/name), PlanRegio, string);
+		container H19 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H19_waarde_klimaatneutraal_gas','@C',Class/Variant/name), PlanRegio, Eur_m3);
+		container H20 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H20_Toekenning_klimaatneutraal_gas','@C',Class/Variant/name), PlanRegio, string);
 		container H21 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H21_Input_elektriciteit_WD_OW','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H22 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H22_vraag_totaal_w','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H23 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H23_Vraag_RV_w','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
@@ -311,10 +298,11 @@ container Outputs
 		container A07 := for_each_nedv(Class/Variant/name, replace('data/@C/results/A07_Aandeel_eWP_WEQ','@C',Class/Variant/name), PlanRegio, ratio);
 		container A08 := for_each_nedv(Class/Variant/name, replace('data/@C/results/A08_Aandeel_eWP_GJ','@C',Class/Variant/name), PlanRegio, ratio	);
 		
-		container G01 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G01_Nat_meerkost_CO2_Kost_Reductie_Hoog','@C',Class/Variant/name), PlanRegio, Eur_ton);
-		container G02 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G02_Nat_meerkost_CO2_Kost_Reductie_Laag','@C',Class/Variant/name), PlanRegio, Eur_ton);
-		container G03 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G03_Nat_meerkost_CO2_En_Prijzen_Laag','@C',Class/Variant/name), PlanRegio, Eur_ton);
-		container G04 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G04_Nat_meerkost_CO2_En_Prijzen_Hoog','@C',Class/Variant/name), PlanRegio, Eur_ton);
+		container G01 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G01_Toekenning_klimaatneutraal_gas_1_5','@C',Class/Variant/name), PlanRegio, Eur_ton);
+		container G02 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G02_Toekenning_klimaatneutraal_gas_1_0','@C',Class/Variant/name), PlanRegio, Eur_ton);
+		container G03 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G03_Nat_meerkost_energiekosten_laag','@C',Class/Variant/name), PlanRegio, Eur_ton);
+		container G04 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G04_Nat_meerkost_energiekosten_hoog','@C',Class/Variant/name), PlanRegio, Eur_ton);
+		container G05 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G05_Nat_meerkost_energiebesparing_opt','@C',Class/Variant/name), PlanRegio, Eur_ton);
 		
 		container nrWEQ       := for_each_nedv(Class/Variant/name, replace('data/@C/results/nrWEQ','@C',Class/Variant/name), PlanRegio, nrWoning);
 		container R_StadV     := for_each_nedv(Class/Variant/name, replace('data/@C/results/R_StadV','@C',Class/Variant/name), PlanRegio, ratio);

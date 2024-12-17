@@ -113,10 +113,11 @@ container PlanregioResults
 		{
 			attribute<string> BU_CODE := Statisch/table/I01_buurtcode;
 			
-			attribute<Eur_ton> G01_Nat_meerkost_CO2_Kost_Reductie_Hoog := =Invoer/G01_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
-			attribute<Eur_ton> G02_Nat_meerkost_CO2_Kost_Reductie_Laag := =Invoer/G02_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
-			attribute<Eur_ton> G03_Nat_meerkost_CO2_En_Prijzen_Laag    := =Invoer/G03_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
-			attribute<Eur_ton> G04_Nat_meerkost_CO2_En_Prijzen_Hoog    := =Invoer/G04_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
+			attribute<string> G01_Toekenning_klimaatneutraal_gas_1_5 := =Invoer/G01_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const('null',PlanRegio)';
+			attribute<string> G02_Toekenning_klimaatneutraal_gas_1_0 := =Invoer/G02_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const('null',PlanRegio)';
+			attribute<Eur_ton> G03_Nat_meerkost_energiekosten_laag    := =Invoer/G03_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
+			attribute<Eur_ton> G04_Nat_meerkost_energiekosten_hoog    := =Invoer/G04_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
+			attribute<Eur_ton> G05_Nat_meerkost_energiebesparing_opt  := =Invoer/G05_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
 		}
 		parameter<string> RefExpr      := isStap0 ? 'Ref_2023_' : isReferentie ? 'Ref_2030_' : '%configName%/';
 		parameter<string> OutputFolder := '%localDataProjDir%/Results/' + Expand( . , RefExpr) + ''+ '';
@@ -807,8 +808,8 @@ container PlanregioResults
 							,0[Eur_yr_WEQ])
 				)[Eur_yr_WEQ];
 
-			attribute<Eur_m3> H19_waarde_hernieuwbaar_gas          := const(0[Eur_m3] , PlanRegio);
-			attribute<string> H20_beschikbaarheid_hernieuwbaar_gas := const('onbekend', PlanRegio);
+			attribute<Eur_m3> H19_Waarde_klimaatneutraal_gas          := const(0[Eur_m3] , PlanRegio);
+			attribute<string> H20_Toekenning_klimaatneutraal_gas := const('onbekend', PlanRegio);
 
 			attribute<GJ_yr_WEQ> H21_Input_elektriciteit_WD_OW     := IsOngeldig ? (0/0)[GJ_yr_WEQ] : round(MakeDefined(extensief/H21_Input_elektriciteit_WD_OW  / nrWEQ, 0[GJ_yr_WEQ]))[GJ_yr_WEQ];
 
