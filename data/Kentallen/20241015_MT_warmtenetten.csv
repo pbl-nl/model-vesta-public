@@ -5,8 +5,8 @@ Ki_id_grondgeb_i;2700;Eur_asl;Validatiesessies 2024. Correctie o.b.v. Atriensis 
 Ki_afleverset_i;1800;Eur_asl;Validatiesessies 2024. Kosten voor afleverset, installatie en demontage oude installatie.;kosten afleverset
 Ki_blokverw_i;194.8705282;Eur_Kw;Functioneel Ontwerp 4.0 Tabel A.3;te vergoeden afschrijving voor gasketels blokverwarming
 K_Ov_i;0;Eur_asl;Validatiesessies 2024. Ongeriefsvergoeding niet meer toepassen, vooral relevant bij grootschalige renovatiemomenten, niet warmtenetspecifiek.;tarief ongeriefsvergoeding
-K_Pm_min_i;66.72281359;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.3;tarief projectmanagement minimaal
-K_Pm_max_i;333.6021892;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.3;tarief projectmanagement maximaal
+K_Pm_min_i;300;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.3;tarief projectmanagement minimaal
+K_Pm_max_i;8000;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.3;tarief projectmanagement maximaal
 K_Wmtr_min_var_i;1.472962237;Eur_Kw;Functioneel Ontwerp 4.0 Tabel A.4;variabele kosten warmtemeters glastuinbouw en utiliteit minimum
 K_Wmtr_max_var_i;1.734294247;Eur_Kw;Functioneel Ontwerp 4.0 Tabel A.5;variabele kosten warmtemeters glastuinbouw en utiliteit maximum
 K_Wmtr_min_vast_i;1067.529381;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.6;vaste kosten warmtemeters glastuinbouw en utiliteit minimum
