@@ -42,6 +42,7 @@ container Kengetallen: Using = "Units;Geography", FreeData = "False"
 		parameter<ratio>     Omwegfactor            :=     1.25                          , Descr = "";
 		parameter<kW_OS>     Vermogen_OS            :=   825   [kW_OS]                   , Descr = "";
 		parameter<ratio>     Efficiency_EA          :=     1.0 [ratio]                   , Descr = "Efficiency van elektriciteitsverbruik in elektrische apparatuur als verhouding metervraag tot functionele vraag";
+		parameter<ratio>     winstP_warmtebedrijven :=     0.0325 [ratio]                , Descr = "Percentage winst dat warmtebedrijven rekenen om totale kosten";
 	}
 	
 	#include<MTkentallen.dms>

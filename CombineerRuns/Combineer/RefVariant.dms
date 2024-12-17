@@ -110,6 +110,7 @@ container Outputs
 			attribute<Eur_yr>     K20_Gebouw_installatie_w           	(PlanRegio) := ='merge('+BesteVar+', Eur_yr,  '+AsItemList('Src/K20/'+Varname/name+'')+')';
 			attribute<Eur_yr>     K21_Gebouw_schil_u           			(PlanRegio) := ='merge('+BesteVar+', Eur_yr,  '+AsItemList('Src/K21/'+Varname/name+'')+')';
 			attribute<Eur_yr>     K22_Gebouw_installatie_u           	(PlanRegio) := ='merge('+BesteVar+', Eur_yr,  '+AsItemList('Src/K22/'+Varname/name+'')+')';
+			attribute<Eur_yr>     K23_winst_warmtebedrijven           	(PlanRegio) := ='merge('+BesteVar+', Eur_yr,  '+AsItemList('Src/K23/'+Varname/name+'')+')';
 			}
 			parameter<string> OutputFolder := '%localDataProjDir%/Results/' + Expand( . , OutputExpr) + ''+ '';
 			unit<uint32> variable := SubItem_PropValues(table,'name');
@@ -288,6 +289,7 @@ container Outputs
 		container K20 := for_each_nedv(Class/Variant/name, replace('data/@C/results/K20_Gebouw_installatie_w','@C',Class/Variant/name), PlanRegio, Eur_yr);
 		container K21 := for_each_nedv(Class/Variant/name, replace('data/@C/results/K21_Gebouw_schil_u','@C',Class/Variant/name), PlanRegio, Eur_yr);
 		container K22 := for_each_nedv(Class/Variant/name, replace('data/@C/results/K22_Gebouw_installatie_u','@C',Class/Variant/name), PlanRegio, Eur_yr);
+		container K23 := for_each_nedv(Class/Variant/name, replace('data/@C/results/K23_winst_warmtebedrijven','@C',Class/Variant/name), PlanRegio, Eur_yr);
 		
 		container A01 := for_each_nedv(Class/Variant/name, replace('data/@C/results/A01_Aansl_aardgas','@C',Class/Variant/name), PlanRegio, nrAsl);
 		container A02 := for_each_nedv(Class/Variant/name, replace('data/@C/results/A02_Aansl_eWP','@C',Class/Variant/name), PlanRegio, nrAsl);

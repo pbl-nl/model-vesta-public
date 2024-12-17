@@ -232,6 +232,12 @@ template GeoThermie
 					attribute<Eur_yr> Km_ow_elek      (PlanRegio) := const(0[Eur_yr], PlanRegio);
 
 					attribute<Eur_yr> Kj_ow_productie (PlanRegio) := GebruikOptie ? Kosten/Kj_WarmteWaarde : 0[Eur_yr]; // geen opsplitsing naar EH, CO2 etc.
+					attribute<Eur_yr> Kj_totaal       (PlanRegio) :=  ge/Kji_ge_ov    + ge/Kji_ge_pm 
+																	+ id/Kj_id_oh    + id/Kji_id 
+																	+ wd/Kj_wd_gas    + wd/Kj_wd_gas_EH + wd/Kj_wd_gas_CO2 + wd/Kj_wd_elek + wd/Kj_wd_elek_EH + wd/Kj_wd_elek_CO2 + wd/Kj_wd_oh + wd/Kj_wd_adm + wd/Kji_wd
+																	+ pt/Kj_pt_oh     + pt/Kj_pt_adm    + pt/Kji_pt
+																	+ Kj_ow_productie + Kj_ow_oh 		+ Kj_ow_adm 	   + Kji_ow;
+					attribute<Eur_yr> Kj_winst        (PlanRegio) := Invoer/Kengetallen/Constanten/winstP_warmtebedrijven * Kj_totaal;
 
 					attribute<Eur_yr> Kj_ow_oh        (PlanRegio) := (heeftNieuwGebruik ? Kosten/Kj_ow_oh  : 0[Eur_yr]) + VorigePeriode/jaarlijks/ow/Kj_ow_oh;
 					attribute<Eur_yr> Kj_ow_adm       (PlanRegio) := (heeftNieuwGebruik ? Kosten/Kj_ow_adm : 0[Eur_yr]) + VorigePeriode/jaarlijks/ow/Kj_ow_adm;

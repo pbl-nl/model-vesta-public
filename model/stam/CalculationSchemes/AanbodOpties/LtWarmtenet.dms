@@ -545,6 +545,14 @@ template LtWarmtenetImpl
 					attribute<Eur_yr> Kj_ow_elek      (PlanRegio) := const(0[Eur_yr], PlanRegio); // geen elektriciteitsverbruik bij opwekker
 					attribute<Eur_yr> Kj_ow_gas	      (PlanRegio) := const(0[Eur_yr], PlanRegio); // geen gasverbruik bij LT netten
 					attribute<Eur_yr> Kj_ow_productie (PlanRegio) := ='add('+AsItemList('ObjectResults/' + LT_Component/name + '/PR/OenM/Kj_ow_productie') + ') + VorigePeriode/jaarlijks/ow/Kj_ow_productie';
+					
+					attribute<Eur_yr> Kj_totaal       (PlanRegio) :=  ge/Kji_ge_ov    + ge/Kji_ge_pm 
+																	+ id/Kji_id       + id/Kj_id_oh     + id/Kj_id_adm 
+																	+ wd/Kji_wd 	  + wd/Kj_wd_elek   + wd/Kj_wd_elek_EH + wd/Kj_wd_elek_CO2 + wd/Kj_wd_adm + wd/Kj_wd_oh
+																	+ pt/Kji_pt       + pt/Kj_pt_oh     + pt/Kj_pt_adm
+																	+ Kji_ow          + Kj_ow_elek      + Kj_ow_elek_CO2   + Kj_ow_elek_EH 	   + Kj_ow_adm    + Kj_ow_oh;
+					attribute<Eur_yr> Kj_winst        (PlanRegio) := Invoer/Kengetallen/Constanten/winstP_warmtebedrijven * Kj_totaal;
+					
 					attribute<Eur_yr> Kj_ow_oh        (PlanRegio) := ='add('+AsItemList('ObjectResults/' + LT_Component/name + '/PR/OenM/Kj_ow_oh') + ') + VorigePeriode/jaarlijks/ow/Kj_ow_oh';
 					attribute<Eur_yr> Kj_ow_adm       (PlanRegio) := ='add('+AsItemList('ObjectResults/' + LT_Component/name + '/PR/OenM/Kj_ow_adm') + ') + VorigePeriode/jaarlijks/ow/Kj_ow_adm';
 					attribute<Eur_yr> Kji_ow          (PlanRegio) := eenmalig/ki_ow * (NCW/ow28/StartDiscountFactor * NCW/ow28/AnnualisationFactor) + VorigePeriode/jaarlijks/ow/Kji_ow;

@@ -62,6 +62,7 @@ container LeidraadResultaten: using = "Model"
 				attribute<Eur_yr> K20_Gebouw_installatie_w   (PlanRegio) := const(0[Eur_yr], PlanRegio);
 				attribute<Eur_yr> K21_Gebouw_schil_u         (PlanRegio) := const(0[Eur_yr], PlanRegio);
 				attribute<Eur_yr> K22_Gebouw_installatie_u   (PlanRegio) := const(0[Eur_yr], PlanRegio);
+				attribute<Eur_yr> K23_winst_warmtebedrijven  (PlanRegio) := const(0[Eur_yr], PlanRegio);
 			}
 			container TotaalUitstoot
 			{
@@ -110,6 +111,11 @@ container LeidraadResultaten: using = "Model"
 			attribute<Eur_yr> Kj_ow_adm       (PlanRegio) := R_StadV * Startjaar/GebiedsAllocatie/RestWarmte/lastiter/Assignment/Kj_ow_adm;
 			attribute<Eur_yr> Kj_gnet_oh      (PlanRegio) := R_StadV * Netwerken/Aardgas/Kj_oh;
 			attribute<Eur_yr> Kj_enet_oh      (PlanRegio) := R_StadV * Netwerken/Elektriciteit/Kj_oh;
+			
+			attribute<Eur_yr> Kj_totaal		  (PlanRegio) := Kj_ow_productie + Kj_wd_gas + Kj_wd_elek 
+															+ Kj_lv_admin + Kj_id_oh + Kj_wd_oh + Kj_wd_adm 
+															+ Kj_pt_oh + Kj_pt_adm + Kj_ow_oh + Kj_ow_adm;
+			attribute<Eur_yr> Kj_winst 		  (PlanRegio) := Invoer/Kengetallen/Constanten/winstP_warmtebedrijven * Kj_totaal;
 
 			attribute<nrAsl>nrAansl_w_MT      (PlanRegio) := R_StadV * sum(StateNaAllocatie/bebouwing/BestaandeWoning/nrAansluitingen, StateNaAllocatie/bebouwing/BestaandeWoning/PlanRegio_rel);
 			attribute<nrAsl>nrAansl_u_MT      (PlanRegio) := R_StadV * sum(StateNaAllocatie/bebouwing/BestaandeUtil/nrAansluitingen  , StateNaAllocatie/bebouwing/BestaandeUtil/PlanRegio_rel  );

@@ -1005,6 +1005,7 @@ container PlanregioResults
 						? 0[Eur_yr]
 						: MakeDefined(
 							 R_AardG * StateNaAllocatie/totaal/jaarlijks/ow/Kj_ow_productie + WarmteBestaand/Kj_ow_productie //productie warmte nieuwe warmtenetten
+						   + R_AardG * StateNaAllocatie/totaal/jaarlijks/ow/Kj_winst 	    + WarmteBestaand/Kj_winst 		 //winst op kosten doorberekend in warmteprijs
 							,0[Eur_yr])
 				  )[Eur_yr];
 
@@ -1140,6 +1141,16 @@ container PlanregioResults
 							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_15_u
 							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_LTAS_u
 							- Origkosten/table/K22_Gebouw_installatie_u
+							,0[Eur_yr])
+				  )[Eur_yr];
+				  
+			attribute<Eur_yr> K23_winst_warmtebedrijven := IsOngeldig
+				? (0/0)[Eur_yr]
+				: round(
+					IsUitgesloten_Stap0_Referentie
+						? 0[Eur_yr]
+						: MakeDefined(
+							  R_AardG * StateNaAllocatie/totaal/jaarlijks/ow/Kj_winst + WarmteBestaand/Kj_winst 		 //winst op kosten doorberekend in warmteprijs
 							,0[Eur_yr])
 				  )[Eur_yr];
 		}
