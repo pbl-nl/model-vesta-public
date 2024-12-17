@@ -44,7 +44,7 @@ container S2f_D_Geo_overal
 			#include <%projDir%/Runs/DefaultSettings/Basis.dms>
 			#include <%projDir%/Runs/DefaultSettings/Rekenstap.dms>
 			#include <%projDir%/Runs/DefaultSettings/Rekenstap_Doeniks.dms>
-			#include <%projDir%/Runs/DefaultSettings/Rekenstap_GroenGasD.dms>
+			#include <%projDir%/Runs/DefaultSettings/Rekenstap_KlimaatneutraalGasD.dms>
 			#include <%projDir%/Runs/DefaultSettings/Rekenstap_AllesD_Geo_overal.dms>
 			#include <%projDir%/Runs/DefaultSettings/Leidraad.dms>
 		}
@@ -57,7 +57,7 @@ container S2f_D_Geo_overal
 			
 			// Per rekenstap kun je hier specifieke instelling overrulen. De lijst van rekenstappen wordt gedefinieerd bij rekenstap
 			container R1_2030 := DefaultInstellingen/Rekenstap_Doeniks/Stap_1;
-			container R2_2030 := DefaultInstellingen/Rekenstap_GroenGasD/Stap_1;
+			container R2_2030 := DefaultInstellingen/Rekenstap_KlimaatneutraalGasD/Stap_1;
 			container R3_2030 := DefaultInstellingen/Rekenstap_AllesD_Geo_overal/Stap_1;
 		}
 	}

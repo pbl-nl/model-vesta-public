@@ -32,8 +32,8 @@ call :do_variant S3f_D_LT30_70
 call :do_variant S3g_D_WKO15_15
 call :do_variant S3h_D_WKO15_70
 
-call :do_variant S4a_GG_B_hWP
-call :do_variant S4b_GG_D_hWP
+call :do_variant S4a_KG_B_hWP
+call :do_variant S4b_KG_D_hWP
 
 echo Klaar met uitrekenen van alle varianten per buurt voor het datapakket per gemeente
 pause

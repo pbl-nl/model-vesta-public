@@ -144,8 +144,8 @@ container EnergiePrijzen
 			,'GebruiksSectie(table, ''GLAST'')'
 		);
 		
-		container GroenGas := ImportElekGas(
-			 FileName + GXXexpr + '_GroenGas'
+		container KlimaatneutraalGas := ImportElekGas(
+			 FileName + GXXexpr + '_KlimaatneutraalGas'
 			,m3
 			,m3 / GJ
 			,1.0 / Kengetallen/constanten/GasEnergie

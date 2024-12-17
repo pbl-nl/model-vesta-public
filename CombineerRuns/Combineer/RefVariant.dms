@@ -9,15 +9,15 @@ container Outputs
 	container S1_WP := StratOutput('ConstructStrategie/S1varL','BesteS1variant','Strategie_1_',Class/S1Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
 	container S2_MT := StratOutput('ConstructStrategie/S2varL','BesteS2variant','Strategie_2_',Class/S2Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
 	container S3_LT := StratOutput('ConstructStrategie/S3varL','BesteS3variant','Strategie_3_',Class/S3Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
-	container S4_GG := StratOutput('ConstructStrategie/S4varL','BesteS4variant','Strategie_4_',Class/GGVariant,'Gaswaarde/GasWaarde_GG','Gaswaarde/Beschikbaarheid_GG_str');
+	container S4_KG := StratOutput('ConstructStrategie/S4varL','BesteS4variant','Strategie_4_',Class/KGVariant,'Gaswaarde/GasWaarde_KG','Gaswaarde/Beschikbaarheid_KG_str');
 	
 	container LN    := StratOutput(
 		 'BesteViewerBeschikbaar'
 		,'BesteViewerBeschikbaar'
 		,'LN'
 		,Class/Variant
-		,'Class/Variant/IsGG[BesteViewerBeschikbaar] ? Gaswaarde/GasWaarde_GG : 0.0[Eur_m3]'
-		,'Class/Variant/IsGG[BesteViewerBeschikbaar] ? Gaswaarde/Beschikbaarheid_GG_str : NvtExpr');
+		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde/GasWaarde_KG : 0.0[Eur_m3]'
+		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde/Beschikbaarheid_KG_str : NvtExpr');
 	
 	template StratOutput
 	{
@@ -26,8 +26,8 @@ container Outputs
 		parameter<string> OutputExpr;
 		unit<uint8> Varname;
 		
-		parameter<string> GaswaardeEurM3 := 'const(0.0[Eur_m3],PlanRegio)';  //'Gaswaarde/GasWaarde_GG' - //'Gaswaarde/GasWaarde_H2'
-		parameter<string> BeschikbaarStr := 'const(NvtExpr,PlanRegio)';  //'Gaswaarde/Beschikbaarheid_GG_str' - 'Gaswaarde/Beschikbaarheid_H2_str'
+		parameter<string> GaswaardeEurM3 := 'const(0.0[Eur_m3],PlanRegio)';  //'Gaswaarde/GasWaarde_KG' - //'Gaswaarde/GasWaarde_H2'
+		parameter<string> BeschikbaarStr := 'const(NvtExpr,PlanRegio)';  //'Gaswaarde/Beschikbaarheid_KG_str' - 'Gaswaarde/Beschikbaarheid_H2_str'
 		parameter<string> NvtExpr := 'Nee';
 		
 		container Hoofdindicatoren
@@ -45,7 +45,7 @@ container Outputs
 			attribute<GJ_yr_ha>   H07_vraag_tot_ha  	  	  	      	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_ha,   '+AsItemList('Src/H07/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ>  H08_Input_totaal 	  	  	  	      	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ,  '+AsItemList('Src/H08/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ>  H09_Input_aardgas 	  	  	      	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ,  '+AsItemList('Src/H09/'+Varname/name+'')+')';
-			attribute<GJ_yr_WEQ>  H10_Input_duurzaamgas  	  	      	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ,  '+AsItemList('Src/H10/'+Varname/name+'')+')';
+			attribute<GJ_yr_WEQ>  H10_Input_KlimaatneutraalGas  	  	      	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ,  '+AsItemList('Src/H10/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ>  H11_Input_elektriciteit 	  	      	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ,  '+AsItemList('Src/H11/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ>  H12_input_MTwarmtebronnen 	      	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ,  '+AsItemList('Src/H12/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ>  H13_input_LTwarmtebronnen	          	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ,  '+AsItemList('Src/H13/'+Varname/name+'')+')';
@@ -71,11 +71,11 @@ container Outputs
 			attribute<GJ_yr_WEQ> H33_Vraag_App_u                		(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H33/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H34_Input_totaal_w                		(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H34/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H35_Input_aardgas_w                	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H35/'+Varname/name+'')+')';
-			attribute<GJ_yr_WEQ> H36_Input_duurzaamgas_w               	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H36/'+Varname/name+'')+')';
+			attribute<GJ_yr_WEQ> H36_Input_KlimaatneutraalGas_w               	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H36/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H37_Input_elektriciteit_w             	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H37/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H38_Input_totaal_u                		(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H38/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H39_Input_aardgas_u                	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H39/'+Varname/name+'')+')';
-			attribute<GJ_yr_WEQ> H40_Input_duurzaamgas_u               	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H40/'+Varname/name+'')+')';
+			attribute<GJ_yr_WEQ> H40_Input_KlimaatneutraalGas_u               	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H40/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H41_Input_elektriciteit_u             	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H41/'+Varname/name+'')+')';
 			}
 			parameter<string> OutputFolder := '%localDataProjDir%/Results/' + Expand( . , OutputExpr) + ''+ '';
@@ -188,8 +188,8 @@ container Outputs
 			attribute<nrWoning> nrWEQ					(Planregio) := ='merge('+BesteVar+', nrWoning, '+AsItemList('Src/nrWEQ/'       +Varname/name+'')+')';
 			attribute<ratio>    R_StadV				   	(Planregio) := ='merge('+BesteVar+', ratio,      '+AsItemList('Src/R_StadV/'     +Varname/name+'')+')';
 			attribute<GJ_yr>    Vraag_H2 				(Planregio) := ='merge('+BesteVar+', GJ_yr,      '+AsItemList('Src/VraagH2/'     +Varname/name+'')+')';
-			attribute<GJ_yr>    Vraag_GG  			   	(Planregio) := ='merge('+BesteVar+', GJ_yr,      '+AsItemList('Src/VraagGG/'     +Varname/name+'')+')';
-			attribute<m3_yr>	Vraag_GG_m3             (Planregio) := Vraag_GG / Invoer/Kengetallen/Constanten/GasEnergie;
+			attribute<GJ_yr>    Vraag_KG  			   	(Planregio) := ='merge('+BesteVar+', GJ_yr,      '+AsItemList('Src/VraagKG/'     +Varname/name+'')+')';
+			attribute<m3_yr>	Vraag_KG_m3             (Planregio) := Vraag_KG / Invoer/Kengetallen/Constanten/GasEnergie;
 			attribute<string>   Uitgesloten  			(Planregio) := string(LeidraadResultaten/zichtjaar/PlanregioResults/Statisch/isUitgesloten);
 			
 			attribute<string>     MT_nr  (Planregio) :=
@@ -229,7 +229,7 @@ container Outputs
 		container H07 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H07_vraag_tot_ha','@C',Class/Variant/name), PlanRegio, GJ_yr_ha);
 		container H08 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H08_Input_totaal','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H09 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H09_Input_aardgas','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
-		container H10 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H10_Input_duurzaamgas','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
+		container H10 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H10_Input_KlimaatneutraalGas','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H11 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H11_Input_elektriciteit','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H12 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H12_input_MTwarmtebronnen','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H13 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H13_input_LTwarmtebronnen','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
@@ -255,11 +255,11 @@ container Outputs
 		container H33 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H33_Vraag_App_u','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H34 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H34_input_totaal_w','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H35 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H35_input_aardgas_w','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
-		container H36 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H36_input_duurzaamgas_w','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
+		container H36 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H36_input_KlimaatneutraalGas_w','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H37 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H37_input_elektriciteit_w','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H38 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H38_input_totaal_u','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H39 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H39_input_aardgas_u','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
-		container H40 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H40_input_duurzaamgas_u','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
+		container H40 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H40_input_KlimaatneutraalGas_u','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 		container H41 := for_each_nedv(Class/Variant/name, replace('data/@C/results/H41_input_elektriciteit_u','@C',Class/Variant/name), PlanRegio, GJ_yr_WEQ);
 
 		container K01 := for_each_nedv(Class/Variant/name, replace('data/@C/results/K01_Enet_verzwaren','@C',Class/Variant/name), PlanRegio, Eur_yr);		
@@ -307,7 +307,7 @@ container Outputs
 		container nrWEQ       := for_each_nedv(Class/Variant/name, replace('data/@C/results/nrWEQ','@C',Class/Variant/name), PlanRegio, nrWoning);
 		container R_StadV     := for_each_nedv(Class/Variant/name, replace('data/@C/results/R_StadV','@C',Class/Variant/name), PlanRegio, ratio);
 		container VraagH2     := for_each_nedv(Class/Variant/name, replace('data/@C/results/VraagH2','@C',Class/Variant/name), PlanRegio, GJ_yr);
-		container VraagGG     := for_each_nedv(Class/Variant/name, replace('data/@C/results/VraagGG','@C',Class/Variant/name), PlanRegio, GJ_yr);
+		container VraagKG     := for_each_nedv(Class/Variant/name, replace('data/@C/results/VraagKG','@C',Class/Variant/name), PlanRegio, GJ_yr);
 		container Uitgesloten := for_each_nedv(Class/Variant/name, replace('data/@C/results/Uitgesloten','@C',Class/Variant/name), PlanRegio, string);
 		container MT_nr       := for_each_nedv(Class/Variant/name, replace('data/@C/results/MT_nr','@C',Class/Variant/name), PlanRegio, string);
 		container LT_nr       := for_each_nedv(Class/Variant/name, replace('data/@C/results/LT_nr','@C',Class/Variant/name), PlanRegio, string);

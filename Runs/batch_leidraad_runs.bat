@@ -34,13 +34,13 @@ call :do_variant S3f_D_LT30_70
 call :do_variant S3g_D_WKO15_15
 call :do_variant S3h_D_WKO15_70
 
-call :do_variant S4a_GG_B_hWP
-call :do_variant S4b_GG_D_hWP
+call :do_variant S4a_KG_B_hWP
+call :do_variant S4b_KG_D_hWP
 
 call :do_runfile S1_WP
 call :do_runfile S2_MT
 call :do_runfile S3_LT
-call :do_runfile S4_GG
+call :do_runfile S4_KG
 
 call :do_runfile LN
 

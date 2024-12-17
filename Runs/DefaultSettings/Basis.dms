@@ -288,18 +288,14 @@ container Basis
 					parameter<string> Gebied_H2_zK : ['Criteria/Gebied']; // alternatieve state gebiedsoptie voor waterstof
 					parameter<string> Gebied_H2_mK : ['Criteria/Gebied']; // alternatieve state gebiedsoptie voor waterstof
 
-					parameter<bool>   KiesMaatschappelijk: [false], Descr = "maak maatschappelijke rentabiliteitsafweging indien true, anders obv eindgebruikerskosten";
+					parameter<bool>   KiesMaatschappelijk: [true], Descr = "maak maatschappelijke rentabiliteitsafweging indien true, anders obv eindgebruikerskosten";
 				}
 				container Kosten
 				{
 					parameter<ratio> EfficiencySchuif            : [0.5]; // 1.0 = maximale efficiency, 0.0 = minimale efficiency
 					parameter<ratio> VerbeterMinMaxSchuif        : [0.5]; // 0.0 = minimale kosten; 1.0 = maximale kosten.
 
-					parameter<ratio> LeercurveMinMaxSchuif       := SharedInvoer/G01_aan 
-						? 0[ratio]
-						: SharedInvoer/G02_aan
-							? 1  [ratio]
-							: 0.5[ratio]; // 0.0 = optimistische leercurve; 1.0= pessimistische leercurve
+					parameter<ratio> LeercurveMinMaxSchuif       : [0.5]; // 0.0 = optimistische leercurve; 1.0= pessimistische leercurve
 
 					parameter<ratio> LeercurveGebruikSchuif      : [1.0]  ; // 0.0 = kosten constant; 1.0 = Leercurve geheel in gebruik
 					parameter<ratio> IndividueleVerwarmingSchuif : [0.846]; // 0.0 = alle meergezinswoningen hebben blokverwarming; 1.0 = alle meergezinswonigen hebben individuele verwarming
@@ -359,9 +355,9 @@ container Basis
 		parameter<float64> MinderDanAndersFactor  :=  1.0       , Descr = "niet minder dan anders: zet op bijvoorbeeld 0.9 voor 10% korting op de volgens de WarmteWet berekende prijs";
 		parameter<bool>    IsVasteWarmtePrijs     := false      , Descr = "indien true: er geldt een vaste warmteprijs";
 		parameter<Eur_GJ>  VasteWarmtePrijs       := 25[Eur_GJ] , Descr = "wordt alleen gebruikt indien IsVasteWarmtePrijs";
-		parameter<float64> GroenGasFactor         :=  0.000     , Descr = "aandeel van de aardgasvraag dat door groengas zal worden ingevuld(zonder Co2 uitstoot) tegen groengasprijs", Source = "Functioneel Ontwerp 4.0, Bijlage A.9 tabel 22 - opnieuw bepaald oktober 2019";
+		parameter<float64> KlimaatneutraalGasFactor         :=  0.000     , Descr = "aandeel van de aardgasvraag dat door KlimaatneutraalGas zal worden ingevuld(zonder Co2 uitstoot) tegen KlimaatneutraalGasprijs", Source = "Functioneel Ontwerp 4.0, Bijlage A.9 tabel 22 - opnieuw bepaald oktober 2019";
 		parameter<float64> H2Factor               :=  0.000     , Descr = "aandeel van de aardgasvraag die door H2 wordt ingevuld in STEG", Source = "TODO DOC: telefonisch Overleg Object Vision - Folckert";
-		parameter<float64> AardGasCO2Factor       :=  0.994     , Descr = "aandeel van de aardgasvraag die door groengas wordt ingevuld(zonder Co2 uitstoot) tegen aardgasprijs", Source = "Functioneel Ontwerp 4.0, Bijlage A.9 tabel 22 - opnieuw bepaald oktober 2019";
+		parameter<float64> AardGasCO2Factor       :=  0.994     , Descr = "aandeel van de aardgasvraag die door KlimaatneutraalGas wordt ingevuld(zonder Co2 uitstoot) tegen aardgasprijs", Source = "Functioneel Ontwerp 4.0, Bijlage A.9 tabel 22 - opnieuw bepaald oktober 2019";
 		parameter<float64> ElektriciteitCO2Factor :=  1.0       , Descr = "aandeel van de elektriciteitsvraag waarover geen CO2 uitstoot wordt gerekend (bovenop factor in invoerbestand)";
 
 		container Afweging
@@ -371,7 +367,7 @@ container Basis
 			parameter<bool>   AlwaysGEO    := false     , Descr = "indien true worden krijgen alle buurten geothermie opgelegd ongeacht de rentabiliteitsafweging";
 			parameter<bool>   AlwaysH2     := false     , Descr = "indien true worden krijgen alle buurten waterstof opgelegd ongeacht de rentabiliteitsafweging";
 			parameter<bool>   GEOcontour   := true      , Descr = "indien true worden bij geothermieafwegingen de contour voor kansgebieden gebruikt, bij false worden alle gebieden als kansrijk aangemerkt";
-			parameter<bool>   IsGroenGas   := false     , Descr = "zet dit op true indien _GG prijzen worden gebruikt (t.b.v. rapportage PlanregioResults)";
+			parameter<bool>   IsKlimaatneutraalGas   := false     , Descr = "zet dit op true indien _KG prijzen worden gebruikt (t.b.v. rapportage PlanregioResults)";
 			parameter<Eur_GJ> OnrendabelMT := 0[Eur_GJ] , Descr = "extra ruimte om MT restwarmtenetten aan te leggen ondanks onrendabele toppen (als vervanging voor SDE)";
 		}
 	}

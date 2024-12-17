@@ -20,7 +20,7 @@ container NLResults
 			attribute<GJ_yr> H06_Vraag_App             := sum(PlanregioResults/Hoofdindicatoren/extensief/H06_Vraag_App             ,NL_rel);
 			attribute<GJ_yr> H08_Input_totaal          := sum(PlanregioResults/Hoofdindicatoren/extensief/H08_Input_totaal          ,NL_rel);
 			attribute<GJ_yr> H09_Input_aardgas         := sum(PlanregioResults/Hoofdindicatoren/extensief/H09_Input_aardgas         ,NL_rel);
-			attribute<GJ_yr> H10_Input_duurzaamgas     := sum(PlanregioResults/Hoofdindicatoren/extensief/H10_Input_duurzaamgas     ,NL_rel);
+			attribute<GJ_yr> H10_Input_KlimaatneutraalGas     := sum(PlanregioResults/Hoofdindicatoren/extensief/H10_Input_KlimaatneutraalGas     ,NL_rel);
 			attribute<GJ_yr> H11_Input_elektriciteit   := sum(PlanregioResults/Hoofdindicatoren/extensief/H11_Input_elektriciteit   ,NL_rel);
 			attribute<GJ_yr> H12_input_MTwarmtebronnen := sum(PlanregioResults/Hoofdindicatoren/extensief/H12_input_MTwarmtebronnen ,NL_rel);
 			attribute<GJ_yr> H13_input_LTwarmtebronnen := sum(PlanregioResults/Hoofdindicatoren/extensief/H13_input_LTwarmtebronnen ,NL_rel);

@@ -44,7 +44,7 @@ container Runfile
 		{
 			#include <%projDir%/Runs/DefaultSettings/Basis.dms>
 			#include <%projDir%/Runs/DefaultSettings/Rekenstap_Doeniks.dms>
-			#include <%projDir%/Runs/DefaultSettings/Rekenstap_GroenGasB.dms>
+			#include <%projDir%/Runs/DefaultSettings/Rekenstap_KlimaatneutraalGasB.dms>
 			#include <%projDir%/Runs/DefaultSettings/Leidraad.dms>
 		}
 		
@@ -56,7 +56,7 @@ container Runfile
 			
 			// Per rekenstap kun je hier specifieke instelling overrulen. De lijst van rekenstappen wordt gedefinieerd bij rekenstap
 			container R1_2030 := DefaultInstellingen/Rekenstap_Doeniks/Stap_1;
-			container R2_2030 := DefaultInstellingen/Rekenstap_GroenGasB/Stap_1;
+			container R2_2030 := DefaultInstellingen/Rekenstap_KlimaatneutraalGasB/Stap_1;
 		}
 	}
 
