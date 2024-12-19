@@ -51,6 +51,8 @@ template ModelObjectKentallenImport
 		container Ki_min_opp := for_each_nedv(SchilSprong_sel ? Classifications/SchilSprong/name : '', 'table/Ki_'+Classifications/SchilSprong/name+'_min_opp[Eur_m2]', ., Eur_m2);
 		container Ki_max_opp := for_each_nedv(SchilSprong_sel ? Classifications/SchilSprong/name : '', 'table/Ki_'+Classifications/SchilSprong/name+'_max_opp[Eur_m2]', ., Eur_m2);
 
+		container Ki_cutoff_opp := for_each_nedv(SchilSprong_sel ? Classifications/SchilSprong/name : '', 'table/Ki_'+Classifications/SchilSprong/name+'_500m[Eur_m2]', ., Eur_m2);
+
 		attribute<Classifications/GebouwOptie> StartOptie_rel := const(GebouwOptie, .);
 	}
 }

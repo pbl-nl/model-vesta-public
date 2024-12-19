@@ -390,6 +390,7 @@ template BebouwingsComponentT
 			{
 				attribute<Eur_asl> Ki_asl := =#.=0?'const(0[Eur_asl],.)':'union_data(.,'+AsItemList(replace('(ModelObject/Ki_min_asl/@SS@ * Schuiven/KostenMin + ModelObject/Ki_max_asl/@SS@ * Schuiven/KostenMax) * Leercurves/'+LeerCurveName+'/Curve', '@SS@', name))+')';
 				attribute<Eur_m2 > Ki_opp := =#.=0?'const(0[Eur_m2 ],.)':'union_data(.,'+AsItemList(replace('(ModelObject/Ki_min_opp/@SS@ * Schuiven/KostenMin + ModelObject/Ki_max_opp/@SS@ * Schuiven/KostenMax) * Leercurves/'+LeerCurveName+'/Curve', '@SS@', name))+')';
+				attribute<Eur_m2 > Ki_cutoff_opp := =#.=0?'const(0[Eur_m2 ],.)':'union_data(.,'+AsItemList(replace('(ModelObject/Ki_cutoff_opp/@SS@ * Schuiven/KostenMin + ModelObject/Ki_cutoff_opp/@SS@ * Schuiven/KostenMax) * Leercurves/'+LeerCurveName+'/Curve', '@SS@', name))+')';
 			}
 		}
 

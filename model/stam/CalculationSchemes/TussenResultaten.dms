@@ -36,14 +36,13 @@ container TussenResultaten
 		attribute<SchilSprong_x_MO> SchilSprong_xMO_rel(BebouwingsObject) := combine_data(VerbruiksOpties/schilsprong_set/xMO, SchilSprong_rel, BebouwingsObject/Model_rel);
 
 		parameter<bool> IsUtil  := BCname == 'BestaandeUtil'; 
-		attribute<m2> 	cutoff (BebouwingsObject) := = IsUtil ? 'classifications/UtilTypeBestaand/isolatie_vast_cutoff[BebouwingsObject/BebouwingsType]' : 'const(999999[m2], BebouwingsObject)'; //Hack voor woningen, want geen gedeeld domein BebouwingsType
+		attribute<m2> 	cutoff (BebouwingsObject) := = IsUtil ? 'classifications/UtilTypeBestaand/isolatie_vast_cutoff[BebouwingsObject/BebouwingsType]' : 'const(0[m2], BebouwingsObject)'; //Hack voor woningen, want geen gedeeld domein BebouwingsType
 		attribute<bool> IsCutoff (BebouwingsObject) := BebouwingsObject/Oppervlakte < cutoff ;
 		
 		attribute<Eur> Ki_GV_def (BebouwingsObject) := MakeDefined
 		(
-			IsCutoff
-			? (SchilSprong_x_MO/Ki_asl[SchilSprong_xMO_rel] * BebouwingsObject/nrAansluitingen +
-				SchilSprong_x_MO/Ki_opp[SchilSprong_xMO_rel] * 100[m2]) * (BebouwingsObject/Oppervlakte / 100[m2])
+			IsCutoff 
+			? SchilSprong_x_MO/Ki_cutoff_opp[SchilSprong_xMO_rel] * BebouwingsObject/Oppervlakte
 			: SchilSprong_x_MO/Ki_asl[SchilSprong_xMO_rel] * BebouwingsObject/nrAansluitingen +
 			 SchilSprong_x_MO/Ki_opp[SchilSprong_xMO_rel] * BebouwingsObject/Oppervlakte
 			,0[Eur]
@@ -57,8 +56,7 @@ container TussenResultaten
 		attribute<Eur> Ki_GV_alt (BebouwingsObject) := MakeDefined
 		(
 			IsCutoff
-			? (SchilSprong_x_MO/Ki_asl[SchilSprong_xMO_rel_alt] * BebouwingsObject/nrAansluitingen +
-			 SchilSprong_x_MO/Ki_opp[SchilSprong_xMO_rel_alt] * 100[m2]) * (BebouwingsObject/Oppervlakte / 100[m2])
+			? SchilSprong_x_MO/Ki_cutoff_opp[SchilSprong_xMO_rel_alt] * BebouwingsObject/Oppervlakte
 			: SchilSprong_x_MO/Ki_asl[SchilSprong_xMO_rel_alt] * BebouwingsObject/nrAansluitingen +
 			 SchilSprong_x_MO/Ki_opp[SchilSprong_xMO_rel_alt] * BebouwingsObject/Oppervlakte
 			,0[Eur]
