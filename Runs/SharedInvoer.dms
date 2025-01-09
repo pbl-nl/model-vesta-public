@@ -14,7 +14,7 @@
 container SharedInvoer
 {
 	// Gemeentes als selectie: 'NL' or a set of municipality codes, 
-		parameter<string> StudieGebied: ['NL'];
+//		parameter<string> StudieGebied: ['NL'];
 //		parameter<string> StudieGebied: ['GM1507'];
 //		parameter<string> StudieGebied: ['GM0402'];  // Hilversum
 //		parameter<string> StudieGebied: ['GM0344'];  // Utrecht
@@ -23,7 +23,7 @@ container SharedInvoer
 //		parameter<string> StudieGebied: ['GM0153'];  // Enschede
 //		parameter<string> StudieGebied: ['GM0599'];  // Rotterdam
 //		parameter<string> StudieGebied: ['GM0034'];  // Almere
-//		parameter<string> StudieGebied: ['GM0050'];  // Zeewolde
+		parameter<string> StudieGebied: ['GM0050'];  // Zeewolde
 //		parameter<string> StudieGebied: ['GM0321'];  // Houten
 
 //		parameter<string> StudieGebied: ['GM0503'];
@@ -38,13 +38,10 @@ container SharedInvoer
 //		parameter<string> RES_StudieGebied : ['RESNoordHollandZuid']; // Deze RES geeft problemen wegens doorsnijding van bestaande warmtenetten.
 //		parameter<string> StudieGebied     := Geography/RegioIndelingen/Energieregio/GM_code_list[rlookup(RES_StudieGebied, Geography/RegioIndelingen/Energieregio/name)];
 
-	parameter<bool> G01_aan := false; // G01_Nat_meerkost_CO2_Kost_Reductie_Hoog = Leercurves maximaal optimistisch
-	parameter<bool> G02_aan := false; // G02_Nat_meerkost_CO2_Kost_Reductie_Laag = Leercurves maximaal pessimistisch
-	parameter<bool> G03_aan := false; // G03_Nat_meerkost_CO2_En_Prijzen_Laag    = Energieprijzen laagste inschatting
-	parameter<bool> G04_aan := false; // G04_Nat_meerkost_CO2_En_Prijzen_Hoog    = Energieprijzen hoogste inschatting
-	parameter<bool> G05_aan := false; // G04_Nat_meerkost_CO2_En_Prijzen_Hoog    = Energieprijzen hoogste inschatting
+	// G01 en G02 zijn analyses die pas in de vergelijking worden gedaan
+	parameter<bool> G03_aan := false; // G03_Nat_meerkost_energiekosten_laag    = Energieprijzen laagste inschatting
+	parameter<bool> G04_aan := false; // G04_Nat_meerkost_energiekosten_hoog    = Energieprijzen hoogste inschatting
+	parameter<bool> G05_aan := false; // G05_Nat_meerkost_energiebesparing_opt  = Energiebesparing optimistisch
 	
-	parameter<bool> IncludeGA := false;
-	
-	parameter<units/m3_yr> MaxVolume_KG := 1500000000[units/m3_yr]; //Invoer maximale beschikbaarheid GG in m3 aardgasequivalent
-}
+	parameter<bool> IncludeGA := true;
+	}
