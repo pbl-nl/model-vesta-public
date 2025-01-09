@@ -265,7 +265,7 @@ container BAG: url="%sourceDataProjDir%/BAG/20190114_actualisatie_BAG_FvdM.txt"
 		: SpecifiekeInstellingen/BAG/IndustrieDoetMee == 2b ? 'true' 
 		: 'unknown_IndustrieDoetMee_code';
 
-	unit<uint32> vbo_utiliteit_studiegebied:= ='Subset ('
+	unit<uint32> vbo_utiliteit_studiegebied_impl:= ='Subset ('
 			'!import/vbo/gebruiksdoelen/woon '
 		' && Studiegebied/selected_per_gemeente[import/vbo/gemeente_rel]'
 		' && IsDefined(import/vbo/pand_rel)'
@@ -295,7 +295,7 @@ container BAG: url="%sourceDataProjDir%/BAG/20190114_actualisatie_BAG_FvdM.txt"
 			for_each_nedv(
 				Classifications/UtilTypeBestaand/name
 				,'import/vbo/gebruiksdoelen/' + Classifications/UtilTypeBestaand/name + '[Nr_OrgEntity]'
-				, vbo_utiliteit_studiegebied
+				, vbo_utiliteit_studiegebied_impl
 				, bool
 			);
 
@@ -319,8 +319,10 @@ container BAG: url="%sourceDataProjDir%/BAG/20190114_actualisatie_BAG_FvdM.txt"
 			attribute<string> name                         (Classifications/UtilTypeBestaand) := Classifications/UtilTypeBestaand/name[gebruiksdoel_index];
 		}
 
-		attribute<Classifications/UtilTypeBestaand> gebruiksdoel (vbo_utiliteit_studiegebied) := ='gebruiksdoel_impl/gebruiksdoel_index[argmax('+ AsItemList('gebruiksdoelen/' + gebruiksdoel_impl/name) + ')[Classifications/UtilTypeBestaand]]';
+		attribute<Classifications/UtilTypeBestaand> gebruiksdoel (vbo_utiliteit_studiegebied_impl) := ='gebruiksdoel_impl/gebruiksdoel_index[argmax('+ AsItemList('gebruiksdoelen/' + gebruiksdoel_impl/name) + ')[Classifications/UtilTypeBestaand]]';
 	}
+
+	unit<uint32> vbo_utiliteit_studiegebied:= select_with_org_rel_with_attr_by_cond(vbo_utiliteit_studiegebied_impl, vbo_utiliteit_studiegebied_impl/oppervlakte >= classifications/UtilTypeBestaand/Afkapgrens[vbo_utiliteit_studiegebied_impl/gebruiksdoel]);
 
 	container Tabel_Gebruiksdoel_BouwjaarUtil := for_each_nedv(
 			classifications/BouwjaarUtilBestaand/name

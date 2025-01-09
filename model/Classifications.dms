@@ -198,6 +198,7 @@ container Classifications: Using = "Units", KeepData = "True", IsHidden = "True"
 		attribute<string>            excel_code            := Label_key;
 		attribute<int16>             SymbolIndex           : [41,54,241,49,67,213,107,246,171,150], DialogType = "SymbolIndex";
 		attribute<m2>             	 Isolatie_vast_cutoff  : [500,500,500,500,500,500,500,500,500,500];
+		attribute<m2>             	 Afkapgrens			   : [50 , 20, 50, 50,150,100, 50,100, 50, 50];
 		attribute<string>            name                  := label;
 		attribute<string>            resterendFactorName   : ['kantoor', 'winkel', 'verzorging_verpleging', 'horeca', 'onderwijs', 'overig', 'overig', 'overig', 'overig', 'overig'];
 		attribute<UtilTypeNieuwbouw> UtilTypeNieuwbouw_rel := rlookup(resterendFactorName, UtilTypeNieuwbouw/label);
