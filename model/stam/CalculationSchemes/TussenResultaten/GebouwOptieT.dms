@@ -154,10 +154,18 @@ template GebouwOptieT
 	// TODO_OV, OPTIMIZE, MTA, consider merge(xy/schil, x/v[xy/x_rel] for each schil)
 	container functioneel
 	{
-		attribute<GJ_yr> RV(BebouwingsObject) := = AltijdSprong
+		attribute<GJ_yr> RV_i(BebouwingsObject) := = AltijdSprong
 			? 'BebouwingsObject/Functioneel/RV/'+Classifications/SchilLabel/name[SchilLabel_rel_formeel]
 			: 'merge(SchilLabel_rel, GJ_yr, '+AsItemList('BebouwingsObject/Functioneel/RV/'+Classifications/SchilLabel/name)+')';
 
+		attribute<GJ_yr> RV (BebouwingsObject) := = G05_aan && BCName == 'BestaandeWoning'
+			? '(Classifications/DoelLabel/SchilLabel_rel[Doellabel_rel] == Classifications/SchilLabel/V/B 
+				? RV_i * ModelObject/GA05_factor_B[BebouwingsObject/Model_rel] 
+				: Classifications/DoelLabel/SchilLabel_rel[Doellabel_rel] == Classifications/SchilLabel/V/D 
+					? RV_i * ModelObject/GA05_factor_B[BebouwingsObject/Model_rel] 
+					: RV_i)'
+			:  'RV_i';
+			
 			
 		attribute<GJ_yr> DeltaRV (BebouwingsObject) := BebouwingsObject/Functioneel/CurrRV - RV;
 		attribute<bool>  NegDelta(BebouwingsObject) := DeltaRV < 0.0[GJ_yr];
