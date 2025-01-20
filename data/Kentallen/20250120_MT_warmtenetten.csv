@@ -5,8 +5,8 @@ Ki_id_grondgeb_i;2700;Eur_asl;Validatiesessies 2024. Correctie o.b.v. Atriensis 
 Ki_afleverset_i;1800;Eur_asl;Validatiesessies 2024. Kosten voor afleverset, installatie en demontage oude installatie.;
 Ki_blokverw_i;203.4257251;Eur_Kw;Functioneel Ontwerp 4.0 Tabel A.3;
 K_Ov_i;0;Eur_asl;Validatiesessies 2024. Ongeriefsvergoeding niet meer toepassen, vooral relevant bij grootschalige renovatiemomenten, niet warmtenetspecifiek.;
-K_Pm_min_i;209;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.3;
-K_Pm_max_i;8000;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.3;
+K_Pm_min_i;0;Eur_asl;Proceskosten worden nu gereld via BC_kentallen;
+K_Pm_max_i;0;Eur_asl;Proceskosten worden nu gereld via BC_kentallen;
 K_Wmtr_min_var_i;1.537628157;Eur_Kw;Functioneel Ontwerp 4.0 Tabel A.4;
 K_Wmtr_max_var_i;1.810433152;Eur_Kw;Functioneel Ontwerp 4.0 Tabel A.5;
 K_Wmtr_min_vast_i;1114.396007;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.6;

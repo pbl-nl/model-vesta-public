@@ -119,6 +119,7 @@ template AllocatieResultatenComponent
 			attribute<Eur> Ki15_LO (BO) := ='merge(GebouwOptie_rel, Eur, ' + AsItemList('GebouwOpties/' + BcGebouwOptie/name + '/Ki15_LO')+')';
 			attribute<Eur> Ki_GV   (BO) := ='merge(GebouwOptie_rel, Eur, ' + AsItemList('GebouwOpties/' + BcGebouwOptie/name + '/Ki_GV')+')';
 			attribute<Eur> Ki_LTAS (BO) := ='merge(GebouwOptie_rel, Eur, ' + AsItemList('GebouwOpties/' + BcGebouwOptie/name + '/Ki_LTAS')+')';
+			attribute<Eur> Ki_pm   (BO) := ='merge(GebouwOptie_rel, Eur, ' + AsItemList('GebouwOpties/' + BcGebouwOptie/name + '/Ki_pm')+')';
 
 			//Subsidies
 			attribute<Eur> Oi_s_LO_30 (BO) := ='merge(GebouwOptie_rel, Eur, ' + AsItemList('GebouwOpties/' + BcGebouwOptie/name + '/Oi30_s_LO')+')';

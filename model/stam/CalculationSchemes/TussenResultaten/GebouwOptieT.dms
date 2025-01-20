@@ -138,11 +138,15 @@ template GebouwOptieT
 	attribute<Eur_yr> KJ_OH_LO    (BebouwingsObject) := =replace(KX_expr, '@X', 'j_OH');
 	attribute<Eur_yr> Kj_Adm_LO   (BebouwingsObject) := =replace(KX_expr, '@X', 'j_Adm');
 	attribute<Eur   > Ki_GV       (BebouwingsObject) := ='BC/DoelLabels/'+Classifications/DoelLabel/name[DoelLabel_rel]+'/Ki_GV';
+	attribute<Eur   > Ki_pm		  (BebouwingsObject) := strcount(lowercase(Variantcode), lowercase('s1')) > 0 ? BebouwingsObject/nrAansluitingen * BebouwingsObject/BCkentallen/Ki_pm_S1
+		: strcount(lowercase(Variantcode), lowercase('s2')) > 0 ? BebouwingsObject/nrAansluitingen * BebouwingsObject/BCkentallen/Ki_pm_S2
+		: strcount(lowercase(Variantcode), lowercase('s3')) > 0 ? BebouwingsObject/nrAansluitingen * BebouwingsObject/BCkentallen/Ki_pm_S3
+		: BebouwingsObject/nrAansluitingen * BebouwingsObject/BCkentallen/Ki_pm_S4;
 
-	attribute<Eur>    Ki_totaal   (BebouwingsObject) := Ki_LO   + Ki_GV + Ki_LTAS + Ki_Meterkast;
+	attribute<Eur>    Ki_totaal   (BebouwingsObject) := Ki_LO   + Ki_GV + Ki_LTAS + Ki_Meterkast + Ki_pm;
 	attribute<Eur>    Ki30_totaal (BebouwingsObject) := Ki30_LO + Ki_GV + Ki_LTAS + Ki_Meterkast;
 	attribute<Eur>    Ki20_totaal (BebouwingsObject) := Ki20_LO;
-	attribute<Eur>    Ki15_totaal (BebouwingsObject) := Ki15_LO;
+	attribute<Eur>    Ki15_totaal (BebouwingsObject) := Ki15_LO + Ki_pm;
 
 	// metervraag
 	container SPF := for_each_nedv(Classifications/Product/name
@@ -310,6 +314,7 @@ template GebouwOptieT
 	attribute<Eur_yr> Kji20_LO (BebouwingsObject) := Ki20_LO * BC/NcwRefs/_20/AnnualisationFactor;
 	attribute<Eur_yr> Kji15_LO (BebouwingsObject) := Ki15_LO * BC/NcwRefs/_15/AnnualisationFactor;
 	attribute<Eur_yr> Kji_LO   (BebouwingsObject) := Kji30_LO + Kji20_LO + Kji15_LO;
+	attribute<Eur_yr> Kji_pm   (BebouwingsObject) := Ki_pm   * BC/NcwRefs/_15/AnnualisationFactor;
 
 	attribute<Eur_yr> Kmi_GV   (BebouwingsObject) := Ki_GV   * NCW/mr30/AnnualisationFactor;
 	attribute<Eur_yr> Kmi_LTAS (BebouwingsObject) := Ki_LTAS * NCW/mr30/AnnualisationFactor;

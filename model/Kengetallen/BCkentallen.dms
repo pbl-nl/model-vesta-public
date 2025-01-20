@@ -105,6 +105,11 @@ container BCkentallen :=
 					? KostenMin * Ki_w_mWKK_min + KostenMax * Ki_w_mWKK_max 
 					: KostenMin * Ki_u_mWKK_min + KostenMax * Ki_u_mWKK_max 
 				);
+				
+			parameter<Eur_asl> Ki_pm_S1 := Schuiven/KostenMin * Ki_pm_S1_min  + Schuiven/KostenMax * Ki_pm_S1_max;
+			parameter<Eur_asl> Ki_pm_S2 := Schuiven/KostenMin * Ki_pm_S2_min  + Schuiven/KostenMax * Ki_pm_S2_max;
+			parameter<Eur_asl> Ki_pm_S3 := Schuiven/KostenMin * Ki_pm_S3_min  + Schuiven/KostenMax * Ki_pm_S3_max;
+			parameter<Eur_asl> Ki_pm_S4 := Schuiven/KostenMin * Ki_pm_S4_min  + Schuiven/KostenMax * Ki_pm_S4_max;
 		}
 	}
 
