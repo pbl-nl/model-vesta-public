@@ -43,5 +43,5 @@ container SharedInvoer
 	parameter<bool> G04_aan := false; // G04_Nat_meerkost_energiekosten_hoog    = Energieprijzen hoogste inschatting
 	parameter<bool> G05_aan := false; // G05_Nat_meerkost_energiebesparing_opt  = Energiebesparing optimistisch
 	
-	parameter<bool> IncludeGA := False;
+	parameter<bool> IncludeGA := true;
 	}
