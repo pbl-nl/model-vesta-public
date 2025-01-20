@@ -16,8 +16,24 @@ container Outputs
 		,'BesteViewerBeschikbaar'
 		,'LN'
 		,Class/Variant
-		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde/GasWaarde_KG : 0.0[Eur_m3]'
-		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde/Beschikbaarheid_KG_str : NvtExpr');
+		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde20/GasWaarde_KG : 0.0[Eur_m3]'
+		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde20/Beschikbaarheid_KG_str : NvtExpr');
+		
+	container LN_GA_01    := StratOutput(
+		 'BesteViewerBeschikbaar'
+		,'BesteViewerBeschikbaar'
+		,'LN'
+		,Class/Variant
+		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde15/GasWaarde_KG : 0.0[Eur_m3]'
+		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde15/Beschikbaarheid_KG_str : NvtExpr');
+		
+	container LN_GA_02    := StratOutput(
+		 'BesteViewerBeschikbaar'
+		,'BesteViewerBeschikbaar'
+		,'LN'
+		,Class/Variant
+		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/GasWaarde_KG : 0.0[Eur_m3]'
+		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/Beschikbaarheid_KG_str : NvtExpr');
 	
 	template StratOutput
 	{
@@ -141,8 +157,8 @@ container Outputs
 			{
 			attribute<string>  	  BU_CODE             	  	  	          	(PlanRegio) := /Invoer/RuimtelijkeData/StudieGebied/buurt/BU_CODE;
 			attribute<string>  	  V01_Strategievariant 	  	  	          	(PlanRegio) := ='Class/Variant/name['+VarCodeOrg+']';
-			attribute<string>     G01_Toekenning_klimaatneutraal_gas_1_5  	(Planregio):= const('dummyvar', Planregio); // OPM: TODO ophalen juiste variabele
-			attribute<string>     G02_Toekenning_klimaatneutraal_gas_1_0  	(Planregio):= const('dummyvar', Planregio); // OPM: TODO ophalen juiste variabele
+			attribute<string>     G01_Toekenning_klimaatneutraal_gas_1_5  	(Planregio):= gaswaarde15/Beschikbaarheid_KG_str; 
+			attribute<string>     G02_Toekenning_klimaatneutraal_gas_1_0  	(Planregio):= gaswaarde10/Beschikbaarheid_KG_str;
 			attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag     	(Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G03/'+Varname/name+'')+')';
 			attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog     	(Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G04/'+Varname/name+'')+')';
 			attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt     (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G05/'+Varname/name+'')+')';

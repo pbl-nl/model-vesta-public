@@ -12,6 +12,7 @@ template WKOUtilData
 	parameter<bool> IsNieuwbouw;
 	parameter<bool> KoudeBeschikbaar;
 	container KostenBase;
+	parameter<string> BCName;
 	// end case parameters
 
 	parameter<Eur_GJ> WarmtePrijs  :=BO/WarmteWet/WarmtePrijs;

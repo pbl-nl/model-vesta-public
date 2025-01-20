@@ -45,6 +45,10 @@ template ModelObjectKentallenImport
 		attribute<GJ_yr_asl> V_Vent_asl := table/Vvent_asl[GJ_yr_asl], Descr = "ventilatievraag bij woningen vanaf schillabel B";
 		attribute<GJ_yr_m2>  V_Vent_opp := table/Vvent_opp[GJ_yr_m2 ], Descr = "variabele extra ventilatievraag bij woningen vanaf schillabel B";
 
+		attribute<ratio>  GA05_factor_B := table/GA_B_factor[ratio ], Descr = "vermennigvuldigingsfactor voor sprong naar label B bij GA05";
+		attribute<ratio>  GA05_factor_D := table/GA_D_factor[ratio ], Descr = "vermennigvuldigingsfactor voor sprong naar label D bij GA05";
+
+
 		container Ki_min_asl := for_each_nedv(SchilSprong_sel ? Classifications/SchilSprong/name : '', 'table/Ki_'+Classifications/SchilSprong/name+'_min_asl[Eur_asl]', ., Eur_asl);
 		container Ki_max_asl := for_each_nedv(SchilSprong_sel ? Classifications/SchilSprong/name : '', 'table/Ki_'+Classifications/SchilSprong/name+'_max_asl[Eur_asl]', ., Eur_asl);
 
