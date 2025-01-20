@@ -1,0 +1,25 @@
+﻿Naam;Waarde;Eenheid;Bron;Beschrijving
+Ki_id_geenBlok_i;3000;Eur_asl;Validatiesessies 2024. Correctie o.b.v. Atriensis model;
+Ki_id_metBlok_i;1444;Eur_asl;Validatiesessies 2024. Correctie o.b.v. Atriensis model;
+Ki_id_grondgeb_i;2700;Eur_asl;Validatiesessies 2024. Correctie o.b.v. Atriensis model;
+Ki_afleverset_i;1800;Eur_asl;Validatiesessies 2024. Kosten voor afleverset, installatie en demontage oude installatie.;
+Ki_blokverw_i;203.4257251;Eur_Kw;Functioneel Ontwerp 4.0 Tabel A.3;
+K_Ov_i;0;Eur_asl;Validatiesessies 2024. Ongeriefsvergoeding niet meer toepassen, vooral relevant bij grootschalige renovatiemomenten, niet warmtenetspecifiek.;
+K_Pm_min_i;209;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.3;
+K_Pm_max_i;8000;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.3;
+K_Wmtr_min_var_i;1.537628157;Eur_Kw;Functioneel Ontwerp 4.0 Tabel A.4;
+K_Wmtr_max_var_i;1.810433152;Eur_Kw;Functioneel Ontwerp 4.0 Tabel A.5;
+K_Wmtr_min_vast_i;1114.396007;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.6;
+K_Wmtr_max_vast_i;1149.228244;Eur_asl;Functioneel Ontwerp 4.0 Tabel A.7;
+Ki_huur_CO2Inst_i;2228.792013;Eur_ha_yr;Functioneel Ontwerp 4.0 Tabel A.3;
+K_CO2_i;111.3540391;Eur_ton;Functioneel Ontwerp 4.0 Tabel A.4;
+K_Dienst_Gwarm_i;13929.98108;Eur;Functioneel Ontwerp 4.0 Tabel A.5;
+K_Dienst_BOwarm_i;8357.98865;Eur;Functioneel Ontwerp 4.0 Tabel A.6;
+GemOppGroente_i;13640.24978;m2;Gem_opp_groente, FO F47b;
+GemOppbloemen_overig_i;11160.20436;m2;Gem_opp_bloemen/Gem_opp_overig, FO F47b;
+GroenteKasLengteFactor_i;2.480045414;m;-;
+V_CO2_i;421.6077204;ton_ha_yr;Functioneel Ontwerp 4.0 Tabel A.3;
+K_os_min_i;53;Eur_kW;CE Delft 2022. Warmtenetten in Vesta MAIS. Update berekeningsmethoden;
+K_os_Max_i;143;Eur_kW;CE Delft 2022. Warmtenetten in Vesta MAIS. Update berekeningsmethoden;
+K_WOS_min_i;250;Eur_kW;Validatiesessies 2024. Kosten voor overdrachtsstation & piekketel.;
+K_WOS_max_i;300;Eur_kW;Validatiesessies 2024. Kosten voor overdrachtsstation & piekketel.;

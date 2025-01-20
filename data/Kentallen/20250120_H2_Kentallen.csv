@@ -7,12 +7,12 @@ Ki_pm_min;0;Eur_asl;20-11-2019 Werkwaarde 24-1-2020 (nul);minimale vergoeding vo
 Ki_pm_max;0;Eur_asl;20-11-2019 Werkwaarde 24-1-2020 (nul);maximale vergoeding voor projectmanagement
 Ki_ov_min;0;Eur_asl;20-11-2019 Werkwaarde 24-1-2020 (nul);minimale vergoeding voor ongerief bewoners
 Ki_ov_max;0;Eur_asl;20-11-2019 Werkwaarde 24-1-2020 (nul);maximale vergoeding voor ongerief bewoners
-K_aansl_w_min;455;Eur_asl;Nico Hoogervorst - notitie waterstof;244 euro aanpassing aansluiting, 211 euro aanpassen gasmeter
-K_aansl_w_max;455;Eur_asl;Nico Hoogervorst - notitie waterstof;244 euro aanpassing aansluiting, 211 euro aanpassen gasmeter
+K_aansl_w_min;573.237697;Eur_asl;Nico Hoogervorst - notitie waterstof;244 euro aanpassing aansluiting, 211 euro aanpassen gasmeter
+K_aansl_w_max;573.237697;Eur_asl;Nico Hoogervorst - notitie waterstof;244 euro aanpassing aansluiting, 211 euro aanpassen gasmeter
 K_section_min;0;Eur;CE Delft parameters H2 pp.18 Tabel 13;minimale kosten voor het afsectioneren van het netwerk om het klaar te maken voor waterstof
 K_section_max;0;Eur;CE Delft parameters H2 pp.18 Tabel 13;maximale kosten voor het afsectioneren van het netwerk om het klaar te maken voor waterstof
-K_aansl_u_min;3.5;Eur_m2;Nico Hoogervorst - notitie waterstof;Afgeleid van woningkental (obv. 450/weq van 130m2)
-K_aansl_u_max;3.5;Eur_m2;Nico Hoogervorst - notitie waterstof;Afgeleid van woningkental (obv. 450/weq van 130m2)
+K_aansl_u_min;4.409520746;Eur_m2;Nico Hoogervorst - notitie waterstof;Afgeleid van woningkental (obv. 450/weq van 130m2)
+K_aansl_u_max;4.409520746;Eur_m2;Nico Hoogervorst - notitie waterstof;Afgeleid van woningkental (obv. 450/weq van 130m2)
 CO2_GJb;0;kg_GJ;-;Emissie CO2
 NOx_GJb;0;g_GJ;-;Emissie Nox
 SO2_GJb;0;g_GJ;-;Emissie SO2
