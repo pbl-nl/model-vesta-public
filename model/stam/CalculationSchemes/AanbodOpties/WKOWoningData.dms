@@ -18,6 +18,8 @@ template WKOWoningData
 	parameter<Eur_GJ> WarmtePrijs := BO/WarmteWet/WarmtePrijs;
 
 	unit<uint8> Type := BO/BebouwingsTypeDomein;
+	
+	unit<uint32> ModelObject := = 'Invoer/Kengetallen/Bebouwing/'+ BCName +'/results';
 
 	attribute<bool> IsAppt    (BO) := BO/IsMeergezins; // REMOVE, Replace Type/IsMeergezins[BCdata/RuimtelijkeVraagComponent/BebouwingsType];
 
