@@ -1,7 +1,7 @@
 REM aanpassingen voor machine specifieke paden
 
-set prj_dir=C:\Vesta\PD_SA
-set log_dir=C:\Vesta\LD\PD_SA\log
+set prj_dir=C:\Vesta\PD_SA_lagere_energieprijzen
+set log_dir=C:\Vesta\LD\PD_SA_lagere_energieprijzen\log
 set exe_dir=C:\Program Files\ObjectVision\GeoDms16.0.0
 
 REM einde aanpassingen voor machine specifieke paden
