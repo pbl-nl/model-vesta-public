@@ -649,7 +649,7 @@ container Classifications: Using = "Units", KeepData = "True", IsHidden = "True"
 	{
 		attribute<string> name          : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'N'];
 		attribute<string> label         : ['A+', 'B', 'C', 'D', 'E', 'F', 'G', 'Geen Label'], DialogType = "LabelText";
-		attribute<string> LeercurveName : ['Verder', 'Bpls', 'Cmin', 'Cmin', 'Cmin', 'Cmin', 'Cmin'];
+		attribute<string> LeercurveName : ['Verder', 'Bpls', 'Cmin', 'Cmin', 'Cmin', 'Cmin', 'Cmin', 'Cmin'];
 
 		attribute<uint32> Color : DialogType = "BrushColor",
 		[
@@ -660,6 +660,7 @@ container Classifications: Using = "Units", KeepData = "True", IsHidden = "True"
 			,rgb(251,182,001)
 			,rgb(249,097,014)
 			,rgb(249,026,031)
+			,rgb(220,220,220)
 		];
 		attribute<uint32> SymbColor := Color, DialogType = "SymbolColor";
 
