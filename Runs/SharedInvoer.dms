@@ -39,7 +39,7 @@ container SharedInvoer
 //		parameter<string> StudieGebied     := Geography/RegioIndelingen/Energieregio/GM_code_list[rlookup(RES_StudieGebied, Geography/RegioIndelingen/Energieregio/name)];
 
 	// G01 en G02 zijn analyses die pas in de vergelijking worden gedaan
-	parameter<bool> G03_aan := True; // G03_Nat_meerkost_energiekosten_laag    = Energieprijzen laagste inschatting
+	parameter<bool> G03_aan := False; // G03_Nat_meerkost_energiekosten_laag    = Energieprijzen laagste inschatting
 	parameter<bool> G04_aan := false; // G04_Nat_meerkost_energiekosten_hoog    = Energieprijzen hoogste inschatting
 	parameter<bool> G05_aan := false; // G05_Nat_meerkost_energiebesparing_opt  = Energiebesparing optimistisch
 	
