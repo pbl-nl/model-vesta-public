@@ -9,7 +9,9 @@ container Outputs
 	container S1_WP := StratOutput('ConstructStrategie/S1varL','BesteS1variant','Strategie_1_',Class/S1Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
 	container S2_MT := StratOutput('ConstructStrategie/S2varL','BesteS2variant','Strategie_2_',Class/S2Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
 	container S3_LT := StratOutput('ConstructStrategie/S3varL','BesteS3variant','Strategie_3_',Class/S3Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
-	container S4_KG := StratOutput('ConstructStrategie/S4varL','BesteS4variant','Strategie_4_',Class/KGVariant,'Gaswaarde/GasWaarde_KG','Gaswaarde/Beschikbaarheid_KG_str');
+	container S4_KG := StratOutput('ConstructStrategie/S4varL','BesteS4variant','Strategie_4_',Class/KGVariant,'Gaswaarde20/GasWaarde_KG','Gaswaarde20/Beschikbaarheid_KG_str');
+	container S4_KG_GA_01 := StratOutput('ConstructStrategie/S4varL','BesteS4variant','Strategie_4_GA_01_',Class/KGVariant,'Gaswaarde15/GasWaarde_KG','Gaswaarde15/Beschikbaarheid_KG_str');
+	container S4_KG_GA_02 := StratOutput('ConstructStrategie/S4varL','BesteS4variant','Strategie_4_GA_02_',Class/KGVariant,'Gaswaarde10/GasWaarde_KG','Gaswaarde10/Beschikbaarheid_KG_str');
 	
 	container LN    := StratOutput(
 		 'BesteViewerBeschikbaar'
@@ -22,7 +24,7 @@ container Outputs
 	container LN_GA_01    := StratOutput(
 		 'BesteViewerBeschikbaar'
 		,'BesteViewerBeschikbaar'
-		,'LN'
+		,'LN_GA_01'
 		,Class/Variant
 		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde15/GasWaarde_KG : 0.0[Eur_m3]'
 		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde15/Beschikbaarheid_KG_str : NvtExpr');
@@ -30,7 +32,7 @@ container Outputs
 	container LN_GA_02    := StratOutput(
 		 'BesteViewerBeschikbaar'
 		,'BesteViewerBeschikbaar'
-		,'LN'
+		,'LN_GA_02'
 		,Class/Variant
 		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/GasWaarde_KG : 0.0[Eur_m3]'
 		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/Beschikbaarheid_KG_str : NvtExpr');
