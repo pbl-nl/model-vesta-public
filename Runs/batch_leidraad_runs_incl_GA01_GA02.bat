@@ -41,6 +41,8 @@ call :do_runfile S1_WP
 call :do_runfile S2_MT
 call :do_runfile S3_LT
 call :do_runfile S4_KG
+call :do_runfile S4_KG_GA_01
+call :do_runfile S4_KG_GA_02
 
 call :do_runfile LN
 call :do_runfile LN_GA_01
@@ -49,7 +51,7 @@ call :do_runfile LN_GA_02
 "%exe_path%" /L"%log_dir%\LN.txt" %FLAGS%  "%prj_dir%\Runs\Runfile.dms" /Vergelijking/Outputs/LN/Hulpvariabelen/export_csv/result || call :error_handler
 
 echo Klaar met uitrekenen van alle varianten per buurt
-pause
+
 exit /B
 
 :do_reference
