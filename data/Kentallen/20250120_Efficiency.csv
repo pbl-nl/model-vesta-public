@@ -9,8 +9,14 @@ Vermogenverlies_LT_min;0.1;ratio;-;aandeel op capaciteit dat verloren gaat tusse
 Vermogenverlies_LT_max;0;ratio;-;aandeel op capaciteit dat verloren gaat tussen bron en afnemer
 Vermogenverlies_MT_min;0.1;ratio;-;aandeel op capaciteit dat verloren gaat tussen bron en afnemer
 Vermogenverlies_MT_max;0;ratio;-;aandeel op capaciteit dat verloren gaat tussen bron en afnemer
-Leidingverlies_min;0.308571429;ratio;-;aandeel op volume dat verloren gaat tussen bron en afnemer
-Leidingverlies_max;0.171428571;ratio;-;aandeel op volume dat verloren gaat tussen bron en afnemer
+Leidingverlies_ZLT_min;0;GJ_yr_asl;CE Delft (2024) - Advies validatiesessies individuele installaties en warmtenetten Actualisatie Startanalyse 2024 - 4.4.1 fig.5,'onderwaarde warmte per aansluiting verloren tussen bron en afnemer, ZLT netten',;
+Leidingverlies_ZLT_max;0;GJ_yr_asl;CE Delft (2024) - Advies validatiesessies individuele installaties en warmtenetten Actualisatie Startanalyse 2024 - 4.4.1 fig.5,'onderwaarde warmte per aansluiting verloren tussen bron en afnemer, ZLT netten',;
+Leidingverlies_LT_min;2.6;GJ_yr_asl;CE Delft (2024) - Advies validatiesessies individuele installaties en warmtenetten Actualisatie Startanalyse 2024 - 4.4.1 fig.5,'onderwaarde warmte per aansluiting verloren tussen bron en afnemer, ZLT netten',;
+Leidingverlies_LT_max;2.6;GJ_yr_asl;CE Delft (2024) - Advies validatiesessies individuele installaties en warmtenetten Actualisatie Startanalyse 2024 - 4.4.1 fig.5,'onderwaarde warmte per aansluiting verloren tussen bron en afnemer, ZLT netten',;
+Leidingverlies_MT_min;10.5;GJ_yr_asl;CE Delft (2024) - Advies validatiesessies individuele installaties en warmtenetten Actualisatie Startanalyse 2024 - 4.4.1 fig.5,'onderwaarde warmte per aansluiting verloren tussen bron en afnemer, ZLT netten',;
+Leidingverlies_MT_max;10.5;GJ_yr_asl;CE Delft (2024) - Advies validatiesessies individuele installaties en warmtenetten Actualisatie Startanalyse 2024 - 4.4.1 fig.5,'onderwaarde warmte per aansluiting verloren tussen bron en afnemer, ZLT netten',;
+Leidingverlies_KD_min;1.5;GJ_yr_asl;CE Delft (2024) - Advies validatiesessies individuele installaties en warmtenetten Actualisatie Startanalyse 2024 - 4.4.1 fig.5,'onderwaarde warmte per aansluiting verloren tussen bron en afnemer, ZLT netten',;
+Leidingverlies_KD_max;1.5;GJ_yr_asl;CE Delft (2024) - Advies validatiesessies individuele installaties en warmtenetten Actualisatie Startanalyse 2024 - 4.4.1 fig.5,'onderwaarde warmte per aansluiting verloren tussen bron en afnemer, ZLT netten',;
 Pompenergie_Wnet_min;0.0072;ratio;-;elektriciteitsverbruik distributiepompen warmtenetten
 Pompenergie_Wnet_max;0.0072;ratio;-;elektriciteitsverbruik distributiepompen warmtenetten
 Efficiency_piekketel_min;0.78;ratio;nketel: FO, Tabel bij F 35;kengetal voor de efficientie van energieomzetting in gasgestookte hulpketels
