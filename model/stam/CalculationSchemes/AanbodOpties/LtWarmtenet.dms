@@ -158,12 +158,12 @@ template LtWarmtenetImpl
 	
 	// TODO: Woning en Utiliteit containers Unificeren en parameterisen per BebouwingsComponent
 	container Woning := for_each_ne(Classifications/WoningComponent/name
-	,	replace('WKOWoningData(bebouwing/@C, KostenBaten/WarmteVraag/@C, '+string(Classifications/WoningComponent/IsNieuwbouw)+', KoudeBeschikbaar, KostenBaten/KostenD/Wonen/'+Classifications/WoningComponent/NcwRefBase+')'
+	,	replace('WKOWoningData(bebouwing/@C, KostenBaten/WarmteVraag/@C, '+string(Classifications/WoningComponent/IsNieuwbouw)+', KoudeBeschikbaar, KostenBaten/KostenD/Wonen/'+Classifications/WoningComponent/NcwRefBase+', "@C")'
 		,	'@C', Classifications/WoningComponent/name
 		)
 	);
 	container Util := for_each_ne(Classifications/UtilComponent/name
-	,	replace('WKOUtilData(bebouwing/@C, KostenBaten/WarmteVraag/@C, '+string(Classifications/UtilComponent/IsNieuwbouw)+', KoudeBeschikbaar, KostenBaten/KostenD/Utiliteit/'+Classifications/UtilComponent/NcwRefBase+')'
+	,	replace('WKOUtilData(bebouwing/@C, KostenBaten/WarmteVraag/@C, '+string(Classifications/UtilComponent/IsNieuwbouw)+', KoudeBeschikbaar, KostenBaten/KostenD/Utiliteit/'+Classifications/UtilComponent/NcwRefBase+', "@C")'
 		,	'@C', Classifications/UtilComponent/name
 		)
 	);

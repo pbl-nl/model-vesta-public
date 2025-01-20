@@ -62,10 +62,10 @@ template TEO
 	container Kostenkentallen := Kengetallen/LTkentallen/Kosten_LT(Leercurves/Inpand/Curve, Leercurves/eWPww/Curve, Leercurves/LTnet/Curve, Leercurves/MTnet/Curve);
 
 	// =========  Voor alle woon en utiliteit bebouwingscomponenten worden op gebouwniveau attributen voor kosten en energie bepaald
-	container BestaandeWoningData := WKOWoningData(bebouwing/BestaandeWoning, KostenBaten/WarmteVraag/BestaandeWoning, false, KoudeBeschikbaar, KostenBaten/KostenD/Wonen/bw);
-	container NieuwbouwWoningData := WKOWoningData(bebouwing/NieuwbouwWoning, KostenBaten/WarmteVraag/NieuwbouwWoning, true , KoudeBeschikbaar, KostenBaten/KostenD/Wonen/nw);
-	container BestaandeUtilData   := WKOUtilData  (bebouwing/BestaandeUtil,   KostenBaten/WarmteVraag/BestaandeUtil  , false, KoudeBeschikbaar, KostenBaten/KostenD/Utiliteit/bu);
-	container NieuwbouwUtilData   := WKOUtilData  (bebouwing/NieuwbouwUtil,   KostenBaten/WarmteVraag/NieuwbouwUtil  , true , KoudeBeschikbaar, KostenBaten/KostenD/Utiliteit/nu);
+	container BestaandeWoningData := WKOWoningData(bebouwing/BestaandeWoning, KostenBaten/WarmteVraag/BestaandeWoning, false, KoudeBeschikbaar, KostenBaten/KostenD/Wonen/bw, "BestaandeWoning");
+	container NieuwbouwWoningData := WKOWoningData(bebouwing/NieuwbouwWoning, KostenBaten/WarmteVraag/NieuwbouwWoning, true , KoudeBeschikbaar, KostenBaten/KostenD/Wonen/nw, "BestaandeUtilData");
+	container BestaandeUtilData   := WKOUtilData  (bebouwing/BestaandeUtil,   KostenBaten/WarmteVraag/BestaandeUtil  , false, KoudeBeschikbaar, KostenBaten/KostenD/Utiliteit/bu, "BestaandeUtil");
+	container NieuwbouwUtilData   := WKOUtilData  (bebouwing/NieuwbouwUtil,   KostenBaten/WarmteVraag/NieuwbouwUtil  , true , KoudeBeschikbaar, KostenBaten/KostenD/Utiliteit/nu, "NieuwbouwUtil");
 
 	container CandidateSets := for_each_ne(WkoComponent/name, replace('TEOData(bebouwing/@WC, @WCData, ''@WC'', T_sec)', '@WC', WkoComponent/name));
 
