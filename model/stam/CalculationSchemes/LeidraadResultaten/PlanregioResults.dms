@@ -208,6 +208,10 @@ container PlanregioResults
 			{
 				attribute<string> name := classifications/UtilTypeBestaand/name[first_rel] + '_' + classifications/BouwjaarUtilBestaand/name[second_rel];
 			}
+			unit<uint32> US := combine(classifications/UtilTypeBestaand, classifications/schillabel)
+			{
+				attribute<string> name := classifications/UtilTypeBestaand/name[first_rel] + '_' + classifications/schillabel/name[second_rel];
+		}
 		}
 
 		container tellingen
@@ -236,6 +240,15 @@ container PlanregioResults
 				* Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/oppervlakte, /Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/buurt_rel)'
 			, Planregio
 			, m2);
+			
+			container utiltype_energielabel := for_each_ind(
+			'nedv'
+			, Class/US/name
+			,'sum(float64(Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/gebruiksdoel == rjoin("'+Class/US/name+'",Class/US/name,class/US/first_rel))
+				* float64(/Invoer/RuimtelijkeData/Bebouwing/impl/BestaandeUtil/SchilLabel_or_N_rel == rjoin("'+Class/US/name+'",Class/US/name,class/US/second_rel))
+				, /Invoer/RuimtelijkeData/BAG/vbo_utiliteit_studiegebied/buurt_rel)'
+			, Planregio
+			, float64);
 		}
 		
 		unit<uint32>  Table := PlanRegio
@@ -432,6 +445,98 @@ container PlanregioResults
 			attribute<m2> 	Cel_v1990		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Cel_v1990;
 			attribute<m2> 	Cel_v1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Cel_v1995;
 			attribute<m2> 	Cel_n1995		:= IsUitgesloten ? 0[m2] :   tellingen/utiltype_bouwjaarklasse/Cel_n1995;
+			
+			attribute<m2> 	kantoor_A		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/kantoor_A;
+			attribute<m2> 	kantoor_B		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/kantoor_B;
+			attribute<m2> 	kantoor_C		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/kantoor_C;
+			attribute<m2> 	kantoor_D		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/kantoor_D;
+			attribute<m2> 	kantoor_E		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/kantoor_E;
+			attribute<m2> 	kantoor_F		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/kantoor_F;
+			attribute<m2> 	kantoor_G		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/kantoor_G;
+			attribute<m2> 	kantoor_N		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/kantoor_N;
+			
+			attribute<m2> 	winkel_A		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/winkel_A;
+			attribute<m2> 	winkel_B		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/winkel_B;
+			attribute<m2> 	winkel_C		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/winkel_C;
+			attribute<m2> 	winkel_D		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/winkel_D;
+			attribute<m2> 	winkel_E		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/winkel_E;
+			attribute<m2> 	winkel_F		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/winkel_F;
+			attribute<m2> 	winkel_G		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/winkel_G;
+			attribute<m2> 	winkel_N		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/winkel_N;
+			
+			attribute<m2> 	gezondheidszorg_A		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/gezondheidszorg_A;
+			attribute<m2> 	gezondheidszorg_B		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/gezondheidszorg_B;
+			attribute<m2> 	gezondheidszorg_C		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/gezondheidszorg_C;
+			attribute<m2> 	gezondheidszorg_D		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/gezondheidszorg_D;
+			attribute<m2> 	gezondheidszorg_E		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/gezondheidszorg_E;
+			attribute<m2> 	gezondheidszorg_F		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/gezondheidszorg_F;
+			attribute<m2> 	gezondheidszorg_G		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/gezondheidszorg_G;
+			attribute<m2> 	gezondheidszorg_N		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/gezondheidszorg_N;
+			
+			attribute<m2> 	logies_A		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/logies_A;
+			attribute<m2> 	logies_B		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/logies_B;
+			attribute<m2> 	logies_C		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/logies_C;
+			attribute<m2> 	logies_D		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/logies_D;
+			attribute<m2> 	logies_E		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/logies_E;
+			attribute<m2> 	logies_F		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/logies_F;
+			attribute<m2> 	logies_G		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/logies_G;
+			attribute<m2> 	logies_N		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/logies_N;
+			
+			attribute<m2> 	onderwijs_A		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/onderwijs_A;
+			attribute<m2> 	onderwijs_B		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/onderwijs_B;
+			attribute<m2> 	onderwijs_C		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/onderwijs_C;
+			attribute<m2> 	onderwijs_D		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/onderwijs_D;
+			attribute<m2> 	onderwijs_E		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/onderwijs_E;
+			attribute<m2> 	onderwijs_F		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/onderwijs_F;
+			attribute<m2> 	onderwijs_G		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/onderwijs_G;
+			attribute<m2> 	onderwijs_N		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/onderwijs_N;
+			
+			attribute<m2> 	industrie_A		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/industrie_A;
+			attribute<m2> 	industrie_B		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/industrie_B;
+			attribute<m2> 	industrie_C		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/industrie_C;
+			attribute<m2> 	industrie_D		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/industrie_D;
+			attribute<m2> 	industrie_E		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/industrie_E;
+			attribute<m2> 	industrie_F		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/industrie_F;
+			attribute<m2> 	industrie_G		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/industrie_G;
+			attribute<m2> 	industrie_N		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/industrie_N;
+			
+			attribute<m2> 	bijeenkomst_A		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/bijeenkomst_A;
+			attribute<m2> 	bijeenkomst_B		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/bijeenkomst_B;
+			attribute<m2> 	bijeenkomst_C		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/bijeenkomst_C;
+			attribute<m2> 	bijeenkomst_D		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/bijeenkomst_D;
+			attribute<m2> 	bijeenkomst_E		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/bijeenkomst_E;
+			attribute<m2> 	bijeenkomst_F		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/bijeenkomst_F;
+			attribute<m2> 	bijeenkomst_G		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/bijeenkomst_G;
+			attribute<m2> 	bijeenkomst_N		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/bijeenkomst_N;
+			
+			attribute<m2> 	sport_A		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/sport_A;
+			attribute<m2> 	sport_B		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/sport_B;
+			attribute<m2> 	sport_C		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/sport_C;
+			attribute<m2> 	sport_D		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/sport_D;
+			attribute<m2> 	sport_E		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/sport_E;
+			attribute<m2> 	sport_F		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/sport_F;
+			attribute<m2> 	sport_G		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/sport_G;
+			attribute<m2> 	sport_N		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/sport_N;
+			
+			attribute<m2> 	overige_gebruiks_A		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/overige_gebruiks_A;
+			attribute<m2> 	overige_gebruiks_B		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/overige_gebruiks_B;
+			attribute<m2> 	overige_gebruiks_C		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/overige_gebruiks_C;
+			attribute<m2> 	overige_gebruiks_D		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/overige_gebruiks_D;
+			attribute<m2> 	overige_gebruiks_E		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/overige_gebruiks_E;
+			attribute<m2> 	overige_gebruiks_F		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/overige_gebruiks_F;
+			attribute<m2> 	overige_gebruiks_G		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/overige_gebruiks_G;
+			attribute<m2> 	overige_gebruiks_N		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/overige_gebruiks_N;
+		
+			attribute<m2> 	Cel_A		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/Cel_A;
+			attribute<m2> 	Cel_B		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/Cel_B;
+			attribute<m2> 	Cel_C		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/Cel_C;
+			attribute<m2> 	Cel_D		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/Cel_D;
+			attribute<m2> 	Cel_E		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/Cel_E;
+			attribute<m2> 	Cel_F		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/Cel_F;
+			attribute<m2> 	Cel_G		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/Cel_G;
+			attribute<m2> 	Cel_N		:= IsUitgesloten ? 0[m2] :  tellingen/utiltype_energielabel/Cel_N;
+			
+			
 		}
 
 		unit<uint32> variable := SubItem_PropValues(Table,'name');
