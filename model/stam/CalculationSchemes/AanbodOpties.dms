@@ -26,7 +26,7 @@ container AanbodOpties
 	#include <WaterstofData.dms>
 	#include <BuurtWKO.dms>
 
-	template BuurtWKO
+	template BuurtWKO15_15
 	{
 		// begin case parameters
 		container BeginStatus;
@@ -34,16 +34,58 @@ container AanbodOpties
 		container EnergiePrijzen;
 		parameter<yr_uint16> Jaar;
 		// end case parameters
+		parameter<Classifications/gebiedsOptie> GebiedsOptie_rel := Classifications/gebiedsOptie/V/BuurtWKO15_15;
 
-		container impl := BuurtWKOimpl(BeginStatus, EnergiePrijzen, Classifications/GebiedsOptie/V/BuurtWKO);
+		container impl := BuurtWKO(BeginStatus, AanbodKentallen, EnergiePrijzen, 15[Celsius], 15[Celsius]);
 		unit<uint32> PlanRegio := .../PlanRegio;
 		attribute<kg_yr> CO2 (PlanRegio) := impl/CO2;
 
 		container Results := impl/Results
 		{
-			container BuurtWKO := impl/Results/BuurtWKO;
+			container BuurtWKO15_15 := impl/Results/BuurtWKO;
 		}
 	}
+	
+	template BuurtWKO15_50
+	{
+		// begin case parameters
+		container BeginStatus;
+		container AanbodKentallen;
+		container EnergiePrijzen;
+		parameter<yr_uint16> Jaar;
+		// end case parameters
+		parameter<Classifications/gebiedsOptie> GebiedsOptie_rel := Classifications/gebiedsOptie/V/BuurtWKO15_50;
+
+		container impl := BuurtWKO(BeginStatus, AanbodKentallen, EnergiePrijzen, 15[Celsius], 50[Celsius]);
+		unit<uint32> PlanRegio := .../PlanRegio;
+		attribute<kg_yr> CO2 (PlanRegio) := impl/CO2;
+
+		container Results := impl/Results
+		{
+			container BuurtWKO15_50 := impl/Results/BuurtWKO;
+		}
+	}
+	
+	template BuurtWKO15_70
+	{
+		// begin case parameters
+		container BeginStatus;
+		container AanbodKentallen;
+		container EnergiePrijzen;
+		parameter<yr_uint16> Jaar;
+		// end case parameters
+		parameter<Classifications/gebiedsOptie> GebiedsOptie_rel := Classifications/gebiedsOptie/V/BuurtWKO15_70;
+
+		container impl := BuurtWKO(BeginStatus, AanbodKentallen, EnergiePrijzen, 15[Celsius], 70[Celsius]);
+		unit<uint32> PlanRegio := .../PlanRegio;
+		attribute<kg_yr> CO2 (PlanRegio) := impl/CO2;
+
+		container Results := impl/Results
+		{
+			container BuurtWKO15_70 := impl/Results/BuurtWKO;
+		}
+	}
+	
 	template WaterstofHR
 	{
 		// begin case parameters

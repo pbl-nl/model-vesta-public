@@ -163,7 +163,9 @@ container BeginSituatie : Using = "Units;Geography;Model;Invoer"
 	}
 
 	container Geothermie  := MtOptie;
-	container BuurtWKO    := WKO;
+	container BuurtWKO15_15    := ZLtOptie;
+	container BuurtWKO15_50    := ZLtOptie;
+	container BuurtWKO15_70    := ZLtOptie;
 	container WaterstofHR := MtOptie;
 	container WaterstofWP := MtOptie;
 	container BioWKK      := MtOptie;
