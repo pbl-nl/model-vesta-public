@@ -76,7 +76,7 @@ container Outputs
 			attribute<string>     H20_Toekenning_klimaatneutraal_gas	(PlanRegio) := =BeschikbaarStr;
 			attribute<GJ_yr_WEQ> H21_Input_elektriciteit_WD_OW       	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H21/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H22_Vraag_totaal_w                		(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H22/'+Varname/name+'')+')';
-			attribute<GJ_yr_WEQ> H23_Vraag_RV_wH24_Vraag_TW_w          	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H23/'+Varname/name+'')+')';
+			attribute<GJ_yr_WEQ> H23_Vraag_RV_w          				(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H23/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H24_Vraag_TW_w                			(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H24/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H25_Vraag_Vent_w                		(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H25/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H26_Vraag_K_w                			(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H26/'+Varname/name+'')+')';
