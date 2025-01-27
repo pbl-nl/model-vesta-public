@@ -52,7 +52,7 @@ container PlanregioResults
 			attribute<string> IsOngeldig    := string(Checks/s3GeenLT || Checks/s2GeenMT || Statisch/IsUitgesloten);
 
 			attribute<string> MT_nr := =(Variantcode == 's2a' || Variantcode == 's2d') 
-				? 'TussenResultaten/GebiedsAllocatie/RestWarmte/results/RestWarmte/bron_naam' 
+				? 'TussenResultaten/GebiedsAllocatie/RestWarmte/results/RestWarmte/bron_label' 
 				: 'const(Variantcode, Planregio)'; //lijst nr uit csv-bestand MT
 
 			attribute<string> LT_nr := =(Variantcode == 's3a' || Variantcode == 's3b' || Variantcode == 's3f') 
