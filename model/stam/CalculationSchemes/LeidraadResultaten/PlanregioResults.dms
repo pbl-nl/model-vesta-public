@@ -1256,6 +1256,7 @@ container PlanregioResults
 							 + R_AardG * StateNaAllocatie/nrAansluitinging/BuurtWKO15_15
 							 + R_AardG * StateNaAllocatie/nrAansluitinging/BuurtWKO15_50
 							 + R_AardG * StateNaAllocatie/nrAansluitinging/BuurtWKO15_70
+							 + R_AardG * StateNaAllocatie/nrAansluitinging/BuurtTEO15_15
 							,0[nrAsl])
 				)[nrAsl];
 

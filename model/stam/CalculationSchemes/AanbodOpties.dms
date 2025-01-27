@@ -25,7 +25,28 @@ container AanbodOpties
 	#include <Waterstof.dms>
 	#include <WaterstofData.dms>
 	#include <BuurtWKO.dms>
+	#include <BuurtTEO.dms>
 
+	template BuurtTEO15_15
+	{
+		// begin case parameters
+		container BeginStatus;
+		container AanbodKentallen;
+		container EnergiePrijzen;
+		parameter<yr_uint16> Jaar;
+		// end case parameters
+		parameter<Classifications/gebiedsOptie> GebiedsOptie_rel := Classifications/gebiedsOptie/V/BuurtTEO15_15;
+
+		container impl := BuurtTEO(BeginStatus, AanbodKentallen, EnergiePrijzen, 15[Celsius], 15[Celsius]);
+		unit<uint32> PlanRegio := .../PlanRegio;
+		attribute<kg_yr> CO2 (PlanRegio) := impl/CO2;
+
+		container Results := impl/Results
+		{
+			container BuurtTEO15_15 := impl/Results/BuurtTEO;
+		}
+	}	
+	
 	template BuurtWKO15_15
 	{
 		// begin case parameters

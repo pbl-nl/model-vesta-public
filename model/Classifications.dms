@@ -1045,7 +1045,7 @@ container Classifications: Using = "Units", KeepData = "True", IsHidden = "True"
 		);
 	}
 
-	unit<uint8> GebiedsOptie : nrofrows = 20 // volgorde niet hier instellen maar in SpecifiekeInstellingen/VoorkEuren/BaseLine/WarmteOpties
+	unit<uint8> GebiedsOptie : nrofrows = 21 // volgorde niet hier instellen maar in SpecifiekeInstellingen/VoorkEuren/BaseLine/WarmteOpties
 	{
 		attribute<string> name:
 		[
@@ -1069,6 +1069,7 @@ container Classifications: Using = "Units", KeepData = "True", IsHidden = "True"
 			,'BuurtWKO15_15'
 			,'BuurtWKO15_50'
 			,'BuurtWKO15_70'
+			,'BuurtTEO15_15'
 
 		];
 		attribute<WarmteOptie> WarmteOptie_rel := rlookup(name, WarmteOptie/name); // WarmteOptie is een zelfstandige gebouw-optie of een gebiedsoptie.
