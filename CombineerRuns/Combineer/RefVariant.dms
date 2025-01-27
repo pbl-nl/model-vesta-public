@@ -164,6 +164,8 @@ container Outputs
 			attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag     	(Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G03/'+Varname/name+'')+')';
 			attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog     	(Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G04/'+Varname/name+'')+')';
 			attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt     (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G05/'+Varname/name+'')+')';
+			attribute<Eur_ton>    G06_Nat_meerkost_proceskosten_laag        (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G06/'+Varname/name+'')+')';
+			attribute<Eur_ton>    G07_Nat_meerkost_proceskosten_hoog        (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G07/'+Varname/name+'')+')';
 			}
 			parameter<string> OutputFolder := '%localDataProjDir%/Results/' + Expand( . , OutputExpr) + ''+ '';
 			unit<uint32> variable := SubItem_PropValues(table,'name');
@@ -323,6 +325,8 @@ container Outputs
 		container G03 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G03_Nat_meerkost_energiekosten_laag','@C',Class/Variant/name), PlanRegio, Eur_ton);
 		container G04 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G04_Nat_meerkost_energiekosten_hoog','@C',Class/Variant/name), PlanRegio, Eur_ton);
 		container G05 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G05_Nat_meerkost_energiebesparing_opt','@C',Class/Variant/name), PlanRegio, Eur_ton);
+		container G06 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G06_Nat_meerkost_proceskosten_laag','@C',Class/Variant/name), PlanRegio, Eur_ton);
+		container G07 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G07_Nat_meerkost_proceskosten_hoog','@C',Class/Variant/name), PlanRegio, Eur_ton);
 		
 		container nrWEQ       := for_each_nedv(Class/Variant/name, replace('data/@C/results/nrWEQ','@C',Class/Variant/name), PlanRegio, nrWoning);
 		container R_StadV     := for_each_nedv(Class/Variant/name, replace('data/@C/results/R_StadV','@C',Class/Variant/name), PlanRegio, ratio);

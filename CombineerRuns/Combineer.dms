@@ -347,6 +347,8 @@ container Vergelijking: using = "Units"
 			attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag    	(Planregio):= =IncludeGA ? G03_expr : 'Preresults/G03_Nat_meerkost_energiekosten_laag';
 			attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog	   	(Planregio):= =IncludeGA ? G04_expr : 'Preresults/G04_Nat_meerkost_energiekosten_hoog';
 			attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt	   	(Planregio):= =IncludeGA ? G05_expr : 'Preresults/G05_Nat_meerkost_energiebesparing_opt';
+			attribute<Eur_ton>    G06_Nat_meerkost_proceskosten_laag	   	(Planregio):= =IncludeGA ? G06_expr : 'Preresults/G06_Nat_meerkost_proceskosten_laag';
+			attribute<Eur_ton>    G07_Nat_meerkost_proceskosten_hoog	   	(Planregio):= =IncludeGA ? G07_expr : 'Preresults/G07_Nat_meerkost_proceskosten_hoog';
 			
 		}		
 
@@ -466,6 +468,8 @@ container Vergelijking: using = "Units"
 		attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag		(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G03_Nat_meerkost_energiekosten_laag_Euro_per_mega_g_)[Eur_ton];
 		attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog     	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G04_Nat_meerkost_energiekosten_hoog_Euro_per_mega_g_)[Eur_ton];
 		attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt    	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G05_Nat_meerkost_energiebesparing_opt_Euro_per_mega_g_)[Eur_ton];
+		attribute<Eur_ton>    G06_Nat_meerkost_proceskosten_laag    	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G06_Nat_meerkost_proceskosten_laag_Euro_per_mega_g_)[Eur_ton];
+		attribute<Eur_ton>    G07_Nat_meerkost_proceskosten_hoog    	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G07_Nat_meerkost_proceskosten_hoog_Euro_per_mega_g_)[Eur_ton];
 	}
 	
 	container Combines 

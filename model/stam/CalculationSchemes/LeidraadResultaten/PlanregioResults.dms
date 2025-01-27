@@ -118,6 +118,8 @@ container PlanregioResults
 			attribute<Eur_ton> G03_Nat_meerkost_energiekosten_laag    := =Invoer/G03_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
 			attribute<Eur_ton> G04_Nat_meerkost_energiekosten_hoog    := =Invoer/G04_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
 			attribute<Eur_ton> G05_Nat_meerkost_energiebesparing_opt  := =Invoer/G05_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
+			attribute<Eur_ton> G06_Nat_meerkost_proceskosten_laag  	  := =Invoer/G06_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
+			attribute<Eur_ton> G07_Nat_meerkost_proceskosten_hoog     := =Invoer/G07_aan ? 'Hoofdindicatoren/Table/H17_Nat_meerkost_CO2' : 'const((0/0)[Eur_ton],PlanRegio)';
 		}
 		parameter<string> RefExpr      := isStap0 ? 'Ref_2023_' : isReferentie ? 'Ref_2030_' : '%configName%/';
 		parameter<string> OutputFolder := '%localDataProjDir%/Results/' + Expand( . , RefExpr) + ''+ '';
@@ -211,7 +213,7 @@ container PlanregioResults
 			unit<uint32> US := combine(classifications/UtilTypeBestaand, classifications/schillabel)
 			{
 				attribute<string> name := classifications/UtilTypeBestaand/name[first_rel] + '_' + classifications/schillabel/name[second_rel];
-		}
+			}
 		}
 
 		container tellingen
