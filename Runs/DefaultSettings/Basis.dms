@@ -102,7 +102,8 @@ container Basis
 				0.0, // AVI
 				0.0, // BMC
 				0.0, // BioWKK, 0.053 € / kwh, Source : Advies SDE+ 2019 https://www.pbl.nl/sites/default/files/cms/publicaties/pbl-2018-eindadvies-basisbedragen-SDE-plus-2019_3342.pdf - 8.4: Ketel op vaste of vloeibare biomassa 0,5 - 5 MWth
-				0.0  // Onbekend
+				0.0  // Hulpketel
+			,   0.0  // Onbekend
 			], Descr = "productiesubsidie SDE voor MT-warmteopwekking in euro per gigajoule";
 		}
 	}
