@@ -16,12 +16,16 @@ container Vergelijking: using = "Units"
 		parameter<string> G03_name := '_lagere_energieprijzen';
 		parameter<string> G04_name := '_hogere_energieprijzen';
 		parameter<string> G05_name := '_energiebesparing_opt';
+		parameter<string> G06_name := '_proceskosten_laag';
+		parameter<string> G07_name := '_proceskosten_hoog';
 
 		//container G01_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G01_name' + ')','@C',Class/Variant/name));
 		//container G02_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G02_name' + ')','@C',Class/Variant/name));
 		container G03_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G03_name' + ')','@C',Class/Variant/name));
 		container G04_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G04_name' + ')','@C',Class/Variant/name));
 		container G05_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G05_name' + ')','@C',Class/Variant/name));
+		container G06_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G06_name' + ')','@C',Class/Variant/name));
+		container G07_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G07_name' + ')','@C',Class/Variant/name));
 
 		template ImportOneGA
 		{
