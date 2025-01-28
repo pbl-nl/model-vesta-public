@@ -972,6 +972,33 @@ container PlanregioResults
 							- Origkosten/table/K09_Gebouw_installatie
 							,0[Eur_yr])
 				)[Eur_yr];
+				
+			attribute<Eur_yr> K20_Gebouw_installatie_w := 
+				round(
+					Statisch/IsUitgesloten
+						? 0[Eur_yr]
+						: MakeDefined(
+							  R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_30_w
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_20_W
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_15_W
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_LTAS_w
+							- Origkosten/table/K20_Gebouw_installatie_w
+							+ ExtraFactoren/Kmi_ElektrischKoken
+							,0[Eur_yr])
+				  )[Eur_yr];
+				  
+			attribute<Eur_yr> K22_Gebouw_installatie_u := 
+				round(
+					Statisch/IsUitgesloten
+						? 0[Eur_yr]
+						: MakeDefined(
+							  R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_30_u
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_20_u
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_15_u
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_LTAS_u
+							- Origkosten/table/K22_Gebouw_installatie_u
+							,0[Eur_yr])
+				  )[Eur_yr];
 		}
 		unit<uint32> ExtraFactoren := Invoer/DefaultInstellingen/Basis/PlanRegio
 		{
@@ -1223,6 +1250,7 @@ container PlanregioResults
 							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_20_W
 							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_15_W
 							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_LTAS_w
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_pm_w
 							- Origkosten/table/K20_Gebouw_installatie_w
 							+ ExtraFactoren/Kmi_ElektrischKoken
 							,0[Eur_yr])
@@ -1248,6 +1276,7 @@ container PlanregioResults
 							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_20_u
 							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_15_u
 							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_LTAS_u
+							+ R_AardG * Maatschappelijk/LokaleEnergieProductie/Kmi_pm_u
 							- Origkosten/table/K22_Gebouw_installatie_u
 							,0[Eur_yr])
 				  )[Eur_yr];

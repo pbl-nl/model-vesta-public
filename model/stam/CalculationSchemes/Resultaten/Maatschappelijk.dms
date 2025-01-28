@@ -98,11 +98,13 @@ container Maatschappelijk: Source = "FO v7a C6", isHidden = "true"
 		attribute<Eur_yr> Kmi_20_w       (PlanRegio) := Eindgebruiker/BestaandeWoning/LokaleEnergieProductie/Ki_Totaal20 * NCW/mr20/AnnualisationFactor;
 		attribute<Eur_yr> Kmi_15_w       (PlanRegio) := Eindgebruiker/BestaandeWoning/LokaleEnergieProductie/Ki_Totaal15 * NCW/mr15/AnnualisationFactor;
 		attribute<Eur_yr> Kmi_LTAS_w     (PlanRegio) := Eindgebruiker/BestaandeWoning/LokaleEnergieProductie/Ki_TotaalLTAS * NCW/mr30/AnnualisationFactor;
+		attribute<Eur_yr> Kmi_pm_w       (PlanRegio) := Eindgebruiker/BestaandeWoning/LokaleEnergieProductie/Ki_Totaalpm * NCW/mr15/AnnualisationFactor;
 
 		attribute<Eur_yr> Kmi_30_u       (PlanRegio) := Eindgebruiker/BestaandeUtil/LokaleEnergieProductie/Ki_Totaal30 * NCW/mr30/AnnualisationFactor;
 		attribute<Eur_yr> Kmi_20_u       (PlanRegio) := Eindgebruiker/BestaandeUtil/LokaleEnergieProductie/Ki_Totaal20 * NCW/mr20/AnnualisationFactor;
 		attribute<Eur_yr> Kmi_15_u       (PlanRegio) := Eindgebruiker/BestaandeUtil/LokaleEnergieProductie/Ki_Totaal15 * NCW/mr15/AnnualisationFactor;
 		attribute<Eur_yr> Kmi_LTAS_u     (PlanRegio) := Eindgebruiker/BestaandeUtil/LokaleEnergieProductie/Ki_TotaalLTAS * NCW/mr30/AnnualisationFactor;
+		attribute<Eur_yr> Kmi_pm_u       (PlanRegio) := Eindgebruiker/BestaandeUtil/LokaleEnergieProductie/Ki_Totaalpm * NCW/mr15/AnnualisationFactor;
 	}
 	container net
 	{
