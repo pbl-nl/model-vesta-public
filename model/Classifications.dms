@@ -1103,9 +1103,10 @@ container Classifications: Using = "Units", KeepData = "True", IsHidden = "True"
 		attribute<bool>   IsZLT : [ false, false, false, false, 
 			true, true, true, true, true, true, true, 
 			false, false, false,
-			false, false, false, false];
+			true, false, false, 
+			true, true, true, true];
 		attribute<bool>   IsH2 := id(.) == V/WaterstofHR || id(.) == V/WaterstofWP;
-		attribute<bool>   IsLT := not(IsMT) && not(IsZLT) && not(IsH2);
+		attribute<bool>   IsLT := not(IsMT) && not(IsH2);
 		attribute<bool>   HeeftKoude := id(.) == V/WKO15_15 || id(.) == V/WKO15_50 || id(.) == V/WKO15_70 || id(.) == V/BuurtWKO15_15 || id(.) == V/BuurtWKO15_50 || id(.) == V/BuurtWKO15_70;
 
 		attribute<string> label := name, DialogType = "LabelText";
