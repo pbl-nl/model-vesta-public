@@ -11,6 +11,7 @@ set FLAGS=/S1 /C2 /S3
 call :do_variant supplementair_S3b_B_buurtWKO15_15
 call :do_variant supplementair_S3c_B_buurtWKO15_50
 call :do_variant supplementair_S3d_B_buurtWKO15_70
+call :do_variant supplementair_S3e_B_buurtTEO_15_15
 call :do_variant supplementair_S3g_D_buurtWKO15_15
 call :do_variant supplementair_S3h_D_buurtWKO15_70
 
