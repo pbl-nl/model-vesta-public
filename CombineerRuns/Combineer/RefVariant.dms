@@ -34,6 +34,14 @@ container Outputs
 		,Class/Variant
 		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/GasWaarde_KG : 0.0[Eur_m3]'
 		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/Beschikbaarheid_KG_str : NvtExpr');
+		
+	container LN_B_variant := StratOutput(
+		 'Beste_B_Variant_impl'
+		,'Beste_B_Variant_impl'
+		,'LN_B_'
+		,Class/Variant
+		,'Class/Variant/IsKG[Beste_B_Variant_impl] ? Gaswaarde20/GasWaarde_KG : 0.0[Eur_m3]'
+		,'Class/Variant/IsKG[Beste_B_Variant_impl] ? Gaswaarde20/Beschikbaarheid_KG_str : NvtExpr');
 	
 	template StratOutput
 	{

@@ -939,6 +939,8 @@ container Vergelijking: using = "Units"
 		='Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten || LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [nrWoning] ? (0/0)[Class/B_variant]
 		: argmin('+AsItemList('H17/'+Class/B_Variant/name+'')+')[Class/B_Variant]';
 		
+	attribute<Class/Variant>          Beste_B_Variant_impl        (PlanRegio) := Class/B_variant/nr_orgentity[Beste_B_Variant];
+		
 	attribute<Eur_ton>              Beste_B_Variant_H17  (PlanRegio) :=
 			='merge(Beste_B_Variant, Eur_ton, '+AsItemList('H17/'+Class/B_Variant/name+'')+')';
 	
