@@ -10,8 +10,6 @@ container Outputs
 	container S2_MT := StratOutput('ConstructStrategie/S2varL','BesteS2variant','Strategie_2_',Class/S2Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
 	container S3_LT := StratOutput('ConstructStrategie/S3varL','BesteS3variant','Strategie_3_',Class/S3Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
 	container S4_KG := StratOutput('ConstructStrategie/S4varL','BesteS4variant','Strategie_4_',Class/KGVariant,'Gaswaarde20/GasWaarde_KG','Gaswaarde20/Beschikbaarheid_KG_str');
-	container S4_KG_GA_01 := StratOutput('ConstructStrategie/S4varL','BesteS4variant','Strategie_4_GA_01_',Class/KGVariant,'Gaswaarde15/GasWaarde_KG','Gaswaarde15/Beschikbaarheid_KG_str');
-	container S4_KG_GA_02 := StratOutput('ConstructStrategie/S4varL','BesteS4variant','Strategie_4_GA_02_',Class/KGVariant,'Gaswaarde10/GasWaarde_KG','Gaswaarde10/Beschikbaarheid_KG_str');
 	
 	container LN    := StratOutput(
 		 'BesteViewerBeschikbaar'
@@ -36,6 +34,14 @@ container Outputs
 		,Class/Variant
 		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/GasWaarde_KG : 0.0[Eur_m3]'
 		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/Beschikbaarheid_KG_str : NvtExpr');
+		
+	container LN_B_variant := StratOutput(
+		 'Beste_B_Variant_impl'
+		,'Beste_B_Variant_impl'
+		,'LN_B_'
+		,Class/Variant
+		,'Class/Variant/IsKG[Beste_B_Variant_impl] ? Gaswaarde20/GasWaarde_KG : 0.0[Eur_m3]'
+		,'Class/Variant/IsKG[Beste_B_Variant_impl] ? Gaswaarde20/Beschikbaarheid_KG_str : NvtExpr');
 	
 	template StratOutput
 	{
@@ -76,7 +82,7 @@ container Outputs
 			attribute<string>     H20_Toekenning_klimaatneutraal_gas	(PlanRegio) := =BeschikbaarStr;
 			attribute<GJ_yr_WEQ> H21_Input_elektriciteit_WD_OW       	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H21/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H22_Vraag_totaal_w                		(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H22/'+Varname/name+'')+')';
-			attribute<GJ_yr_WEQ> H23_Vraag_RV_wH24_Vraag_TW_w          	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H23/'+Varname/name+'')+')';
+			attribute<GJ_yr_WEQ> H23_Vraag_RV_w          				(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H23/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H24_Vraag_TW_w                			(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H24/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H25_Vraag_Vent_w                		(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H25/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H26_Vraag_K_w                			(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H26/'+Varname/name+'')+')';
@@ -164,6 +170,8 @@ container Outputs
 			attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag     	(Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G03/'+Varname/name+'')+')';
 			attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog     	(Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G04/'+Varname/name+'')+')';
 			attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt     (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G05/'+Varname/name+'')+')';
+			attribute<Eur_ton>    G06_Nat_meerkost_proceskosten_laag        (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G06/'+Varname/name+'')+')';
+			attribute<Eur_ton>    G07_Nat_meerkost_proceskosten_hoog        (Planregio):= ='merge('+BesteVar+', Eur_ton,  '+AsItemList('Src/G07/'+Varname/name+'')+')';
 			}
 			parameter<string> OutputFolder := '%localDataProjDir%/Results/' + Expand( . , OutputExpr) + ''+ '';
 			unit<uint32> variable := SubItem_PropValues(table,'name');
@@ -323,6 +331,8 @@ container Outputs
 		container G03 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G03_Nat_meerkost_energiekosten_laag','@C',Class/Variant/name), PlanRegio, Eur_ton);
 		container G04 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G04_Nat_meerkost_energiekosten_hoog','@C',Class/Variant/name), PlanRegio, Eur_ton);
 		container G05 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G05_Nat_meerkost_energiebesparing_opt','@C',Class/Variant/name), PlanRegio, Eur_ton);
+		container G06 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G06_Nat_meerkost_proceskosten_laag','@C',Class/Variant/name), PlanRegio, Eur_ton);
+		container G07 := for_each_nedv(Class/Variant/name, replace('data/@C/results/G07_Nat_meerkost_proceskosten_hoog','@C',Class/Variant/name), PlanRegio, Eur_ton);
 		
 		container nrWEQ       := for_each_nedv(Class/Variant/name, replace('data/@C/results/nrWEQ','@C',Class/Variant/name), PlanRegio, nrWoning);
 		container R_StadV     := for_each_nedv(Class/Variant/name, replace('data/@C/results/R_StadV','@C',Class/Variant/name), PlanRegio, ratio);

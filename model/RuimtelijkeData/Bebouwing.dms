@@ -125,6 +125,7 @@ container Bebouwing :=
 
 			unit<uint32> EnergieLabelData := RuimtelijkeData/EnergieLabel/Data;
 			attribute<Classifications/SchilLabel> SchilLabel_rel := rjoin(code, EnergieLabelData/VBO_id, EnergieLabelData/schillabel_rel);
+			attribute<Classifications/SchilLabel> SchilLabel_or_N_rel := MakeDefined(SchilLabel_rel, Classifications/SchilLabel/V/N);
 
 			container Criteria
 			{

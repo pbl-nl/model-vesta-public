@@ -106,10 +106,10 @@ container BCkentallen :=
 					: KostenMin * Ki_u_mWKK_min + KostenMax * Ki_u_mWKK_max 
 				);
 				
-			parameter<Eur_asl> Ki_pm_S1 := Schuiven/KostenMin * Ki_pm_S1_min  + Schuiven/KostenMax * Ki_pm_S1_max;
-			parameter<Eur_asl> Ki_pm_S2 := Schuiven/KostenMin * Ki_pm_S2_min  + Schuiven/KostenMax * Ki_pm_S2_max;
-			parameter<Eur_asl> Ki_pm_S3 := Schuiven/KostenMin * Ki_pm_S3_min  + Schuiven/KostenMax * Ki_pm_S3_max;
-			parameter<Eur_asl> Ki_pm_S4 := Schuiven/KostenMin * Ki_pm_S4_min  + Schuiven/KostenMax * Ki_pm_S4_max;
+			parameter<Eur_asl> Ki_pm_S1 := SharedInvoer/G06_aan ? Ki_pm_S1_min : SharedInvoer/G07_aan ? Ki_pm_S1_max : Schuiven/KostenMin * Ki_pm_S1_min  + Schuiven/KostenMax * Ki_pm_S1_max;
+			parameter<Eur_asl> Ki_pm_S2 := SharedInvoer/G06_aan ? Ki_pm_S2_min : SharedInvoer/G07_aan ? Ki_pm_S2_max : Schuiven/KostenMin * Ki_pm_S2_min  + Schuiven/KostenMax * Ki_pm_S2_max;
+			parameter<Eur_asl> Ki_pm_S3 := SharedInvoer/G06_aan ? Ki_pm_S3_min : SharedInvoer/G07_aan ? Ki_pm_S3_max : Schuiven/KostenMin * Ki_pm_S3_min  + Schuiven/KostenMax * Ki_pm_S3_max;
+			parameter<Eur_asl> Ki_pm_S4 := SharedInvoer/G06_aan ? Ki_pm_S4_min : SharedInvoer/G07_aan ? Ki_pm_S4_max : Schuiven/KostenMin * Ki_pm_S4_min  + Schuiven/KostenMax * Ki_pm_S4_max;
 		}
 	}
 

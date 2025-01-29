@@ -245,7 +245,19 @@ container Basis
 		container Lt30_70     := VraagKentallen;
 		container WaterstofHR := VraagKentallen;
 		container WaterstofWP := VraagKentallen;
-		container BuurtWKO    := VraagKentallen
+		container BuurtWKO15_15    := VraagKentallen
+		{
+			parameter<bool> BuitenContour: [true];
+		}
+		container BuurtWKO15_50    := VraagKentallen
+		{
+			parameter<bool> BuitenContour: [true];
+		}
+		container BuurtWKO15_70    := VraagKentallen
+		{
+			parameter<bool> BuitenContour: [true];
+		}
+		container BuurtTEO15_15    := VraagKentallen
 		{
 			parameter<bool> BuitenContour: [true];
 		}
