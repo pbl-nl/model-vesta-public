@@ -4,7 +4,7 @@
 //                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-template BuurtWKO
+template BuurtTEO
 {
 	// begin case parameters
 	container BeginStatus;
@@ -14,7 +14,7 @@ template BuurtWKO
 	parameter<Celsius> T_sec;
 	// end case parameters
 
-	parameter<string> GebiedsOptie_name := 'BuurtWKO' + string(T_ow) + '_' + string(T_sec);
+	parameter<string> GebiedsOptie_name := 'BuurtTEO' + string(T_ow) + '_' + string(T_sec);
 
 	parameter<Classifications/GebiedsOptie> Optie := = ' Classifications/GebiedsOptie/V/' + GebiedsOptie_name;
 
@@ -44,7 +44,7 @@ template BuurtWKO
 		? 'WKOUtilData(bebouwing/NieuwbouwUtil, KostenBaten/WarmteVraag/NieuwbouwUtil, true , KoudeBeschikbaar, KostenBaten/KostenD/Utiliteit/nu, "NieuwbouwUtil")'
 		: 'CalculationSchemes/BebouwingsComponentDoetNietMee()';
 
-	container CandidateSets := for_each_ne(WkoComponent/name, replace('WKOData(bebouwing/@WC, @WCData, ''@WC'', T_sec)', '@WC', WkoComponent/name));
+	container CandidateSets := for_each_ne(WkoComponent/name, replace('TEOData(bebouwing/@WC, @WCData, ''@WC'', T_sec)', '@WC', WkoComponent/name));
 
 	container BuurtSelected
 	{
@@ -104,9 +104,9 @@ template BuurtWKO
 		attribute<Eur_yr> Kji_wd            (PlanRegio) := Ki_wd * NCW/wd28/AnnualisationFactor         , Descr ="jaarlijkse kapitaallasten wijkdistributie";
 		attribute<Eur_yr> Oji_wd_EIA        (PlanRegio) := Oi_wd_EIA * NCW/wd28/AnnualisationFactor     , Descr ="jaarlijkse subsidie wijkdistributie";
 
-		attribute<Eur>    Ki_ow             (PlanRegio) := const(KostenKentallen/Ki_WKO_vast * KostenKentallen/R_Regeneratie, PlanRegio);
-		attribute<Eur_yr> Kj_ow_oh          (PlanRegio) := Ki_ow * Leercurves/OenM/Curve * Kengetallen/Onderhoud/R_WKO_onderhoud;
-		attribute<Eur_yr> Kj_ow_adm         (PlanRegio) := Ki_ow * Leercurves/OenM/Curve * Kengetallen/Onderhoud/R_WKO_admin;
+		attribute<Eur>    Ki_ow             (PlanRegio) := const(KostenKentallen/Ki_TEO_vast, PlanRegio);
+		attribute<Eur_yr> Kj_ow_oh          (PlanRegio) := Ki_ow * Leercurves/OenM/Curve * Kengetallen/Onderhoud/R_TEO_onderhoud;
+		attribute<Eur_yr> Kj_ow_adm         (PlanRegio) := Ki_ow * Leercurves/OenM/Curve * Kengetallen/Onderhoud/R_TEO_admin;
 		attribute<Eur>    Oi_ow_EIA         (PlanRegio) := Ki_ow * SpecifiekeInstellingen/Beleid/EIA/LT , Descr ="investeringssubsidie opwekking";
 		attribute<Eur_yr> Oji_ow_EIA        (PlanRegio) := Oi_ow_EIA * NCW/ow28/AnnualisationFactor     , Descr ="jaarlijkse subsidie opwekking";
 
@@ -201,7 +201,7 @@ template BuurtWKO
 
 		container Bebouwing := for_each_nex(Classifications/BebouwingsComponent/name, 'BebouwingMutatie/'+Classifications/BebouwingsComponent/name+'/results', uint32);
 
-		container BuurtWKO
+		container BuurtTEO
 		{
 			container VorigePeriode := = 'BeginStatus/' + GebiedsOptie_name;
 			attribute<float64> P_vol(PlanRegio) := VorigePeriode/P_Vol;
@@ -376,5 +376,5 @@ template BuurtWKO
 			}
 		}
 	}
-	attribute<kg_yr> CO2 (PlanRegio) := results/BuurtWKO/Uitstoot/CO2_id_elek + results/BuurtWKO/Uitstoot/CO2_wd_elek + results/BuurtWKO/Uitstoot/CO2_ow_elek;
+	attribute<kg_yr> CO2 (PlanRegio) := results/BuurtTEO/Uitstoot/CO2_id_elek + results/BuurtTEO/Uitstoot/CO2_wd_elek + results/BuurtTEO/Uitstoot/CO2_ow_elek;
 }

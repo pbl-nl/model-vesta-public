@@ -16,12 +16,16 @@ container Vergelijking: using = "Units"
 		parameter<string> G03_name := '_lagere_energieprijzen';
 		parameter<string> G04_name := '_hogere_energieprijzen';
 		parameter<string> G05_name := '_energiebesparing_opt';
+		parameter<string> G06_name := '_proceskosten_laag';
+		parameter<string> G07_name := '_proceskosten_hoog';
 
 		//container G01_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G01_name' + ')','@C',Class/Variant/name));
 		//container G02_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G02_name' + ')','@C',Class/Variant/name));
 		container G03_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G03_name' + ')','@C',Class/Variant/name));
 		container G04_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G04_name' + ')','@C',Class/Variant/name));
 		container G05_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G05_name' + ')','@C',Class/Variant/name));
+		container G06_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G06_name' + ')','@C',Class/Variant/name));
+		container G07_Import := for_each_ne(Class/Variant/name, replace('ImportOneGA(Class/Variant/V/@C' + ',G07_name' + ')','@C',Class/Variant/name));
 
 		template ImportOneGA
 		{
@@ -341,12 +345,16 @@ container Vergelijking: using = "Units"
 			parameter<string> G03_expr := 'Gevoeligheidsanalyses/G03_Import/'+Class/Variant/name[VC]+'/H17_Nat_meerkost_CO2';
 			parameter<string> G04_expr := 'Gevoeligheidsanalyses/G04_Import/'+Class/Variant/name[VC]+'/H17_Nat_meerkost_CO2';
 			parameter<string> G05_expr := 'Gevoeligheidsanalyses/G05_Import/'+Class/Variant/name[VC]+'/H17_Nat_meerkost_CO2';
+			parameter<string> G06_expr := 'Gevoeligheidsanalyses/G06_Import/'+Class/Variant/name[VC]+'/H17_Nat_meerkost_CO2';
+			parameter<string> G07_expr := 'Gevoeligheidsanalyses/G07_Import/'+Class/Variant/name[VC]+'/H17_Nat_meerkost_CO2';
 			
 			attribute<string>     G01_Toekenning_klimaatneutraal_gas_1_5	(Planregio):= =IncludeGA ? G01_expr : 'Preresults/G01_Toekenning_klimaatneutraal_gas_1_5';
 			attribute<string>     G02_Toekenning_klimaatneutraal_gas_1_0  	(Planregio):= =IncludeGA ? G02_expr : 'Preresults/G02_Toekenning_klimaatneutraal_gas_1_0';
 			attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag    	(Planregio):= =IncludeGA ? G03_expr : 'Preresults/G03_Nat_meerkost_energiekosten_laag';
 			attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog	   	(Planregio):= =IncludeGA ? G04_expr : 'Preresults/G04_Nat_meerkost_energiekosten_hoog';
 			attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt	   	(Planregio):= =IncludeGA ? G05_expr : 'Preresults/G05_Nat_meerkost_energiebesparing_opt';
+			attribute<Eur_ton>    G06_Nat_meerkost_proceskosten_laag	   	(Planregio):= =IncludeGA ? G06_expr : 'Preresults/G06_Nat_meerkost_proceskosten_laag';
+			attribute<Eur_ton>    G07_Nat_meerkost_proceskosten_hoog	   	(Planregio):= =IncludeGA ? G07_expr : 'Preresults/G07_Nat_meerkost_proceskosten_hoog';
 			
 		}		
 
@@ -466,6 +474,8 @@ container Vergelijking: using = "Units"
 		attribute<Eur_ton>    G03_Nat_meerkost_energiekosten_laag		(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G03_Nat_meerkost_energiekosten_laag_Euro_per_mega_g_)[Eur_ton];
 		attribute<Eur_ton>    G04_Nat_meerkost_energiekosten_hoog     	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G04_Nat_meerkost_energiekosten_hoog_Euro_per_mega_g_)[Eur_ton];
 		attribute<Eur_ton>    G05_Nat_meerkost_energiebesparing_opt    	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G05_Nat_meerkost_energiebesparing_opt_Euro_per_mega_g_)[Eur_ton];
+		attribute<Eur_ton>    G06_Nat_meerkost_proceskosten_laag    	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G06_Nat_meerkost_proceskosten_laag_Euro_per_mega_g_)[Eur_ton];
+		attribute<Eur_ton>    G07_Nat_meerkost_proceskosten_hoog    	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G07_Nat_meerkost_proceskosten_hoog_Euro_per_mega_g_)[Eur_ton];
 	}
 	
 	container Combines 
@@ -930,6 +940,8 @@ container Vergelijking: using = "Units"
 	attribute<Class/B_Variant>        Beste_B_Variant        (PlanRegio) :=
 		='IsUitgesloten ? (0/0)[Class/B_variant]
 		: argmin('+AsItemList('H17/'+Class/B_Variant/name+'')+')[Class/B_Variant]';
+		
+	attribute<Class/Variant>          Beste_B_Variant_impl        (PlanRegio) := Class/B_variant/nr_orgentity[Beste_B_Variant];
 		
 	attribute<Eur_ton>              Beste_B_Variant_H17  (PlanRegio) :=
 			='merge(Beste_B_Variant, Eur_ton, '+AsItemList('H17/'+Class/B_Variant/name+'')+')';

@@ -150,6 +150,8 @@ container LeidraadResultaten: using = "Model"
 			{
 				attribute<Eur_yr> K09_Gebouw_installatie     (PlanRegio) := Ref2030/PlanregioResults/NationaleKosten/Recap/K09_Gebouw_installatie;
 				attribute<Eur_yr> K10_Totaal_Kapitaalslasten (PlanRegio) := Ref2030/PlanregioResults/NationaleKosten/Recap/K09_Gebouw_installatie;
+				attribute<Eur_yr> K20_Gebouw_installatie_w   (PlanRegio) := Ref2030/PlanregioResults/NationaleKosten/Recap/K20_Gebouw_installatie_w;
+				attribute<Eur_yr> K22_Gebouw_installatie_u   (PlanRegio) := Ref2030/PlanregioResults/NationaleKosten/Recap/K22_Gebouw_installatie_u;
 			}
 			attribute<ton_yr> Orig_CO2_ton (Planregio) := Ref2030/PlanregioResults/NationaleKosten/TotaalUitstoot/New_CO2_ton;
 		}
