@@ -37,6 +37,31 @@ container Outputs
 		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/GasWaarde_KG : 0.0[Eur_m3]'
 		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/Beschikbaarheid_KG_str : NvtExpr');
 	
+	container KostenVerschilAnalyse
+	{	
+		unit<uint8> VarName := /Vergelijking/Class/Variant;
+		unit<uint32> table := Invoer/DefaultInstellingen/Basis/PlanRegio
+		{
+			attribute<string>  	  BU_CODE             	  	  	      	(PlanRegio) := /Invoer/RuimtelijkeData/StudieGebied/buurt/BU_CODE;
+			attribute<string>  	  V01_Strategievariant 	  	  	      	(PlanRegio) := Class/Variant/name[BesteViewerBeschikbaar];
+			attribute<string>     V02_Tweedevariant                     (PlanRegio) := Class/Variant/name[TweedeViewerBeschikbaar];
+			attribute<Eur_yr>     H16_Nat_meerkost1                     (PlanRegio) := ='merge(BesteViewerBeschikbaar , Eur_yr, '+AsItemList('Src/H16/'+Varname/name+'')+')';
+			attribute<Eur_yr>     H16_Nat_meerkost2                     (PlanRegio) := ='merge(TweedeViewerBeschikbaar, Eur_yr, '+AsItemList('Src/H16/'+Varname/name+'')+')';
+			attribute<Eur_yr>     H16_Delta                             (PlanRegio) := H16_Nat_meerkost2 - H16_Nat_meerkost1;
+			
+			attribute<Eur_ton>    H17_Nat_meerkost1_tCO2                (PlanRegio) := ='merge(BesteViewerBeschikbaar , Eur_ton, '+AsItemList('Src/H17/'+Varname/name+'')+')';
+			attribute<Eur_ton>    H17_Nat_meerkost2_tCO2                (PlanRegio) := ='merge(TweedeViewerBeschikbaar, Eur_ton, '+AsItemList('Src/H17/'+Varname/name+'')+')';
+			attribute<Eur_ton>    H17_Delta_tCO2                        (PlanRegio) := H17_Nat_meerkost2_tCO2 - H17_Nat_meerkost1_tCO2;
+			
+			attribute<Eur_yr_WEQ> H18_Nat_meerkost1_WEQ                 (PlanRegio) := ='merge(BesteViewerBeschikbaar , Eur_yr_WEQ, '+AsItemList('Src/H18/'+Varname/name+'')+')';
+			attribute<Eur_yr_WEQ> H18_Nat_meerkost2_WEQ                 (PlanRegio) := ='merge(TweedeViewerBeschikbaar, Eur_yr_WEQ, '+AsItemList('Src/H18/'+Varname/name+'')+')';
+			attribute<Eur_yr_WEQ> H18_Delta_WEQ                         (PlanRegio) := H18_Nat_meerkost2_WEQ - H18_Nat_meerkost1_WEQ;
+			
+		}
+		unit<uint32> variable := SubItem_PropValues(table,'name');
+		container export_csv := Model/CalculationSchemes/Rapportage/WriteTable32ToCSV(table, AsList(variable/name, ';'), '%localDataProjDir%/Results/LNKostenVerschilAnalyse.csv');
+	}
+	
 	template StratOutput
 	{
 		parameter<string> BesteVar;

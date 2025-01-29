@@ -917,20 +917,26 @@ container Vergelijking: using = "Units"
 		attribute<Eur_ton>    Beste19BeschikbaarVariant_H17  (PlanRegio) :=
 		='merge(BesteViewerBeschikbaar19, Eur_ton, '+AsItemList('H17/'+Class/Variant/name+'')+')';
 	}
+	
+	attribute<bool>                 IsUitgesloten          (PlanRegio) := Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten || LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [nrWoning];
 					
 	attribute<Class/Variant>        BesteVariant           (PlanRegio) :=
-		='Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten || LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [nrWoning] ? (0/0)[Class/variant]
+		='IsUitgesloten ? (0/0)[Class/variant]
 		: argmin('+AsItemList('H17/'+Class/Variant/name+'')+')[Class/Variant]';
 	attribute<Eur_ton>              BesteVariant_H17  (PlanRegio) :=
 		='merge(BesteVariant, Eur_ton, '+AsItemList('H17/'+Class/Variant/name+'')+')';
 	
 	
 	attribute<Class/B_Variant>        Beste_B_Variant        (PlanRegio) :=
-		='Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten || LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [nrWoning] ? (0/0)[Class/B_variant]
+		='IsUitgesloten ? (0/0)[Class/B_variant]
 		: argmin('+AsItemList('H17/'+Class/B_Variant/name+'')+')[Class/B_Variant]';
 		
 	attribute<Eur_ton>              Beste_B_Variant_H17  (PlanRegio) :=
 			='merge(Beste_B_Variant, Eur_ton, '+AsItemList('H17/'+Class/B_Variant/name+'')+')';
+			
+	attribute<Class/Strategie>      Beste_B_Strategie  (PlanRegio) := Beste_B_Variant->Strategie_rel;
+	attribute<Class/B_Variant>      Tweede_B_Variant   (PlanRegio) := ='IsUitgesloten ? (0/0)[Class/B_Variant] '
+		': argmin('+AsItemList('Beste_B_Strategie == '+string(Class/B_Variant/Strategie_rel)+'[Class/Strategie] ? -999999.0 : H17/'+Class/B_Variant/name+'')+')[Class/B_Variant]';
 	
 	attribute<nrWoning> WEQ_per_BesteVariant (Class/variant) := sum(LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ, BesteVariant);
 	attribute<percent>    Aandeel_WEQ_BesteVariant(Class/variant) := WEQ_per_BesteVariant / sum(WEQ_per_BesteVariant) * 100[percent];
@@ -939,19 +945,29 @@ container Vergelijking: using = "Units"
 	attribute<percent>    Aandeel_WEQ_Beste_B_Variant(Class/B_Variant) := WEQ_per_Beste_B_Variant / sum(WEQ_per_Beste_B_Variant) * 100[percent];
 	
 	attribute<Class/ViewerVariant>  BesteViewerVariant     (PlanRegio) :=
-		='Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten || LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [nrWoning] ? (0/0)[Class/ViewerVariant] :
+		='IsUitgesloten ? (0/0)[Class/ViewerVariant] :
 		 argmin('+AsItemList('H17/'+Class/ViewerVariant/name+'')+')[Class/ViewerVariant]';
-	attribute<Class/GasloosVariant> BesteGasloosVariant    (PlanRegio) := ='Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten || LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [nrWoning] ? (0/0)[Class/GasloosVariant] : argmin('+AsItemList('H17/'+Class/GasloosVariant/name+'')+')[Class/GasloosVariant]';
+	attribute<Class/GasloosVariant> BesteGasloosVariant    (PlanRegio) := ='IsUitgesloten ? (0/0)[Class/GasloosVariant] : argmin('+AsItemList('H17/'+Class/GasloosVariant/name+'')+')[Class/GasloosVariant]';
+	attribute<Class/Strategie>      BesteGasloosStrategie  (PlanRegio) := BesteGasloosVariant->Strategie_rel;
+	attribute<Class/GasloosVariant> TweedeGasloosVariant   (PlanRegio) := ='IsUitgesloten ? (0/0)[Class/GasloosVariant] '
+		': argmin('+AsItemList('BesteGasloosStrategie == '+string(Class/GasloosVariant/Strategie_rel)+'[Class/Strategie] ? -999999.0 : H17/'+Class/GasloosVariant/name+'')+')[Class/GasloosVariant]';
+	
 	attribute<nrWoning> WEQ_per_GasloosVariant (Class/GasloosVariant):= sum(LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ, BesteGasloosVariant);
 	attribute<percent>    Aandeel_WEQ_GasloosVariant(Class/GasloosVariant) := WEQ_per_GasloosVariant / sum(WEQ_per_GasloosVariant) * 100[percent];
-	attribute<Class/KGVariant>      BesteKGVariant         (PlanRegio) := ='Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten || LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [nrWoning] ? (0/0)[Class/KGVariant] : argmin('+AsItemList('H17/'+Class/KGVariant/name+'')+')[Class/KGVariant]';
+	attribute<Class/KGVariant>      BesteKGVariant         (PlanRegio) := ='IsUitgesloten ? (0/0)[Class/KGVariant] : argmin('+AsItemList('H17/'+Class/KGVariant/name+'')+')[Class/KGVariant]';
 
 	attribute<Class/variant>        BesteViewerBeschikbaar (PlanRegio) :=
-		Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten || LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [nrWoning] ? (0/0)[Class/variant] :
+		IsUitgesloten ? (0/0)[Class/variant] :
 		Gaswaarde20/Beschikbaarheid_KG ? Class/KGVariant/nr_orgentity[BesteKGVariant] : Class/GasloosVariant/nr_orgentity[BesteGasloosVariant];	
+	attribute<Class/variant>        TweedeViewerBeschikbaar (PlanRegio) :=
+		IsUitgesloten ? (0/0)[Class/variant] :
+		Gaswaarde20/Beschikbaarheid_KG ? Class/GasloosVariant/nr_orgentity[BesteGasloosVariant] : Class/GasloosVariant/nr_orgentity[TweedeGasloosVariant];	
 	
 	attribute<Eur_ton>              BesteViewerBeschikbaar_H17  (PlanRegio) :=
 			='merge(BesteViewerBeschikbaar, Eur_ton, '+AsItemList('H17/'+Class/Variant/name+'')+')';
+	attribute<Eur_ton>              TweedeViewerBeschikbaar_H17  (PlanRegio) :=
+			='merge(TweedeViewerBeschikbaar, Eur_ton, '+AsItemList('H17/'+Class/Variant/name+'')+')';
+	attribute<Eur_ton>              Delta_H17  (PlanRegio) := TweedeViewerBeschikbaar_H17 - BesteViewerBeschikbaar_H17;
 		
 	container ConstructStrategie
 	{
@@ -975,7 +991,7 @@ container Vergelijking: using = "Units"
 	attribute<Class/variant>   BesteS3variant (PlanRegio) := IsNull(ConstructStrategie/S3H17) ? (0/0)[Class/variant] : Class/S3Variant/nr_orgentity[ConstructStrategie/S3var];
 	attribute<Class/variant>   BesteS4variant (PlanRegio) := IsNull(ConstructStrategie/S4H17) ? (0/0)[Class/variant] : Class/KGVariant/nr_orgentity[ConstructStrategie/S4var];
 	
-	attribute<Class/strategie> ViewerStrategie (PlanRegio) := Invoer/RuimtelijkeData/leidraad_oktober_2019/isUitgesloten || LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ < 1 [nrWoning] ? Class/Strategie/V/geen : Class/Variant/Strategie_rel[BesteViewerBeschikbaar];
+	attribute<Class/strategie> ViewerStrategie (PlanRegio) := IsUitgesloten ? Class/Strategie/V/geen : Class/Variant/Strategie_rel[BesteViewerBeschikbaar];
 
 	#include <RefVariant.dms>
 	
