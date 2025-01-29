@@ -54,7 +54,8 @@ container Outputs
 			attribute<Eur_yr>     H16_Nat_meerkost1                     (PlanRegio) := ='merge(BesteViewerBeschikbaar , Eur_yr, '+AsItemList('Src/H16/'+Varname/name+'')+')';
 			attribute<Eur_yr>     H16_Nat_meerkost2                     (PlanRegio) := ='merge(TweedeViewerBeschikbaar, Eur_yr, '+AsItemList('Src/H16/'+Varname/name+'')+')';
 			attribute<Eur_yr>     H16_Delta                             (PlanRegio) := H16_Nat_meerkost2 - H16_Nat_meerkost1;
-			
+			attribute<bool>       klein_verschil                        (PlanRegio) := H16_Nat_meerkost2 < H16_Nat_meerkost1 * 1.2;			
+
 			attribute<Eur_ton>    H17_Nat_meerkost1_tCO2                (PlanRegio) := ='merge(BesteViewerBeschikbaar , Eur_ton, '+AsItemList('Src/H17/'+Varname/name+'')+')';
 			attribute<Eur_ton>    H17_Nat_meerkost2_tCO2                (PlanRegio) := ='merge(TweedeViewerBeschikbaar, Eur_ton, '+AsItemList('Src/H17/'+Varname/name+'')+')';
 			attribute<Eur_ton>    H17_Delta_tCO2                        (PlanRegio) := H17_Nat_meerkost2_tCO2 - H17_Nat_meerkost1_tCO2;
