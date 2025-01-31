@@ -961,8 +961,9 @@ container Vergelijking: using = "Units"
 		 argmin('+AsItemList('H16/'+Class/ViewerVariant/name+'')+')[Class/ViewerVariant]';
 	attribute<Class/GasloosVariant> BesteGasloosVariant    (PlanRegio) := ='IsUitgesloten ? (0/0)[Class/GasloosVariant] : argmin('+AsItemList('H16/'+Class/GasloosVariant/name+'')+')[Class/GasloosVariant]';
 	attribute<Class/Strategie>      BesteGasloosStrategie  (PlanRegio) := BesteGasloosVariant->Strategie_rel;
+	attribute<Class/Strategie>      TweedeGasloosStrategie  (PlanRegio) := TweedeGasloosVariant->Strategie_rel;
 	attribute<Class/GasloosVariant> TweedeGasloosVariant   (PlanRegio) := ='IsUitgesloten ? (0/0)[Class/GasloosVariant] '
-		': argmin('+AsItemList('BesteGasloosStrategie == '+string(Class/GasloosVariant/Strategie_rel)+'[Class/Strategie] ? 999999.0 : H16/'+Class/GasloosVariant/name+'')+')[Class/GasloosVariant]';
+		': argmin('+AsItemList('BesteGasloosStrategie == '+string(Class/GasloosVariant/Strategie_rel)+'[Class/Strategie] ? 99999999.0 : H16/'+Class/GasloosVariant/name+'')+')[Class/GasloosVariant]';
 	
 	attribute<nrWoning> WEQ_per_GasloosVariant (Class/GasloosVariant):= sum(LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ, BesteGasloosVariant);
 	attribute<percent>    Aandeel_WEQ_GasloosVariant(Class/GasloosVariant) := WEQ_per_GasloosVariant / sum(WEQ_per_GasloosVariant) * 100[percent];
