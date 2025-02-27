@@ -12,28 +12,38 @@ container Outputs
 	container S4_KG := StratOutput('ConstructStrategie/S4varL','BesteS4variant','Strategie_4_',Class/KGVariant,'Gaswaarde20/GasWaarde_KG','Gaswaarde20/Beschikbaarheid_KG_str');
 	
 	container LN    := StratOutput(
-		 'BesteViewerBeschikbaar'
-		,'BesteViewerBeschikbaar'
+		 'viewerbeschikbaar20/BesteViewerBeschikbaar'
+		,'viewerbeschikbaar20/BesteViewerBeschikbaar'
 		,'LN'
 		,Class/Variant
-		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde20/GasWaarde_KG : 0.0[Eur_m3]'
-		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde20/Beschikbaarheid_KG_str : NvtExpr');
+		,'Class/Variant/IsKG[viewerbeschikbaar20/BesteViewerBeschikbaar] ? Gaswaarde20/GasWaarde_KG : 0.0[Eur_m3]'
+		,'Class/Variant/IsKG[viewerbeschikbaar20/BesteViewerBeschikbaar] ? Gaswaarde20/Beschikbaarheid_KG_str : NvtExpr');
 		
 	container LN_GA_01    := StratOutput(
-		 'BesteViewerBeschikbaar'
-		,'BesteViewerBeschikbaar'
+		 'viewerbeschikbaar15/BesteViewerBeschikbaar'
+		,'viewerbeschikbaar15/BesteViewerBeschikbaar'
 		,'LN_GA_01'
 		,Class/Variant
-		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde15/GasWaarde_KG : 0.0[Eur_m3]'
-		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde15/Beschikbaarheid_KG_str : NvtExpr');
+		,'Class/Variant/IsKG[viewerbeschikbaar15/BesteViewerBeschikbaar] ? Gaswaarde15/GasWaarde_KG : 0.0[Eur_m3]'
+		,'Class/Variant/IsKG[viewerbeschikbaar15/BesteViewerBeschikbaar] ? Gaswaarde15/Beschikbaarheid_KG_str : NvtExpr');
 		
 	container LN_GA_02    := StratOutput(
-		 'BesteViewerBeschikbaar'
-		,'BesteViewerBeschikbaar'
+		 'viewerbeschikbaar10/BesteViewerBeschikbaar'
+		,'viewerbeschikbaar10/BesteViewerBeschikbaar'
 		,'LN_GA_02'
 		,Class/Variant
-		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/GasWaarde_KG : 0.0[Eur_m3]'
-		,'Class/Variant/IsKG[BesteViewerBeschikbaar] ? Gaswaarde10/Beschikbaarheid_KG_str : NvtExpr');
+		,'Class/Variant/IsKG[viewerbeschikbaar10/BesteViewerBeschikbaar] ? Gaswaarde10/GasWaarde_KG : 0.0[Eur_m3]'
+		,'Class/Variant/IsKG[viewerbeschikbaar10/BesteViewerBeschikbaar] ? Gaswaarde10/Beschikbaarheid_KG_str : NvtExpr');
+		
+		
+	container LN_0BCM   := StratOutput(
+		 'viewerbeschikbaar05/BesteViewerBeschikbaar'
+		,'viewerbeschikbaar05/BesteViewerBeschikbaar'
+		,'LN_0BCM'
+		,Class/Variant
+		,'Class/Variant/IsKG[viewerbeschikbaar05/BesteViewerBeschikbaar] ? Gaswaarde05/GasWaarde_KG : 0.0[Eur_m3]'
+		,'Class/Variant/IsKG[viewerbeschikbaar05/BesteViewerBeschikbaar] ? Gaswaarde05/Beschikbaarheid_KG_str : NvtExpr');
+		
 		
 	container LN_B_variant := StratOutput(
 		 'Beste_B_Variant_impl'

@@ -789,6 +789,8 @@ container Vergelijking: using = "Units"
 	container gaswaarde20 := GaswaardeT(1500000000[units/m3_yr]);
 	container gaswaarde15 := GaswaardeT(1000000000[units/m3_yr]);
 	container gaswaarde10 := GaswaardeT( 500000000[units/m3_yr]);
+	container gaswaarde05 := GaswaardeT( 		 0[units/m3_yr]);
+
 
 
 	Template GaswaardeT
@@ -969,64 +971,83 @@ container Vergelijking: using = "Units"
 	attribute<percent>    Aandeel_WEQ_GasloosVariant(Class/GasloosVariant) := WEQ_per_GasloosVariant / sum(WEQ_per_GasloosVariant) * 100[percent];
 	attribute<Class/KGVariant>      BesteKGVariant         (PlanRegio) := ='IsUitgesloten ? (0/0)[Class/KGVariant] : argmin('+AsItemList('H16/'+Class/KGVariant/name+'')+')[Class/KGVariant]';
 
-	attribute<Class/variant>        BesteViewerBeschikbaar (PlanRegio) :=
-		IsUitgesloten ? (0/0)[Class/variant] :
-		Gaswaarde20/Beschikbaarheid_KG ? Class/KGVariant/nr_orgentity[BesteKGVariant] : Class/GasloosVariant/nr_orgentity[BesteGasloosVariant];	
-	attribute<Class/variant>        TweedeViewerBeschikbaar (PlanRegio) :=
-		IsUitgesloten ? (0/0)[Class/variant] :
-		Gaswaarde20/Beschikbaarheid_KG ? Class/GasloosVariant/nr_orgentity[BesteGasloosVariant] : Class/GasloosVariant/nr_orgentity[TweedeGasloosVariant];	
-	
-	attribute<Eur_ton>              BesteViewerBeschikbaar_H17  (PlanRegio) :=
-			='merge(BesteViewerBeschikbaar, Eur_ton, '+AsItemList('H17/'+Class/Variant/name+'')+')';
-	attribute<Eur_ton>              TweedeViewerBeschikbaar_H17  (PlanRegio) :=
-			='merge(TweedeViewerBeschikbaar, Eur_ton, '+AsItemList('H17/'+Class/Variant/name+'')+')';
-	attribute<Eur_ton>              Delta_H17  (PlanRegio) := TweedeViewerBeschikbaar_H17 - BesteViewerBeschikbaar_H17;
-		
-	container ConstructStrategie
+	template viewerbeschikbaar
 	{
-		attribute<Class/S1Variant>        S1var (PlanRegio) := ='argmin('+AsItemList('H16/'+Class/S1variant/name+'')+')[Class/S1Variant]';
-		attribute<Class/S2Variant>        S2var (PlanRegio) := ='argmin('+AsItemList('H16/'+Class/S2variant/name+'')+')[Class/S2Variant]';
-		attribute<Class/S3Variant>        S3var (PlanRegio) := ='argmin('+AsItemList('H16/'+Class/S3variant/name+'')+')[Class/S3Variant]';
-		attribute<Class/KGVariant>        S4var (PlanRegio) := ='argmin('+AsItemList('H16/'+Class/KGvariant/name+'')+')[Class/KGVariant]';
+		parameter<string> beschikbaarheid;
 		
-		attribute<Eur_ton> S1H17 (PlanRegio) := ='merge(S1var, Eur_ton, '+AsItemList('H17/'+Class/S1Variant/name+'')+')';
-		attribute<Eur_ton> S2H17 (PlanRegio) := ='merge(S2var, Eur_ton, '+AsItemList('H17/'+Class/S2Variant/name+'')+')';
-		attribute<Eur_ton> S3H17 (PlanRegio) := ='merge(S3var, Eur_ton, '+AsItemList('H17/'+Class/S3Variant/name+'')+')';
-		attribute<Eur_ton> S4H17 (PlanRegio) := ='merge(S4var, Eur_ton, '+AsItemList('H17/'+Class/KGVariant/name+'')+')';
+		attribute<Class/variant>        BesteViewerBeschikbaar (PlanRegio) := ="
+		IsUitgesloten ? (0/0)[Class/variant] :
+		Gaswaarde"+beschikbaarheid+"/Beschikbaarheid_KG ? Class/KGVariant/nr_orgentity[BesteKGVariant] : Class/GasloosVariant/nr_orgentity[BesteGasloosVariant]";	
+		attribute<Class/variant>        TweedeViewerBeschikbaar (PlanRegio) := ="
+		IsUitgesloten ? (0/0)[Class/variant] :
+		Gaswaarde"+Beschikbaarheid+"/Beschikbaarheid_KG ? Class/GasloosVariant/nr_orgentity[BesteGasloosVariant] : Class/GasloosVariant/nr_orgentity[TweedeGasloosVariant]";
 		
-		attribute<Class/S1Variant>        S1varL (PlanRegio) := IsNull(S1H17) ? (0/0)[Class/S1Variant] : S1var;
-		attribute<Class/S2Variant>        S2varL (PlanRegio) := IsNull(S2H17) ? (0/0)[Class/S2Variant] : S2var;
-		attribute<Class/S3Variant>        S3varL (PlanRegio) := IsNull(S3H17) ? (0/0)[Class/S3Variant] : S3var;
-		attribute<Class/KGVariant>        S4varL (PlanRegio) := IsNull(S4H17) ? (0/0)[Class/KGVariant] : S4var;
+		attribute<Eur_ton>              BesteViewerBeschikbaar_H17  (PlanRegio) :=
+				='merge(BesteViewerBeschikbaar, Eur_ton, '+AsItemList('H17/'+Class/Variant/name+'')+')';
+		attribute<Eur_ton>              TweedeViewerBeschikbaar_H17  (PlanRegio) :=
+				='merge(TweedeViewerBeschikbaar, Eur_ton, '+AsItemList('H17/'+Class/Variant/name+'')+')';
+		attribute<Eur_ton>              Delta_H17  (PlanRegio) := TweedeViewerBeschikbaar_H17 - BesteViewerBeschikbaar_H17;
+		
+		
+		container ConstructStrategie
+		{
+			attribute<Class/S1Variant>        S1var (PlanRegio) := ='argmin('+AsItemList('H16/'+Class/S1variant/name+'')+')[Class/S1Variant]';
+			attribute<Class/S2Variant>        S2var (PlanRegio) := ='argmin('+AsItemList('H16/'+Class/S2variant/name+'')+')[Class/S2Variant]';
+			attribute<Class/S3Variant>        S3var (PlanRegio) := ='argmin('+AsItemList('H16/'+Class/S3variant/name+'')+')[Class/S3Variant]';
+			attribute<Class/KGVariant>        S4var (PlanRegio) := ='argmin('+AsItemList('H16/'+Class/KGvariant/name+'')+')[Class/KGVariant]';
+			
+			attribute<Eur_ton> S1H17 (PlanRegio) := ='merge(S1var, Eur_ton, '+AsItemList('H17/'+Class/S1Variant/name+'')+')';
+			attribute<Eur_ton> S2H17 (PlanRegio) := ='merge(S2var, Eur_ton, '+AsItemList('H17/'+Class/S2Variant/name+'')+')';
+			attribute<Eur_ton> S3H17 (PlanRegio) := ='merge(S3var, Eur_ton, '+AsItemList('H17/'+Class/S3Variant/name+'')+')';
+			attribute<Eur_ton> S4H17 (PlanRegio) := ='merge(S4var, Eur_ton, '+AsItemList('H17/'+Class/KGVariant/name+'')+')';
+			
+			attribute<Class/S1Variant>        S1varL (PlanRegio) := IsNull(S1H17) ? (0/0)[Class/S1Variant] : S1var;
+			attribute<Class/S2Variant>        S2varL (PlanRegio) := IsNull(S2H17) ? (0/0)[Class/S2Variant] : S2var;
+			attribute<Class/S3Variant>        S3varL (PlanRegio) := IsNull(S3H17) ? (0/0)[Class/S3Variant] : S3var;
+			attribute<Class/KGVariant>        S4varL (PlanRegio) := IsNull(S4H17) ? (0/0)[Class/KGVariant] : S4var;
+		}
+		attribute<Class/variant>   BesteS1variant (PlanRegio) := IsNull(ConstructStrategie/S1H17) ? (0/0)[Class/variant] : Class/S1Variant/nr_orgentity[ConstructStrategie/S1var];
+		attribute<Class/variant>   BesteS2variant (PlanRegio) := IsNull(ConstructStrategie/S2H17) ? (0/0)[Class/variant] : Class/S2Variant/nr_orgentity[ConstructStrategie/S2var];
+		attribute<Class/variant>   BesteS3variant (PlanRegio) := IsNull(ConstructStrategie/S3H17) ? (0/0)[Class/variant] : Class/S3Variant/nr_orgentity[ConstructStrategie/S3var];
+		attribute<Class/variant>   BesteS4variant (PlanRegio) := IsNull(ConstructStrategie/S4H17) ? (0/0)[Class/variant] : Class/KGVariant/nr_orgentity[ConstructStrategie/S4var];
+		
+		attribute<Class/strategie> ViewerStrategie (PlanRegio) := IsUitgesloten ? Class/Strategie/V/geen : Class/Variant/Strategie_rel[BesteViewerBeschikbaar];
+		
+		container Aandelen
+		{
+			attribute<nrAsl>    AG_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A01_Aansl_aardgas, BesteViewerBeschikbaar);
+			attribute<nrAsl>    WP_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A02_Aansl_eWP, BesteViewerBeschikbaar);
+			attribute<nrAsl>    MT_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A03_Aansl_MT, BesteViewerBeschikbaar);
+			attribute<nrAsl>    LT_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A04_Aansl_LT, BesteViewerBeschikbaar);
+			attribute<nrAsl>    HP_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A05_Aansl_hWP_HG, BesteViewerBeschikbaar);
+			attribute<nrAsl>    DG_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A06_Aansl_HR_HG, BesteViewerBeschikbaar);
+			
+			attribute<float64>  A_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalA, BesteViewerBeschikbaar);
+			attribute<float64>  B_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalB, BesteViewerBeschikbaar);
+			attribute<float64>  C_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalC, BesteViewerBeschikbaar);
+			attribute<float64>  D_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalD, BesteViewerBeschikbaar);
+			attribute<float64>  E_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalE, BesteViewerBeschikbaar);
+			attribute<float64>  F_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalF, BesteViewerBeschikbaar);
+			attribute<float64>  G_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalG, BesteViewerBeschikbaar);
+			attribute<float64>  N_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalN, BesteViewerBeschikbaar);
+		}
+		
+		attribute<nrWoning> WEQ_per_ViewerBeschikbaar    (Class/variant) := sum(LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ, BesteViewerBeschikbaar);
+		attribute<percent>  Aandeel_WEQ_ViewerBeschikbaar(Class/variant) := WEQ_per_ViewerBeschikbaar / sum(WEQ_per_ViewerBeschikbaar) * 100[percent];
+		
 	}
-	attribute<Class/variant>   BesteS1variant (PlanRegio) := IsNull(ConstructStrategie/S1H17) ? (0/0)[Class/variant] : Class/S1Variant/nr_orgentity[ConstructStrategie/S1var];
-	attribute<Class/variant>   BesteS2variant (PlanRegio) := IsNull(ConstructStrategie/S2H17) ? (0/0)[Class/variant] : Class/S2Variant/nr_orgentity[ConstructStrategie/S2var];
-	attribute<Class/variant>   BesteS3variant (PlanRegio) := IsNull(ConstructStrategie/S3H17) ? (0/0)[Class/variant] : Class/S3Variant/nr_orgentity[ConstructStrategie/S3var];
-	attribute<Class/variant>   BesteS4variant (PlanRegio) := IsNull(ConstructStrategie/S4H17) ? (0/0)[Class/variant] : Class/KGVariant/nr_orgentity[ConstructStrategie/S4var];
 	
-	attribute<Class/strategie> ViewerStrategie (PlanRegio) := IsUitgesloten ? Class/Strategie/V/geen : Class/Variant/Strategie_rel[BesteViewerBeschikbaar];
+	container viewerbeschikbaar20 := viewerbeschikbaar("20");
+	container viewerbeschikbaar15 := viewerbeschikbaar("15");
+	container viewerbeschikbaar10 := viewerbeschikbaar("10");
+	container viewerbeschikbaar05 := viewerbeschikbaar("05");
+	
+
+	
 
 	#include <RefVariant.dms>
 	
-	attribute<nrWoning> WEQ_per_ViewerBeschikbaar    (Class/variant) := sum(LeidraadResultaten/StartJaar/PlanregioResults/nrWEQ, BesteViewerBeschikbaar);
-	attribute<percent>  Aandeel_WEQ_ViewerBeschikbaar(Class/variant) := WEQ_per_ViewerBeschikbaar / sum(WEQ_per_ViewerBeschikbaar) * 100[percent];
-	container Aandelen
-	{
-		attribute<nrAsl>    AG_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A01_Aansl_aardgas, BesteViewerBeschikbaar);
-		attribute<nrAsl>    WP_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A02_Aansl_eWP, BesteViewerBeschikbaar);
-		attribute<nrAsl>    MT_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A03_Aansl_MT, BesteViewerBeschikbaar);
-		attribute<nrAsl>    LT_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A04_Aansl_LT, BesteViewerBeschikbaar);
-		attribute<nrAsl>    HP_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A05_Aansl_hWP_HG, BesteViewerBeschikbaar);
-		attribute<nrAsl>    DG_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Aansluitingen/Table/A06_Aansl_HR_HG, BesteViewerBeschikbaar);
-		
-		attribute<float64>  A_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalA, BesteViewerBeschikbaar);
-		attribute<float64>  B_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalB, BesteViewerBeschikbaar);
-		attribute<float64>  C_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalC, BesteViewerBeschikbaar);
-		attribute<float64>  D_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalD, BesteViewerBeschikbaar);
-		attribute<float64>  E_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalE, BesteViewerBeschikbaar);
-		attribute<float64>  F_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalF, BesteViewerBeschikbaar);
-		attribute<float64>  G_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalG, BesteViewerBeschikbaar);
-		attribute<float64>  N_per_ViewerBeschikbaar     (Class/variant) := sum(Outputs/LN/Hulpvariabelen/Table/AantalN, BesteViewerBeschikbaar);
-	}
+	
+	
 }
 
