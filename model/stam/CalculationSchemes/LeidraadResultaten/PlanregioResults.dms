@@ -9,7 +9,7 @@ container PlanregioResults
 	attribute<nrWoning> nrWEQ    (Planregio) :=
 		  sum(bebouwing/BestaandeWoning/nrAansluitingen / 1.0[nrAsl / nrWoning], bebouwing/BestaandeWoning/Planregio_rel)
 		+ sum(bebouwing/BestaandeUtil/Oppervlakte / 130[m2 / nrWoning], bebouwing/BestaandeUtil/Planregio_rel);
-	attribute<ratio>      R_StadV  (Planregio) := Invoer/RuimtelijkeData/StudieGebied/buurt/R_StadV;
+	attribute<ratio>      R_StadV  (Planregio) := Warmtebestaand/R_StadV;
 	attribute<ratio>      R_AardG  (Planregio) := 1D - R_StadV;
 	attribute<string>     IsWater  (Planregio) := Invoer/RuimtelijkeData/StudieGebied/buurt/IsWater;
 	parameter<Float64>    KlimaatneutraalGasFactor := TussenResultaten/Voorkeuren/KlimaatneutraalGasFactor;

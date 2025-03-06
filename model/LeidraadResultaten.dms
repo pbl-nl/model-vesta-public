@@ -10,7 +10,8 @@ container LeidraadResultaten: using = "Model"
 	{
 		container WarmteBestaand
 		{
-			attribute<ratio>  R_StadV         (PlanRegio) := Invoer/RuimtelijkeData/StudieGebied/buurt/R_StadV;
+			attribute<ratio>  R_StadV_impl         (PlanRegio) := Invoer/RuimtelijkeData/StudieGebied/buurt/R_StadV;
+			attribute<ratio>  R_StadV	           (PlanRegio) := R_StadV_impl > 0.99[ratio] ? 1[ratio] : R_StadV_impl;
 
 			attribute<GJ_yr>  V_Bijstook      (PlanRegio) := R_StadV * (1d - GebiedsAllocatie/RestWarmte/results/RestWarmte/P_vol) * GebiedsAllocatie/RestWarmte/KostenBaten/KostenD/Bijstook/V_Bijstook;
 			attribute<GJ_yr>  V_wd_elek       (PlanRegio) := R_StadV * GebiedsAllocatie/RestWarmte/KostenBaten/KostenD/SecundairNet/V_wd_elek;
@@ -86,7 +87,7 @@ container LeidraadResultaten: using = "Model"
 	{	
 		container WarmteBestaand
 		{
-			attribute<ratio>  R_StadV         (PlanRegio) := Invoer/RuimtelijkeData/StudieGebied/buurt/R_StadV;
+			attribute<ratio>  R_StadV         (PlanRegio) := StartJaar/WarmteBestaand/R_StadV;
 
 			attribute<GJ_yr>  V_Bijstook      (PlanRegio) := R_StadV * (1d - GebiedsAllocatie/RestWarmte/results/RestWarmte/P_vol) * GebiedsAllocatie/RestWarmte/KostenBaten/KostenD/Bijstook/V_Bijstook;
 
@@ -159,7 +160,7 @@ container LeidraadResultaten: using = "Model"
 		//TEST
 		container Warmtebestaand := Ref2030/WarmteBestaand
 		{
-			attribute<ratio>  R_StadV         (PlanRegio) := Invoer/RuimtelijkeData/StudieGebied/buurt/R_StadV;
+			attribute<ratio>  R_StadV         (PlanRegio) := Ref2030/WarmteBestaand/R_StadV;
 			attribute<GJ_yr>  V_Bijstook      (PlanRegio) := R_StadV * (1d - ..../TussenResultaten/R2_2030/GebiedsAllocatie/RestWarmte/results/RestWarmte/P_vol) * ..../TussenResultaten/R2_2030/GebiedsAllocatie/RestWarmte/KostenBaten/KostenD/Bijstook/V_Bijstook;
 			attribute<GJ_yr>  V_wd_elek       (PlanRegio) := R_StadV * ..../TussenResultaten/R2_2030/GebiedsAllocatie/RestWarmte/KostenBaten/KostenD/SecundairNet/V_wd_elek;
 			attribute<GJ_yr>  V_elek_w        (PlanRegio) := R_StadV * sum(..../TussenResultaten/R2_2030/AllocatieResultaten/BestaandeWoning/metervraag/Elektriciteit, bebouwing/BestaandeWoning/PlanRegio_rel);
