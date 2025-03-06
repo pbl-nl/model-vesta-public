@@ -148,6 +148,7 @@ container WarmteBronnen
 
 				attribute<.>                     per_BronElementen (BronElementen) := rlookup(BronElementen/point, Values);
 				attribute<MetaData/TypeInfoList> TypeInfoList_rel                  := modus_weighted(BronElementen/TypeInfoList_rel, BronElementen/MWth_max, per_BronElementen);
+				attribute<string> 				 Type                  := MetaData/TypeInfoList/naam[TypeInfoList_rel];
 
 				attribute<rdc_meter>             point        := Values;
 				attribute<ratio>                 P_vol        := sum(BronElementen/P_vol        * BronElementen/MWth_max, per_BronElementen) / sum(BronElementen/MWth_max, per_BronElementen);
@@ -491,9 +492,11 @@ container WarmteBronnen
 		{
 			attribute<rdc_meter> point         := data/point;
 			attribute<string>    label         := data/label;
+			attribute<string>    name          := data/bron_naam;
 			attribute<yr_uint16> ingebruik     := data/ingebruik;
 			attribute<yr_uint16> uitgebruik    := data/ingebruik;
 			attribute<categorie> Categorie_rel := data/Categorie_rel;
+			attribute<string>    CategorieSoort     := categorie/label[Categorie_rel];
 
 			//invoerwaardes
 // 			attribute<MW>			MWth_max_spec	:=	LTbronnen_capaciteit/MWth_max_f;
