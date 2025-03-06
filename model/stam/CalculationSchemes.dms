@@ -146,7 +146,7 @@ container CalculationSchemes: Using = "Units;Geography"
 		// begin case parameters
 
 		parameter<ratio> a := 1.25; // omwegfactor
-		parameter<ratio> AF := 1.3; // Aanpassingsfactor 2020-2023
+		parameter<ratio> AF := invoer/kengetallen/constanten/AF_K_buizen;
 
 		attribute<Eur_m> K_min (PlanRegio) := Capaciteit > 0[MW] ? AF * (400[Eur_m] + 210[Eur / m] * (Capaciteit * 1.0[1 / MW])^ 0.5): 0[Eur_m], Source = "Functioneel Ontwerp 4.0 bijlage A.11";
 		attribute<Eur_m> K_max (PlanRegio) := Capaciteit > 0[MW] ? AF * (800[Eur_m] + 200[Eur / m] * (Capaciteit * 1.0[1 / MW])^ 0.6) : 0[Eur_m], Source = "Functioneel Ontwerp 4.0 bijlage A.11";
@@ -162,9 +162,10 @@ container CalculationSchemes: Using = "Units;Geography"
 		// begin case parameters
 
 		parameter<ratio> a := 1.25; // omwegfactor
+		parameter<ratio> AF := invoer/kengetallen/constanten/AF_K_buizen;
 
-		attribute<Eur_m> K_min (BebouwingsComponent) := Capaciteit > 0[MW] ? 400[Eur_m] + 210[Eur / m] * (Capaciteit * 1.0[1 / MW])^ 0.5 : 0[Eur_m], Source = "Functioneel Ontwerp 4.0 bijlage A.11";
-		attribute<Eur_m> K_max (BebouwingsComponent) := Capaciteit > 0[MW] ? 800[Eur_m] + 200[Eur / m] * (Capaciteit * 1.0[1 / MW])^ 0.6 : 0[Eur_m], Source = "Functioneel Ontwerp 4.0 bijlage A.11";
+		attribute<Eur_m> K_min (BebouwingsComponent) := Capaciteit > 0[MW] ? AF * (400[Eur_m] + 210[Eur / m] * (Capaciteit * 1.0[1 / MW])^ 0.5) : 0[Eur_m], Source = "Functioneel Ontwerp 4.0 bijlage A.11";
+		attribute<Eur_m> K_max (BebouwingsComponent) := Capaciteit > 0[MW] ? AF * (800[Eur_m] + 200[Eur / m] * (Capaciteit * 1.0[1 / MW])^ 0.6) : 0[Eur_m], Source = "Functioneel Ontwerp 4.0 bijlage A.11";
 		attribute<Eur_m> K_m   (BebouwingsComponent) := (K_min * Schuiven/KostenMin + K_max * Schuiven/KostenMax) * Leercurves/MTnet/curve;
 		attribute<Eur_m> aK_m  (BebouwingsComponent) := a * K_m; // K_hoofd_m incl omwegfactor
 	}
