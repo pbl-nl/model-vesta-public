@@ -53,8 +53,11 @@ container Outputs
 		,'Class/Variant/IsKG[Beste_B_Variant_impl] ? Gaswaarde20/GasWaarde_KG : 0.0[Eur_m3]'
 		,'Class/Variant/IsKG[Beste_B_Variant_impl] ? Gaswaarde20/Beschikbaarheid_KG_str : NvtExpr');
 	
-	container KostenVerschilAnalyse
-	{	
+	
+	template KostenVerschilAnalyse
+	{
+		parameter<float64> maxVerschil;
+		parameter<string>  verschilString := string((maxVerschil - 1d) * 100d);
 		unit<uint8> VarName := /Vergelijking/Class/Variant;
 		unit<uint32> table := Invoer/DefaultInstellingen/Basis/PlanRegio
 		{
@@ -64,21 +67,27 @@ container Outputs
 			attribute<Eur_yr>     H16_Nat_meerkost1                     (PlanRegio) := ='merge(viewerbeschikbaar20/BesteViewerBeschikbaar , Eur_yr, '+AsItemList('Src/H16/'+Varname/name+'')+')';
 			attribute<Eur_yr>     H16_Nat_meerkost2                     (PlanRegio) := ='merge(viewerbeschikbaar20/TweedeViewerBeschikbaar, Eur_yr, '+AsItemList('Src/H16/'+Varname/name+'')+')';
 			attribute<Eur_yr>     H16_Delta                             (PlanRegio) := H16_Nat_meerkost2 - H16_Nat_meerkost1;
-			attribute<string>       klein_verschil                      (PlanRegio) := string(H16_Nat_meerkost2 < H16_Nat_meerkost1 * 1.2 || H16_Nat_meerkost2 < H16_Nat_meerkost1 * 0.83333); // nota bene: H16 kan ook negatief zijn. zonder 2e conditie in 4796 buurten, met 2e conditie in 4707 buurten, dus kennelijk heeft 1 negatieve kosten voor zowel Beste als Tweede variant met klein verschil.
+			attribute<string>     klein_verschil                      (PlanRegio) := string(H16_Nat_meerkost2 < H16_Nat_meerkost1 * maxVerschil || H16_Nat_meerkost2 < H16_Nat_meerkost1 * 1d/ maxVerschil); // nota bene: H16 kan ook negatief zijn. zonder 2e conditie in 4796 buurten, met 2e conditie in 4707 buurten, dus kennelijk heeft 1 negatieve kosten voor zowel Beste als Tweede variant met klein verschil.
 
 			attribute<Eur_ton>    H17_Nat_meerkost1_tCO2                (PlanRegio) := ='merge(viewerbeschikbaar20/BesteViewerBeschikbaar , Eur_ton, '+AsItemList('Src/H17/'+Varname/name+'')+')';
 			attribute<Eur_ton>    H17_Nat_meerkost2_tCO2                (PlanRegio) := ='merge(viewerbeschikbaar20/TweedeViewerBeschikbaar, Eur_ton, '+AsItemList('Src/H17/'+Varname/name+'')+')';
 			attribute<Eur_ton>    H17_Delta_tCO2                        (PlanRegio) := H17_Nat_meerkost2_tCO2 - H17_Nat_meerkost1_tCO2;
-			
+			attribute<string>     klein_verschil17                      (PlanRegio) := string(H17_Nat_meerkost2_tCO2 < H17_Nat_meerkost1_tCO2 * maxVerschil || H17_Nat_meerkost2_tCO2 < H17_Nat_meerkost1_tCO2 * 1d/ maxVerschil); // nota bene: H16 kan ook negatief zijn. zonder 2e conditie in 4796 buurten, met 2e conditie in 4707 buurten, dus kennelijk heeft 1 negatieve kosten voor zowel Beste als Tweede variant met klein verschil.
+
 			attribute<Eur_yr_WEQ> H18_Nat_meerkost1_WEQ                 (PlanRegio) := ='merge(viewerbeschikbaar20/BesteViewerBeschikbaar , Eur_yr_WEQ, '+AsItemList('Src/H18/'+Varname/name+'')+')';
 			attribute<Eur_yr_WEQ> H18_Nat_meerkost2_WEQ                 (PlanRegio) := ='merge(viewerbeschikbaar20/TweedeViewerBeschikbaar, Eur_yr_WEQ, '+AsItemList('Src/H18/'+Varname/name+'')+')';
 			attribute<Eur_yr_WEQ> H18_Delta_WEQ                         (PlanRegio) := H18_Nat_meerkost2_WEQ - H18_Nat_meerkost1_WEQ;
-			
+			attribute<string>     klein_verschil18                      (PlanRegio) := string(H18_Nat_meerkost2_WEQ < H18_Nat_meerkost1_WEQ * maxVerschil || H18_Nat_meerkost2_WEQ < H18_Nat_meerkost1_WEQ * 1d/ maxVerschil); // nota bene: H16 kan ook negatief zijn. zonder 2e conditie in 4796 buurten, met 2e conditie in 4707 buurten, dus kennelijk heeft 1 negatieve kosten voor zowel Beste als Tweede variant met klein verschil.
+			attribute<bool>			verschillenZijnGelijk := klein_verschil == klein_verschil17 && klein_verschil18 == klein_verschil17;
 		}
 		unit<uint32> variable := SubItem_PropValues(table,'name');
-		container export_csv := Model/CalculationSchemes/Rapportage/WriteTable32ToCSV(table, AsList(variable/name, ';'), '%localDataProjDir%/Results/LNKostenVerschilAnalyse.csv');
+		container export_csv := Model/CalculationSchemes/Rapportage/WriteTable32ToCSV(table, AsList(variable/name, ';'), '%localDataProjDir%/Results/LNKostenVerschilAnalyse'+verschilString+'.csv');
 	}
 	
+	container KostenVerschilAnalyse20 := KostenVerschilAnalyse(1.2d);
+	container KostenVerschilAnalyse10 := KostenVerschilAnalyse(1.1d);
+	container KostenVerschilAnalyse30 := KostenVerschilAnalyse(1.3d);
+
 	template StratOutput
 	{
 		parameter<string> BesteVar;
@@ -89,6 +98,21 @@ container Outputs
 		parameter<string> GaswaardeEurM3 := 'const(0.0[Eur_m3],PlanRegio)';  //'Gaswaarde/GasWaarde_KG' - //'Gaswaarde/GasWaarde_H2'
 		parameter<string> BeschikbaarStr := 'const(NvtExpr,PlanRegio)';  //'Gaswaarde/Beschikbaarheid_KG_str' - 'Gaswaarde/Beschikbaarheid_H2_str'
 		parameter<string> NvtExpr := 'Nee';
+		
+		unit<uint32> BuurtenGeenS2WelBestaandWarmtenet := select_with_org_rel_with_attr_by_cond(PlanRegio, Vergelijking/data/s1a/Results/Checks/FullStadV && 
+		(Vergelijking/data/s2a/Results/Checks/s2aGeenMT && Vergelijking/data/s2d/Results/Checks/S2dGeenMT))
+		{
+			attribute<string>   BU_CODE             	  	  	     := /Invoer/RuimtelijkeData/StudieGebied/buurt/BU_CODE[org_rel];
+			attribute<string>   V01_Strategievariant 	  	  	     := aansluitingen/table/V01_Strategievariant[org_rel];
+			attribute<nrAsl>    A01_Aansl_aardgas                    := aansluitingen/table/A01_Aansl_aardgas[org_rel];
+			attribute<nrAsl>    A02_Aansl_eWP                        := aansluitingen/table/A02_Aansl_eWP[org_rel];
+			attribute<nrAsl>    A03_Aansl_MT                         := aansluitingen/table/A03_Aansl_MT[org_rel];
+			attribute<nrAsl>    A04_Aansl_LT                         := aansluitingen/table/A04_Aansl_LT[org_rel];
+			attribute<nrAsl>    A05_Aansl_hWP_HG                     := aansluitingen/table/A05_Aansl_hWP_HG[org_rel];
+			attribute<nrAsl>    A06_Aansl_HR_HG                      := aansluitingen/table/A06_Aansl_HR_HG[org_rel];
+			attribute<nrAsl>    ansl_totaal                          := A01_Aansl_aardgas + A02_Aansl_eWP + A03_Aansl_MT + A04_Aansl_LT + A05_Aansl_hWP_HG + A06_Aansl_HR_HG;
+			
+		}
 		
 		container Hoofdindicatoren
 		{
