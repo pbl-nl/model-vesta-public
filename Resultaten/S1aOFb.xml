@@ -6,11 +6,11 @@
 	</FullName>
 	<GeoDmsVersion>GeoDms 16.0.0 [Oct 27 2024 14:36:36]
 	</GeoDmsVersion>
-	<SessionStartTime>2025-01-21 00:14:42
+	<SessionStartTime>2025-03-07 21:30:48
 	</SessionStartTime>
-	<CurrentTime>2025-01-21 00:14:45
+	<CurrentTime>2025-03-07 21:30:51
 	</CurrentTime>
-	<StatusFlags>0x2e1bf = AdminMode SuspendForGUI ShowStateColors TraceLogFile TreeViewVisible DetailsVisible ToolBarVisible MultiThreading1 
+	<StatusFlags>0x2e1ff = AdminMode SuspendForGUI ShowStateColors TraceLogFile TreeViewVisible DetailsVisible EventLogVisible ToolBarVisible MultiThreading1 
 	</StatusFlags>
 </DefaultInfo>
 <Software>
@@ -24,7 +24,7 @@
 	</Expr>
 </Config>
 <Environment>
-	<Processor>AMD64 Family 25 Model 1 Stepping 1, AuthenticAMD
+	<Processor>Intel64 Family 6 Model 106 Stepping 6, GenuineIntel
 	</Processor>
 	<User>poorthuisw
 	</User>
