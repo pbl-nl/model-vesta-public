@@ -46,7 +46,7 @@ call :do_runfile LN
 call :do_runfile LN_B_variant
 
 "%exe_path%" /L"%log_dir%\LN.txt" %FLAGS%  "%prj_dir%\Runs\Runfile.dms" /Vergelijking/Outputs/LN/Hulpvariabelen/export_csv/result || call :error_handler
-"%exe_path%" /L"%log_dir%\KVK.txt" %FLAGS%  "%prj_dir%\Runs\Runfile.dms" /Vergelijking/Outputs/KostenVerschilAnalyse/export_csv/result || call :error_handler
+"%exe_path%" /L"%log_dir%\KVK.txt" %FLAGS%  "%prj_dir%\Runs\Runfile.dms" /Vergelijking/Outputs/KostenVerschilAnalyse20/export_csv/result || call :error_handler
 
 echo Klaar met uitrekenen van alle varianten per buurt
 

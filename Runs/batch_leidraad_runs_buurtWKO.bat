@@ -17,7 +17,7 @@ call :do_variant supplementair_S3h_D_buurtWKO15_70
 
 
 echo Klaar met uitrekenen van alle varianten per buurt
-pause
+
 exit /B
 
 
