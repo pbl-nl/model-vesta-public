@@ -20,7 +20,7 @@ Ki_TEO_vast_min_i;110000;Eur;Validatiesessies 2024;minimale investeringskosten b
 Ki_TEO_vast_max_i;140000;Eur;Validatiesessies 2024;maximale investeringskosten bron oppervlaktewater warmtewisselaar
 Ki_TEO_var_min_i;120;Eur_kW;Validatiesessies 2024;minimale investeringskosten bron oppervlaktewater warmtewisselaa
 Ki_TEO_var_max_i;150;Eur_kW;Validatiesessies 2024;maximale investeringskosten bron oppervlaktewater warmtewisselaar
-R_Regeneratie_i;1.1;ratio;-;extra investeringskosten voor regeneratiemechanisme bij WKO zonder TEO
+R_Regeneratie_i;1.25;ratio;-;extra investeringskosten voor regeneratiemechanisme bij WKO zonder TEO
 Ki_dist_OS_i;6508.67;Eur_pand;Validatiesessies 2024;kosten pand-straat aansluiting en onderstation
 Ki_booster_min_i;2400;Eur;Validatiesessies 2024;minimale Investeringskosten booster-warmtepomp voor warm tapwater, inclusief buffervat en verzwaarde elektriciteitsaansluiting en installatie en montagekosten
 Ki_booster_max_i;3600;Eur;Validatiesessies 2024;maximale Investeringskosten booster-warmtepomp voor warm tapwater, inclusief buffervat en verzwaarde elektriciteitsaansluiting en installatie en montagekosten
