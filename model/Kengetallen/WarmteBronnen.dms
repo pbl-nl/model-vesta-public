@@ -142,11 +142,17 @@ container WarmteBronnen
 			
 			container STEG
 			{
-				attribute<Eur_GJ> Km_GJ_H2  (classifications/Rekenstap) := (0.2 / 0.3) * prijzen/Waterstof_GJ[classifications/Rekenstap/RekenJaar_rel];
-				attribute<Eur_GJ> K_GJ_Gas  (classifications/Rekenstap) := (0.2 / 0.3) * prijzen/K_Gas_GJ    [classifications/Rekenstap/RekenJaar_rel];
-				attribute<Eur_GJ> Km_GJ_Gas (classifications/Rekenstap) := (0.2 / 0.3) * prijzen/Km_Gas_GJ   [classifications/Rekenstap/RekenJaar_rel];
-				attribute<Eur_GJ> Km_GJ     (classifications/Rekenstap) := H2Factor *  Km_GJ_H2 + (1.0 - H2Factor) * Km_GJ_Gas;
-				attribute<Eur_GJ> K_GJ      (classifications/Rekenstap) := H2Factor *  Km_GJ_H2 + (1.0 - H2Factor) * K_GJ_Gas;
+				attribute<Eur_GJ> Km_GJ_H2  		(classifications/Rekenstap) := (0.2 / 0.3) * prijzen/Waterstof_GJ[classifications/Rekenstap/RekenJaar_rel];
+				attribute<Eur_GJ> K_GJ_Gas  		(classifications/Rekenstap) := (0.2 / 0.3) * prijzen/K_Gas_GJ    [classifications/Rekenstap/RekenJaar_rel];
+				attribute<Eur_GJ> Km_GJ_Gas 		(classifications/Rekenstap) := (0.2 / 0.3) * prijzen/Km_Gas_GJ   [classifications/Rekenstap/RekenJaar_rel];
+
+				attribute<Eur_GJ> K_GJ_KNGas		(classifications/Rekenstap) := (0.2 / 0.3) * prijzen/K_GrGas_GJ    [classifications/Rekenstap/RekenJaar_rel];
+				attribute<Eur_GJ> Km_GJ_KNGas		(classifications/Rekenstap) := (0.2 / 0.3) * prijzen/Km_GrGas_GJ    [classifications/Rekenstap/RekenJaar_rel];
+
+				attribute<Eur_GJ> Km_GJ_H2_basis	(classifications/Rekenstap) := H2Factor *  Km_GJ_H2 + (1.0 - H2Factor) * Km_GJ_Gas;
+				attribute<Eur_GJ> K_GJ_H2_basis  	(classifications/Rekenstap) := H2Factor *  Km_GJ_H2 + (1.0 - H2Factor) * K_GJ_Gas;
+				attribute<Eur_GJ> K_GJ      		(classifications/Rekenstap) := KlimaatneutraalGasFactor * K_GJ_KNGas + (1.0 - KlimaatneutraalGasFactor) * K_GJ_Gas;
+				attribute<Eur_GJ> Km_GJ      		(classifications/Rekenstap) := KlimaatneutraalGasFactor * Km_GJ_KNGas + (1.0 - KlimaatneutraalGasFactor) * Km_GJ_Gas;
 			}
 
 			container Kolen
