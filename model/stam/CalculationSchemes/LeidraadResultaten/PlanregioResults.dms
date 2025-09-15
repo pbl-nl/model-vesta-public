@@ -103,6 +103,8 @@ container PlanregioResults
 				  		== Classifications/schillabel/V/N), Allocatie/BestaandeUtil/BO/Planregio_rel)
 				+ sum(float64(Allocatie/BestaandeWoning/BO/Schillabel_rel
 						== Classifications/schillabel/V/N), Allocatie/BestaandeWoning/BO/Planregio_rel);
+
+			attribute<string> BronkoppelingBestaandWarmtenet := MakeDefined(R_stadv == 0d ? 'Geen bestaand warmtenet' : /Invoer/RuimtelijkeData/WarmteBronnen/RestWarmte/BronSelecties/StartJaar/Bronnen/naam[/Tussenresultaten/Startjaar/GebiedsAllocatie/RestWarmte/Iterations/I0/Assignment/Bronnen_rel], 'Geen koppeling');
 		}
 
 		parameter<string> OutputFolder := '%localDataProjDir%/Results/' + Expand( . , '%configName%') + '/'+ 'Leidraad';

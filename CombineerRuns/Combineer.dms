@@ -469,6 +469,9 @@ container Vergelijking: using = "Units"
 		attribute<float64>    AantalF                              (Planregio):= rjoin(BU_CODE, Hulpvariabelen/CODE, Hulpvariabelen/_AantalF_)[float64];
 		attribute<float64>    AantalG                              (Planregio):= rjoin(BU_CODE, Hulpvariabelen/CODE, Hulpvariabelen/_AantalG_)[float64];
 		attribute<float64>    AantalN                              (Planregio):= rjoin(BU_CODE, Hulpvariabelen/CODE, Hulpvariabelen/_AantalN_)[float64];
+
+		attribute<string>    BronkoppelingBestaandWarmtenet       (Planregio):= rjoin(BU_CODE, Hulpvariabelen/CODE, Hulpvariabelen/_BronkoppelingBestaandWarmtenet_)[string];
+
 		
 		attribute<string>    G01_Toekenning_klimaatneutraal_gas_1_5  	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G01_Toekenning_klimaatneutraal_gas_1_5_);
 		attribute<string>    G02_Toekenning_klimaatneutraal_gas_1_0  	(Planregio):= rjoin(BU_CODE, GevoeligheidsAnalyse/CODE, GevoeligheidsAnalyse/_G02_Toekenning_klimaatneutraal_gas_1_0_);

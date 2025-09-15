@@ -296,6 +296,27 @@ container Outputs
 			attribute<float64>    AantalG  			   (Planregio) := ='merge('+BesteVar+', float64,      '+AsItemList('Src/AantalG/'     +Varname/name+'')+')';
 			attribute<float64>    AantalN  			   (Planregio) := ='merge('+BesteVar+', float64,      '+AsItemList('Src/AantalN/'     +Varname/name+'')+')';
 			
+			attribute<string> BronkoppelingBestaandWarmtenet (Planregio) := V01_Strategievariant == 's1a' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s1a // dit is lelijk, maar merge werkt niet op string valuetype
+																			: V01_Strategievariant == 's1b' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s1b
+																			: V01_Strategievariant == 's2a' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s2a
+																			: V01_Strategievariant == 's2b' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s2b
+																			: V01_Strategievariant == 's2c' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s2c
+																			: V01_Strategievariant == 's2d' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s2d
+																			: V01_Strategievariant == 's2e' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s2e
+																			: V01_Strategievariant == 's2f' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s2f
+																			: V01_Strategievariant == 's3a' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s3a
+																			: V01_Strategievariant == 's3b' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s3b
+																			: V01_Strategievariant == 's3c' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s3c
+																			: V01_Strategievariant == 's3d' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s3d
+																			: V01_Strategievariant == 's3e' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s3e
+																			: V01_Strategievariant == 's3f' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s3f
+																			: V01_Strategievariant == 's3g' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s3g
+																			: V01_Strategievariant == 's3h' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s3h
+																			: V01_Strategievariant == 's4a' ? /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s4a
+																			: /Vergelijking/Outputs/src/BronkoppelingBestaandWarmtenet/s4b;
+
+
+
 			}
 			parameter<string> OutputFolder := '%localDataProjDir%/Results/' + Expand( . , OutputExpr) + ''+ '';
 			unit<uint32> variable := SubItem_PropValues(table,'name');
@@ -410,6 +431,8 @@ container Outputs
 		container AantalF     := for_each_nedv(Class/Variant/name, replace('data/@C/results/AantalF','@C',Class/Variant/name), PlanRegio, float64);
 		container AantalG     := for_each_nedv(Class/Variant/name, replace('data/@C/results/AantalG','@C',Class/Variant/name), PlanRegio, float64);
 		container AantalN     := for_each_nedv(Class/Variant/name, replace('data/@C/results/AantalN','@C',Class/Variant/name), PlanRegio, float64);
+
+		container BronkoppelingBestaandWarmtenet     := for_each_nedv(Class/Variant/name, replace('data/@C/results/BronkoppelingBestaandWarmtenet','@C',Class/Variant/name), PlanRegio, string);
 	}
 
 	container S1aOFb
