@@ -132,7 +132,8 @@ container WarmteBronnen
 				attribute<MW>                    MWth_max         := WarmteBronnen/MWth_max[org_rel];
 				attribute<Eur_GJ>                K_GJ             := = 'WarmteBronnen/K_GJ/' +RekenstapName+'[org_rel]';
 				attribute<Eur_GJ>                Km_GJ            := = 'WarmteBronnen/Km_GJ/'+RekenstapName+'[org_rel]';
-				attribute<Eur_GJ>                Km_GJ_2030       := = 'WarmteBronnen/Km_GJ/R1_2030[org_rel]';
+				attribute<Eur_GJ>                Km_GJ_R3_2030    := WarmteBronnen/Km_GJ/R3_2030[org_rel];
+				attribute<Eur_GJ>                Km_GJ_R1_2030    := WarmteBronnen/Km_GJ/R1_2030[org_rel];
 				attribute<kg_GJ>                 CO2_GJ           := ='WarmteBronnen/CO2_'+string(ZichtJaar)+'[org_rel]';
 				attribute<G_GJ>                  NOx_GJ           := ='WarmteBronnen/NOx_'+string(ZichtJaar)+'[org_rel]';
 				attribute<G_GJ>                  SO2_GJ           := ='WarmteBronnen/SO2_'+string(ZichtJaar)+'[org_rel]';
@@ -161,7 +162,8 @@ container WarmteBronnen
 				attribute<_yr>                   Rj_Onderhoud := sum(BronElementen/Rj_Onderhoud * BronElementen/MWth_max, per_BronElementen) / sum(BronElementen/MWth_max, per_BronElementen);
 				attribute<Eur_GJ>                K_GJ         := sum(BronElementen/K_GJ         * BronElementen/MWth_max, per_BronElementen) / sum(BronElementen/MWth_max, per_BronElementen);
 				attribute<Eur_GJ>                Km_GJ        := sum(BronElementen/Km_GJ        * BronElementen/MWth_max, per_BronElementen) / sum(BronElementen/MWth_max, per_BronElementen);
-				attribute<Eur_GJ>                Km_GJ_2030   := sum(BronElementen/Km_GJ_2030   * BronElementen/MWth_max, per_BronElementen) / sum(BronElementen/MWth_max, per_BronElementen);
+				attribute<Eur_GJ>                Km_GJ_R1_2030   := sum(BronElementen/Km_GJ_R1_2030   * BronElementen/MWth_max, per_BronElementen) / sum(BronElementen/MWth_max, per_BronElementen);
+				attribute<Eur_GJ>                Km_GJ_R3_2030   := sum(BronElementen/Km_GJ_R3_2030   * BronElementen/MWth_max, per_BronElementen) / sum(BronElementen/MWth_max, per_BronElementen);
 				attribute<kg_GJ >                CO2_GJ       := sum(BronElementen/CO2_GJ       * BronElementen/MWth_max, per_BronElementen) / sum(BronElementen/MWth_max, per_BronElementen);
 				attribute<G_GJ >                 NOx_GJ       := sum(BronElementen/NOx_GJ       * BronElementen/MWth_max, per_BronElementen) / sum(BronElementen/MWth_max, per_BronElementen);
 				attribute<G_GJ >                 SO2_GJ       := sum(BronElementen/SO2_GJ       * BronElementen/MWth_max, per_BronElementen) / sum(BronElementen/MWth_max, per_BronElementen);
@@ -235,6 +237,9 @@ container WarmteBronnen
 				attribute<_yr>       Rj_Onderhoud        := TypeInfo_rel->JaarKosten[_yr];
 				attribute<Eur_GJ>    K_GJ                := ='TypeInfo_rel->K_GJ/' +RekenjaarName;
 				attribute<Eur_GJ>    Km_GJ               := ='TypeInfo_rel->Km_GJ/'+RekenjaarName;
+				attribute<Eur_GJ>    Km_GJ_R1_2030          := TypeInfo_rel->Km_GJ/R1_2030;
+				attribute<Eur_GJ>    Km_GJ_R3_2030          := TypeInfo_rel->Km_GJ/R3_2030;
+
 
 				attribute<ratio>     P_vol               := TypeInfo_rel->Pvol_default;
 				attribute<ratio>     P_cap               := TypeInfo_rel->Pcap_default;
@@ -289,6 +294,8 @@ container WarmteBronnen
 				attribute<EUR_kW> Ki_kW_max     := union_data(., PuntBronSelectie/bronnen/Ki_kW_max    , LijnBronSelectie/Bronnen/Ki_kW_max);
 				attribute<EUR_GJ> K_GJ          := union_data(., PuntBronSelectie/bronnen/K_GJ        , LijnBronSelectie/Bronnen/K_GJ  );
 				attribute<EUR_GJ> Km_GJ         := union_data(., PuntBronSelectie/bronnen/Km_GJ         , LijnBronSelectie/Bronnen/Km_GJ  );
+				attribute<EUR_GJ> Km_GJ_R1_2030    := union_data(., PuntBronSelectie/bronnen/Km_GJ_R1_2030   , LijnBronSelectie/Bronnen/Km_GJ_R1_2030  );
+				attribute<EUR_GJ> Km_GJ_R3_2030    := union_data(., PuntBronSelectie/bronnen/Km_GJ_R3_2030   , LijnBronSelectie/Bronnen/Km_GJ_R3_2030  );
 				attribute<_yr>    Rj_Onderhoud  := union_data(., PuntBronSelectie/bronnen/Rj_Onderhoud , LijnBronSelectie/Bronnen/Rj_Onderhoud );
 				attribute<ratio>  P_cap         := union_data(., PuntBronSelectie/bronnen/P_cap        , LijnBronSelectie/Bronnen/P_cap );
 				attribute<ratio>  P_vol         := union_data(., PuntBronSelectie/bronnen/P_vol        , LijnBronSelectie/Bronnen/P_vol );
