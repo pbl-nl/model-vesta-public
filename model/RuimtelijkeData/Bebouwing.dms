@@ -36,7 +36,7 @@ container Bebouwing :=
 			attribute<Invoer/RuimtelijkeData/StudieGebied/buurt> buurt_rel := BAG/vbo_woonfunctie_studiegebied/buurt_rel;
 
 			attribute<nrAsl>                nrAansluitingen_i := impl/nrWon;
-			attribute<m2>                   Oppervlakte_i     := median(BAG/vbo_woonfunctie_studiegebied/oppervlakte[m2], interval(50[m2], 200[m2]));
+			attribute<m2>                   Oppervlakte_i     := min_elem(BAG/vbo_woonfunctie_studiegebied/oppervlakte[m2], const(200[m2],.));
 
 			attribute<BebouwingsTypeDomein> BebouwingsType := impl/WoningType, isHidden = "True";
 			attribute<ModelObjectKeyDomein> ModelObjectKey := combine_data(ModelObjectKeyDomein, BebouwingsType, impl/BouwjaarWoningBestaand_rel);
