@@ -269,7 +269,8 @@ container Vergelijking: using = "Units"
 	
 	container checks
 	{
-		attribute<Eur_yr> K13_s1a (PlanRegio) := data/s1a/Preresults/K13_Inkoop_Elek;
+		attribute<Eur_yr> K13_s1a  (PlanRegio) := data/s1a/Preresults/K13_Inkoop_Elek;
+		attribute<ratio>  R_StadV  (PlanRegio) := data/s1a/Preresults/R_StadV;
 	}
 	
 	template ImportResults
@@ -817,7 +818,7 @@ container Vergelijking: using = "Units"
 			attribute<Eur_yr> 		BesteKGvariantH16   (PlanRegio) := ='merge(BesteKGvariant, Eur_yr, '+AsItemList('H16/'+Class/KGVariant/name+'')+')';
 			attribute<Eur_ton> 		BesteKGvariantH17   (PlanRegio) := ='merge(BesteKGvariant, Eur_ton,'+AsItemList('H17/'+Class/KGVariant/name+'')+')';
 			attribute<GJ_yr> 		Verbruik            (PlanRegio) := ='merge(BesteKGvariant, GJ_yr, '+AsItemList('data/'+Class/KGVariant/name+'/results/VraagKG')+')';
-			attribute<Eur_yr>		Besparing			(PlanRegio) := BesteGasloosVariantH16 - BesteKGvariantH16;
+			attribute<Eur_yr>		Besparing			(PlanRegio) := (1d - checks/R_StadV) * (BesteGasloosVariantH16 - BesteKGvariantH16);
 			attribute<bool>			GasVrager           (PlanRegio) := BesteGasloosVariantH17 > BesteKGvariantH17;
 			unit<uint32> Gasvragers := subset(GasVrager)
 			{
