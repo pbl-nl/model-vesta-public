@@ -17,7 +17,9 @@ container Outputs
 		,'LN'
 		,Class/Variant
 		,'Class/Variant/IsKG[viewerbeschikbaar20/BesteViewerBeschikbaar] ? Gaswaarde20/GasWaarde_KG : 0.0[Eur_m3]'
-		,'Class/Variant/IsKG[viewerbeschikbaar20/BesteViewerBeschikbaar] ? Gaswaarde20/Beschikbaarheid_KG_str : NvtExpr');
+		,'Class/Variant/IsKG[viewerbeschikbaar20/BesteViewerBeschikbaar] ? Gaswaarde20/Beschikbaarheid_KG_str : NvtExpr'
+		,'Makedefined( Gaswaarde20/KG/Gasvragers/GasWaarde [invert( Gaswaarde20/KG/Gasvragers/nr_OrgEntity )], 0[Eur_m3])'
+		,'const(/Vergelijking/gaswaarde20/kg/Gasvragers/Orientatiewaarde, Planregio)');
 		
 	container LN_GA_01    := StratOutput(
 		 'viewerbeschikbaar15/BesteViewerBeschikbaar'
@@ -25,7 +27,9 @@ container Outputs
 		,'LN_GA_01'
 		,Class/Variant
 		,'Class/Variant/IsKG[viewerbeschikbaar15/BesteViewerBeschikbaar] ? Gaswaarde15/GasWaarde_KG : 0.0[Eur_m3]'
-		,'Class/Variant/IsKG[viewerbeschikbaar15/BesteViewerBeschikbaar] ? Gaswaarde15/Beschikbaarheid_KG_str : NvtExpr');
+		,'Class/Variant/IsKG[viewerbeschikbaar15/BesteViewerBeschikbaar] ? Gaswaarde15/Beschikbaarheid_KG_str : NvtExpr'
+		,'Makedefined( Gaswaarde15/KG/Gasvragers/GasWaarde [invert( Gaswaarde15/KG/Gasvragers/nr_OrgEntity )], 0[Eur_m3])'
+		,'const(/Vergelijking/gaswaarde15/kg/Gasvragers/Orientatiewaarde, Planregio)');
 		
 	container LN_GA_02    := StratOutput(
 		 'viewerbeschikbaar10/BesteViewerBeschikbaar'
@@ -33,7 +37,9 @@ container Outputs
 		,'LN_GA_02'
 		,Class/Variant
 		,'Class/Variant/IsKG[viewerbeschikbaar10/BesteViewerBeschikbaar] ? Gaswaarde10/GasWaarde_KG : 0.0[Eur_m3]'
-		,'Class/Variant/IsKG[viewerbeschikbaar10/BesteViewerBeschikbaar] ? Gaswaarde10/Beschikbaarheid_KG_str : NvtExpr');
+		,'Class/Variant/IsKG[viewerbeschikbaar10/BesteViewerBeschikbaar] ? Gaswaarde10/Beschikbaarheid_KG_str : NvtExpr'
+		,'Makedefined( Gaswaarde10/KG/Gasvragers/GasWaarde [invert( Gaswaarde10/KG/Gasvragers/nr_OrgEntity )], 0[Eur_m3])'
+		,'const(/Vergelijking/gaswaarde10/kg/Gasvragers/Orientatiewaarde, Planregio)');
 		
 		
 	container LN_0BCM   := StratOutput(
@@ -42,7 +48,9 @@ container Outputs
 		,'LN_0BCM'
 		,Class/Variant
 		,'Class/Variant/IsKG[viewerbeschikbaar05/BesteViewerBeschikbaar] ? Gaswaarde05/GasWaarde_KG : 0.0[Eur_m3]'
-		,'Class/Variant/IsKG[viewerbeschikbaar05/BesteViewerBeschikbaar] ? Gaswaarde05/Beschikbaarheid_KG_str : NvtExpr');
+		,'Class/Variant/IsKG[viewerbeschikbaar05/BesteViewerBeschikbaar] ? Gaswaarde05/Beschikbaarheid_KG_str : NvtExpr'
+		,'Makedefined( Gaswaarde05/KG/Gasvragers/GasWaarde [invert( Gaswaarde05/KG/Gasvragers/nr_OrgEntity )], 0[Eur_m3])'
+		,'const(/Vergelijking/gaswaarde05/kg/Gasvragers/Orientatiewaarde, Planregio)');
 		
 		
 	container LN_B_variant := StratOutput(
@@ -51,7 +59,9 @@ container Outputs
 		,'LN_B_'
 		,Class/Variant
 		,'Class/Variant/IsKG[Beste_B_Variant_impl] ? Gaswaarde20/GasWaarde_KG : 0.0[Eur_m3]'
-		,'Class/Variant/IsKG[Beste_B_Variant_impl] ? Gaswaarde20/Beschikbaarheid_KG_str : NvtExpr');
+		,'Class/Variant/IsKG[Beste_B_Variant_impl] ? Gaswaarde20/Beschikbaarheid_KG_str : NvtExpr'
+		,'Makedefined( Gaswaarde20/KG/Gasvragers/GasWaarde [invert( Gaswaarde20/KG/Gasvragers/nr_OrgEntity )], 0[Eur_m3])'
+		,'const(/Vergelijking/gaswaarde20/kg/Gasvragers/Orientatiewaarde, Planregio)');
 	
 	
 	template KostenVerschilAnalyse
@@ -97,6 +107,8 @@ container Outputs
 		
 		parameter<string> GaswaardeEurM3 := 'const(0.0[Eur_m3],PlanRegio)';  //'Gaswaarde/GasWaarde_KG' - //'Gaswaarde/GasWaarde_H2'
 		parameter<string> BeschikbaarStr := 'const(NvtExpr,PlanRegio)';  //'Gaswaarde/Beschikbaarheid_KG_str' - 'Gaswaarde/Beschikbaarheid_H2_str'
+		parameter<string> H42_GaswaardeStr;  //'Gaswaarde/Beschikbaarheid_KG_str' - 'Gaswaarde/Beschikbaarheid_H2_str'
+		parameter<string> H43_OrientatiewaardeStr;
 		parameter<string> NvtExpr := 'Nee';
 		
 		unit<uint32> BuurtenGeenS2WelBestaandWarmtenet := select_with_org_rel_with_attr_by_cond(PlanRegio, Vergelijking/data/s1a/Results/Checks/FullStadV && 
@@ -161,6 +173,8 @@ container Outputs
 			attribute<GJ_yr_WEQ> H39_Input_aardgas_u                	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H39/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H40_Input_KlimaatneutraalGas_u               	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H40/'+Varname/name+'')+')';
 			attribute<GJ_yr_WEQ> H41_Input_elektriciteit_u             	(PlanRegio) := ='merge('+BesteVar+', GJ_yr_WEQ, '+AsItemList('Src/H41/'+Varname/name+'')+')';
+			attribute<Eur_m3> 	 H42_Gaswaarde			             	(PlanRegio) := =H42_GaswaardeStr;
+			attribute<Eur_m3> 	 H43_Orientatiewaarde	             	(PlanRegio) := =H43_OrientatiewaardeStr;
 			}
 			parameter<string> OutputFolder := '%localDataProjDir%/Results/' + Expand( . , OutputExpr) + ''+ '';
 			unit<uint32> variable := SubItem_PropValues(table,'name');

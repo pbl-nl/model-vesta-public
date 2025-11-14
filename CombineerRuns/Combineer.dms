@@ -822,6 +822,7 @@ container Vergelijking: using = "Units"
 			attribute<bool>			GasVrager           (PlanRegio) := BesteGasloosVariantH17 > BesteKGvariantH17;
 			unit<uint32> Gasvragers := subset(GasVrager)
 			{
+				attribute<string>	BU_CODE 	:= Planregio/BU_CODE[nr_orgentity];
 				attribute<Eur_yr>	Besparing   := ../Besparing[nr_orgentity];
 				attribute<GJ_yr>	VerbruikGJ  := ../Verbruik[nr_orgentity];
 				attribute<m3_yr>	VerbruikM3  := VerbruikGJ / Invoer/Kengetallen/Constanten/GasEnergie;
