@@ -109,8 +109,26 @@ container BAG: url="%sourceDataProjDir%/BAG/20190114_actualisatie_BAG_FvdM.txt"
 
 			// pand gerelateerde data
 			attribute<string>  pand_id_geom;
-			attribute<string>  pand_id                := pand_id_geom;
-			attribute<pand>    pand_rel               := rlookup(pand_id, pand/identificatie);
+			attribute<string>  pand_id;
+
+			container pandkoppeling
+			{
+				attribute<pand>    	pand_rel_geom 				(vbo)	:= rlookup(pand_id_geom, pand/identificatie);	// Bepaling van pand_rel op basis van gemometrie en point_in_polygon.
+				attribute<pand>		pand_rel_admin				(vbo)	:= rlookup(pand_id, pand/identificatie);		// Bepaling van pand_rel op basis van administratie van Kadaster.
+				attribute<bool> 	IsWoning 					(vbo) 	:= import/vbo/gebruiksdoelen/woon;				// VBO heeft gebruiksdoel woon.
+
+				attribute<pand>		Pand_rel 					(vbo)	:=
+				IsWoning									// Bij woningen treedt er interactie op tussen pand_id en woonpand_type. Wwonpand_type wordt daarom meegenomen in onderstaande condities. Pand_rel_admin heeft de voorkeur boven pand_rel_geom.
+				? IsDefined(pand_rel_admin) && IsDefined(import/pand/woonpand_type[pand_rel_admin]) && not(import/pand/woonpand_type[pand_rel_admin] 	== typeringen/WoningtypeSnapshot/V/geen_woonpand)
+					? pand_rel_admin						// pand_rel_admin bestaat en gekoppeld pand heeft een gedefinieerd woonpand_type dat niet 'geen_woonpand' is.
+					: IsDefined(pand_rel_geom) && IsDefined(import/pand/woonpand_type[pand_rel_geom]) && not(import/pand/woonpand_type[pand_rel_geom] 	== typeringen/WoningtypeSnapshot/V/geen_woonpand)
+						? pand_rel_geom						// pand_rel_geom bestaat en gekoppeld pand heeft een gedefinieerd woonpand_type dat niet 'geen_woonpand' is.
+						:  0/0 								// Als zowel pand_rel_admin als pand_rel_geom geen juist woonpand_type opleveren, dan krijgt de woning geen pand_rel toegewezen.
+				: MakeDefined(pand_rel_admin,pand_rel_geom)	// Utiliteitsbouw krijgt simpele hierarchie omdat er geen interactie is met pandtype. Gebruiksfunctie si namelijk gedefinieerd op VBO-niveau.
+				;
+			}
+
+			attribute<pand>    pand_rel		          := pandkoppeling/pand_rel;
 			attribute<float32> pand_bouwlagen_fictief := pand/bouwlagen_fictief[pand_rel];
 			
 			// relatie naar buurt voor o.a. ruimtelijke selectie
@@ -207,8 +225,9 @@ container BAG: url="%sourceDataProjDir%/BAG/20190114_actualisatie_BAG_FvdM.txt"
 		attribute<string>                                 postcode                   := rjoin(import/vbo/nummeraanduiding_id[nr_OrgEntity], import/nummeraanduiding/identificatie, import/nummeraanduiding/postcode);
 
 		attribute<Units/m2>                               oppervlakte                := import/vbo/oppervlak_filters/wonen[nr_OrgEntity];
-		attribute<string>                                 pand_id                    := import/vbo/pand_id[nr_OrgEntity];
-		attribute<import/pand>                            pand_rel                   := import/vbo/pand_rel[nr_OrgEntity];
+		attribute<import/pand>                            pand_rel		             := import/vbo/pand_rel[nr_OrgEntity];
+		attribute<string>                              	  pand_id                  	 := import/pand/identificatie[pand_rel];
+
 		attribute<units/pand_asl>                         pand_aandeel               := 1.0 / value(import/pand/nr_woningen[pand_rel],units/asl_pand);
  
 		attribute<Studiegebied/buurt>                     buurt_rel                  := point_in_polygon(geometry, Studiegebied/buurt/geometry);
@@ -216,10 +235,10 @@ container BAG: url="%sourceDataProjDir%/BAG/20190114_actualisatie_BAG_FvdM.txt"
 		attribute<Geography/RegioIndelingen/gemeente> 	  Gemeente_rel 				 := point_in_polygon(geometry, Geography/RegioIndelingen/gemeente/geometry);
 		attribute<Geography/RegioIndelingen/wijk> 		  Wijk_rel 					 := point_in_polygon(geometry, Geography/RegioIndelingen/wijk/geometry);
 
-		attribute<Units/yr>                               bouwjaar                   := rjoin(pand_id, import/pand/identificatie, import/pand/bouwjaar_gecorrigeerd);
+		attribute<Units/yr>                               bouwjaar                   := import/pand/bouwjaar_gecorrigeerd[pand_rel];
 		attribute<Classifications/BouwjaarWoningBestaand> BouwjaarWoningBestaand_rel := isNull(bouwjaar) ? Classifications/BouwjaarWoningBestaand/onbekend : classify(bouwjaar,Classifications/BouwjaarWoningBestaand/ClassBreak);
 
-		attribute<typeringen/WoningtypeSnapshot>          WoningtypeSnapshot_rel     := rjoin(pand_id, import/pand/identificatie, import/pand/woonpand_type);
+		attribute<typeringen/WoningtypeSnapshot>          WoningtypeSnapshot_rel     := import/pand/woonpand_type[pand_rel];
 
 		attribute<classifications/WoningtypeBestaand>     WoningtypeBestaand_rel     :=
 			(WoningtypeSnapshot_rel == typeringen/WoningtypeSnapshot/V/meergezinspand && nr_verdiepingen > 4b)
@@ -227,7 +246,7 @@ container BAG: url="%sourceDataProjDir%/BAG/20190114_actualisatie_BAG_FvdM.txt"
 				: WoningtypeSnapshot_rel[classifications/WoningtypeBestaand]
 		;
 
-		attribute<uint8>                                  nr_verdiepingen             := rjoin(pand_id, import/pand/identificatie, import/pand/nr_verdiepingen);
+		attribute<uint8>                                  nr_verdiepingen             := import/pand/nr_verdiepingen[pand_rel];
 		
 		attribute<typeringen/gebruiksdoel>                gebruiksdoel                := const(Invoer/RuimtelijkeData/BAG/typeringen/gebruiksdoel/V/woon,.);
 		
@@ -282,12 +301,13 @@ container BAG: url="%sourceDataProjDir%/BAG/20190114_actualisatie_BAG_FvdM.txt"
 		attribute<string>                               postcode                 := rjoin(import/vbo/nummeraanduiding_id[nr_OrgEntity], import/nummeraanduiding/identificatie, import/nummeraanduiding/postcode);
 
 		attribute<Units/m2>                             oppervlakte              := import/vbo/oppervlak_filters/utiliteit[nr_OrgEntity];
-		attribute<string>                               pand_id                  := import/vbo/pand_id[nr_OrgEntity];
-		attribute<import/pand>                          pand_rel                 := import/vbo/pand_rel[nr_OrgEntity];
+		attribute<import/pand>                          pand_rel           		 := import/vbo/pand_rel[nr_OrgEntity];
+
+		attribute<string>                               pand_id                  := import/pand/identificatie[pand_rel];
 
 		attribute<Studiegebied/buurt>                   buurt_rel                := point_in_polygon(geometry, Studiegebied/buurt/geometry);
 
-		attribute<units/yr>                             bouwjaar                 := rjoin(pand_id, import/pand/identificatie, import/pand/bouwjaar_gecorrigeerd);
+		attribute<units/yr>                             bouwjaar                 := import/pand/bouwjaar_gecorrigeerd[pand_rel];
 		attribute<Classifications/BouwjaarUtilBestaand> BouwjaarUtilBestaand_rel := isNull(bouwjaar) ? Classifications/BouwjaarUtilBestaand/V/onbekend :classify(bouwjaar,Classifications/BouwjaarUtilBestaand/ClassBreak);
 
 		container gebruiksdoelen :=
