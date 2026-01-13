@@ -6,10 +6,44 @@
 
 container Outputs
 {
-	container S1_WP := StratOutput('viewerbeschikbaar20/ConstructStrategie/S1varL','viewerbeschikbaar20/BesteS1variant','Strategie_1_',Class/S1Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
-	container S2_MT := StratOutput('viewerbeschikbaar20/ConstructStrategie/S2varL','viewerbeschikbaar20/BesteS2variant','Strategie_2_',Class/S2Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
-	container S3_LT := StratOutput('viewerbeschikbaar20/ConstructStrategie/S3varL','viewerbeschikbaar20/BesteS3variant','Strategie_3_',Class/S3Variant,'const(0.0[Eur_m3],PlanRegio)','const(NvtExpr,PlanRegio)');
-	container S4_KG := StratOutput('viewerbeschikbaar20/ConstructStrategie/S4varL','viewerbeschikbaar20/BesteS4variant','Strategie_4_',Class/KGVariant,'Gaswaarde20/GasWaarde_KG','Gaswaarde20/Beschikbaarheid_KG_str');
+	container S1_WP := StratOutput(
+		 'viewerbeschikbaar20/ConstructStrategie/S1varL'	// BesteVar
+		,'viewerbeschikbaar20/BesteS1variant'				// VarCodeOrg
+		,'Strategie_1_'										// OutputExpr
+		,Class/S1Variant									// Varname
+		,'const(0.0[Eur_m3],PlanRegio)'						// GaswaardeEurM3
+		,'const(NvtExpr,PlanRegio)'							// BeschikbaarStr
+		,'Makedefined( Gaswaarde20/KG/Gasvragers/GasWaarde [invert( Gaswaarde20/KG/Gasvragers/nr_OrgEntity )], 0[Eur_m3])' 	// H42_GaswaardeStr
+		,'const(/Vergelijking/gaswaarde20/kg/Gasvragers/Orientatiewaarde, Planregio)');										// H43_OrientatiewaardeStr
+
+	container S2_MT := StratOutput(
+		 'viewerbeschikbaar20/ConstructStrategie/S2varL'
+		,'viewerbeschikbaar20/BesteS2variant'
+		,'Strategie_2_',Class/S2Variant
+		,'const(0.0[Eur_m3],PlanRegio)'
+		,'const(NvtExpr,PlanRegio)'
+		,'Makedefined( Gaswaarde20/KG/Gasvragers/GasWaarde [invert( Gaswaarde20/KG/Gasvragers/nr_OrgEntity )], 0[Eur_m3])'
+		,'const(/Vergelijking/gaswaarde20/kg/Gasvragers/Orientatiewaarde, Planregio)');
+
+	container S3_LT := StratOutput(
+		 'viewerbeschikbaar20/ConstructStrategie/S3varL'
+		,'viewerbeschikbaar20/BesteS3variant'
+		,'Strategie_3_'
+		,Class/S3Variant
+		,'const(0.0[Eur_m3],PlanRegio)'
+		,'const(NvtExpr,PlanRegio)'
+		,'Makedefined( Gaswaarde20/KG/Gasvragers/GasWaarde [invert( Gaswaarde20/KG/Gasvragers/nr_OrgEntity )], 0[Eur_m3])'
+		,'const(/Vergelijking/gaswaarde20/kg/Gasvragers/Orientatiewaarde, Planregio)');
+
+	container S4_KG := StratOutput(
+		 'viewerbeschikbaar20/ConstructStrategie/S4varL'
+		,'viewerbeschikbaar20/BesteS4variant'
+		,'Strategie_4_'
+		,Class/KGVariant
+		,'Gaswaarde20/GasWaarde_KG'
+		,'Gaswaarde20/Beschikbaarheid_KG_str'
+		,'Makedefined( Gaswaarde20/KG/Gasvragers/GasWaarde [invert( Gaswaarde20/KG/Gasvragers/nr_OrgEntity )], 0[Eur_m3])'
+		,'const(/Vergelijking/gaswaarde20/kg/Gasvragers/Orientatiewaarde, Planregio)');
 	
 	container LN    := StratOutput(
 		 'viewerbeschikbaar20/BesteViewerBeschikbaar'
@@ -105,8 +139,8 @@ container Outputs
 		parameter<string> OutputExpr;
 		unit<uint8> Varname;
 		
-		parameter<string> GaswaardeEurM3 := 'const(0.0[Eur_m3],PlanRegio)';  //'Gaswaarde/GasWaarde_KG' - //'Gaswaarde/GasWaarde_H2'
-		parameter<string> BeschikbaarStr := 'const(NvtExpr,PlanRegio)';  //'Gaswaarde/Beschikbaarheid_KG_str' - 'Gaswaarde/Beschikbaarheid_H2_str'
+		parameter<string> GaswaardeEurM3;  //'Gaswaarde/GasWaarde_KG' - //'Gaswaarde/GasWaarde_H2'
+		parameter<string> BeschikbaarStr;  //'Gaswaarde/Beschikbaarheid_KG_str' - 'Gaswaarde/Beschikbaarheid_H2_str'
 		parameter<string> H42_GaswaardeStr;  //'Gaswaarde/Beschikbaarheid_KG_str' - 'Gaswaarde/Beschikbaarheid_H2_str'
 		parameter<string> H43_OrientatiewaardeStr;
 		parameter<string> NvtExpr := 'Nee';
