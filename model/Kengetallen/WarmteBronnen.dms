@@ -192,12 +192,12 @@ container WarmteBronnen
 
 			container HulpKetel := Gasmotor;
 
-			container Industrie
+            container Industrie
 			{
-				// obv 0.0000025 [GJ/GJ] * R10[Eur/GJ]
+				// obv 2.5 kWh / GJ (= 0.009 GJ_el / GJ_th) * R10[Eur/GJ]
 				// obv R10 = S10[Eur/kWh] * 1000000[kJ/GJ] / 3600[sec/h]
-				attribute<Eur_GJ> K_GJ  (classifications/Rekenstap) := 0.0000025 [GJ / GJ] * prijzen/ElekKMG_GJ[classifications/Rekenstap/RekenJaar_rel];
-				attribute<Eur_GJ> Km_GJ (classifications/Rekenstap) := 0.0000025 [GJ / GJ] * prijzen/Km_Elek_GJ[classifications/Rekenstap/RekenJaar_rel];
+				attribute<Eur_GJ> K_GJ  (classifications/Rekenstap) := 0.009 [GJ / GJ] * prijzen/ElekKMG_GJ[classifications/Rekenstap/RekenJaar_rel];
+				attribute<Eur_GJ> Km_GJ (classifications/Rekenstap) := 0.009 [GJ / GJ] * prijzen/Km_Elek_GJ[classifications/Rekenstap/RekenJaar_rel];
 			}
 			container GeoThermie
 			{
