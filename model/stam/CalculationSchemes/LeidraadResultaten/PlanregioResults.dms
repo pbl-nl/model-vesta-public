@@ -1082,14 +1082,15 @@ container PlanregioResults
 							,0[Eur_yr])
 				  )[Eur_yr];
 
-            attribute<Eur_yr> K06_Wnet_transport := IsOngeldig
+			attribute<Eur_yr> K06_Wnet_transport := IsOngeldig
 				? (0/0)[Eur_yr]
 				: round(
 					IsUitgesloten_Stap0_Referentie
 						? 0[Eur_yr]
 						: MakeDefined(
-							  R_AardG * StateNaAllocatie/totaal/jaarlijks/pt/Kmi_pt
-							- Origkosten/table/K06_Wnet_transport //transportleidingen nieuwe warmtenetten
+							R_StadV > 0[ratio]
+								? 0[Eur_yr]
+								: R_AardG * StateNaAllocatie/totaal/jaarlijks/pt/Kmi_pt - Origkosten/table/K06_Wnet_transport //transportleidingen nieuwe warmtenetten
 							,0[Eur_yr])
 				  )[Eur_yr];
 
