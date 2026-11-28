@@ -162,11 +162,11 @@ template GebouwOptieT
 			? 'BebouwingsObject/Functioneel/RV/'+Classifications/SchilLabel/name[SchilLabel_rel_formeel]
 			: 'merge(SchilLabel_rel, GJ_yr, '+AsItemList('BebouwingsObject/Functioneel/RV/'+Classifications/SchilLabel/name)+')';
 
-		attribute<GJ_yr> RV (BebouwingsObject) := = G05_aan && BCName == 'BestaandeWoning'
+        attribute<GJ_yr> RV (BebouwingsObject) := = G05_aan && BCName == 'BestaandeWoning'
 			? '(Classifications/DoelLabel/SchilLabel_rel[Doellabel_rel] == Classifications/SchilLabel/V/B 
 				? RV_i * ModelObject/GA05_factor_B[BebouwingsObject/Model_rel] 
 				: Classifications/DoelLabel/SchilLabel_rel[Doellabel_rel] == Classifications/SchilLabel/V/D 
-					? RV_i * ModelObject/GA05_factor_B[BebouwingsObject/Model_rel] 
+					? RV_i * ModelObject/GA05_factor_D[BebouwingsObject/Model_rel] 
 					: RV_i)'
 			:  'RV_i';
 			

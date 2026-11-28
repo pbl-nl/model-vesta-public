@@ -1104,13 +1104,13 @@ container PlanregioResults
 							,0[Eur_yr])
 				  )[Eur_yr];
 
-			attribute<Eur_yr> K08_Gebouw_schil := IsOngeldig
+            attribute<Eur_yr> K08_Gebouw_schil := IsOngeldig
 				? (0/0)[Eur_yr]
 				: round(
 					IsUitgesloten_Stap0_Referentie
-						? 0[Eur_yr] 
+						? 0[Eur_yr]
 						: MakeDefined(
-							 Maatschappelijk/gebouwen/Kmi_GebouwVerbetering - Origkosten/table/K08_Gebouw_schil          //kosten schilverbetering
+							  R_AardG * Maatschappelijk/gebouwen/Kmi_GebouwVerbetering - Origkosten/table/K08_Gebouw_schil   //kosten schilverbetering
 							,0[Eur_yr])
 				  )[Eur_yr];
 
@@ -1164,7 +1164,7 @@ container PlanregioResults
 							,0[Eur_yr])
 				  )[Eur_yr];
 
-			attribute<Eur_yr> K13_Inkoop_Elek := IsOngeldig
+             attribute<Eur_yr> K13_Inkoop_Elek := IsOngeldig
 				? (0/0)[Eur_yr]
 				: round(
 					Statisch/IsUitgesloten
@@ -1173,7 +1173,6 @@ container PlanregioResults
 							  R_AardG * StateNaAllocatie/totaal/jaarlijks/ow/Km_ow_elek    //elektriciteitskosten opwekking in nieuwe warmtenetten
 							+ R_AardG * StateNaAllocatie/totaal/jaarlijks/id/Km_id_elek    //elektriciteitskosten inpandig in nieuwe warmtenetten
 							+ R_AardG * StateNaAllocatie/totaal/jaarlijks/wd/Km_wd_elek    //elektriciteitskosten distributie in nieuwe warmtenetten
-							+ R_AardG * StateNaAllocatie/totaal/jaarlijks/ge/Om_ge_comfort //jaarlijkse comfortwinst nieuwe warmtenetten
 							+ WarmteBestaand/Kj_wd_elek
 							+ R_AardG * Maatschappelijk/gebouwen/ElektriciteitsVraag/Km_Totaal
 							+ WarmteBestaand/Kj_elek_gebouw
@@ -1235,13 +1234,13 @@ container PlanregioResults
 				? (0/0)[Eur_yr]
 				: K17_Totaal_VariabeleKosten - Ref2030/PlanregioResults/NationaleKosten/Table/K17_Totaal_VariabeleKosten;
 
-			attribute<Eur_yr> K19_Gebouw_schil_w := IsOngeldig
+            attribute<Eur_yr> K19_Gebouw_schil_w := IsOngeldig
 				? (0/0)[Eur_yr]
 				: round(
 					IsUitgesloten_Stap0_Referentie
 						? 0[Eur_yr] 
 						: MakeDefined(
-							 Maatschappelijk/gebouwen/Kmi_GebouwVerbetering_w - Origkosten/table/K19_Gebouw_schil_w          //kosten schilverbetering
+							  R_AardG * Maatschappelijk/gebouwen/Kmi_GebouwVerbetering_w - Origkosten/table/K19_Gebouw_schil_w   //kosten schilverbetering
 							,0[Eur_yr])
 				  )[Eur_yr];
 
@@ -1261,13 +1260,13 @@ container PlanregioResults
 							,0[Eur_yr])
 				  )[Eur_yr];
 
-			attribute<Eur_yr> K21_Gebouw_schil_u := IsOngeldig
+            attribute<Eur_yr> K21_Gebouw_schil_u := IsOngeldig
 				? (0/0)[Eur_yr]
 				: round(
 					IsUitgesloten_Stap0_Referentie
 						? 0[Eur_yr] 
 						: MakeDefined(
-							 Maatschappelijk/gebouwen/Kmi_GebouwVerbetering_u - Origkosten/table/K21_Gebouw_schil_u          //kosten schilverbetering
+							  R_AardG * Maatschappelijk/gebouwen/Kmi_GebouwVerbetering_u - Origkosten/table/K21_Gebouw_schil_u   //kosten schilverbetering
 							,0[Eur_yr])
 				  )[Eur_yr];
 
